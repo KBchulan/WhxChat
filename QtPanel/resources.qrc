@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/icos/MainWindow.ico</file>
+        <file>resources/Login/Main.png</file>
+    </qresource>
+</RCC>
