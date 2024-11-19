@@ -10,32 +10,31 @@ MainWindow::MainWindow(QWidget *parent)
     // design ico
     setWindowIcon(QIcon(":/resources/icos/MainWindow.ico"));
 
-    // create LoginDialog
-    _login_dlg = new LoginDialog();
-    setCentralWidget(_login_dlg);
-    _login_dlg->show();
+    // create LoginDialog, RegisterDialog
+    _login_dlg = new LoginDialog(this);
+    _reg_dlg = new RegisterDialog(this);
 
-    // create RegisterDialog
-    _reg_dlg = new RegisterDialog();
+    // set dialogs's style
+    _reg_dlg->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+    _login_dlg->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
 
     // create and register message link
     connect(_login_dlg, &LoginDialog::switchRegister, this, &MainWindow::SlotSwitchReg);
+
+    // show current dialog(default widget is _login_dlg)
+    _reg_dlg->hide();
+    setCentralWidget(_login_dlg);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
 
-    if(_login_dlg)
-    {
-        delete _login_dlg;
-        _login_dlg = nullptr;
-    }
-
-    if(_reg_dlg)
-    {
-        delete _reg_dlg;
-        _reg_dlg = nullptr;
-    }
+void MainWindow::SlotSwitchReg()
+{
+    setCentralWidget(_reg_dlg);
+    _login_dlg->hide();
+    _reg_dlg->show();
 }
 

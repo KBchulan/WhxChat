@@ -17,7 +17,7 @@ namespace Ui
     class RegisterDialog;
 }
 
-class RegisterDialog : public QDialog
+class RegisterDialog final : public QDialog
 {
     Q_OBJECT
 

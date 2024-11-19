@@ -1,0 +1,19 @@
+QDialog #LoginDialog, #RegisterDialog 
+{
+    background-color: rgb(243, 235, 235);
+}
+
+#user_label, #pass_label
+{
+    color: rgb(0, 0, 0);
+}
+
+#err_tip[state = 'normal']
+{
+    color : rgb(0, 255, 0);
+}
+
+#err_tip[state = 'err']
+{
+    color : rgb(255, 0, 0);
+}
