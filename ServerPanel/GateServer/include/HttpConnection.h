@@ -3,8 +3,10 @@
 
 #include "const.h"
 
+class LogicSystem;
 class HttpConnection final : public std::enable_shared_from_this<HttpConnection>
 {
+    friend class LogicSystem;
 public:
     explicit HttpConnection(boost::asio::ip::tcp::socket socket);
 
@@ -21,18 +23,18 @@ private:
     // 处理请求(header, body)
     void HandleReq();
 
+private:
+    boost::asio::ip::tcp::socket _socket;
+    boost::beast::flat_buffer _buffer{ BUFFER_SIZE };
+    boost::beast::http::request<boost::beast::http::dynamic_body> _request;
+    boost::beast::http::response<boost::beast::http::dynamic_body> _response;
+
     // 所有的定时器都是绑定在底层的事件循环里，需要绑定一个调度器
     boost::asio::steady_timer _deadline
     {
         _socket.get_executor(),
         std::chrono::seconds(60)
     };
-
-private:
-    boost::asio::ip::tcp::socket _socket;
-    boost::beast::flat_buffer _buffer{ BUFFER_SIZE };
-    boost::beast::http::request<boost::beast::http::dynamic_body> _request;
-    boost::beast::http::response<boost::beast::http::dynamic_body> _response;
 };
 
 #endif // !HTTPCONNECTION_H

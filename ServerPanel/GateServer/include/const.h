@@ -7,7 +7,14 @@
 #include <boost/beast/http.hpp>
 
 // cc
+#include <map>
 #include <memory>
+#include <functional>
+
+
+// personal
+#include "Singleton.h"
+
 
 // 常量定义
 static constexpr size_t BUFFER_SIZE = 8192;

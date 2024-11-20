@@ -20,12 +20,21 @@ endif()
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(JSONCPP REQUIRED jsoncpp)
 
-aux_source_directory(${PROJECT_SOURCE_DIR}/src SRC_FILES)
-include_directories(${PROJECT_SOURCE_DIR}/include)
+aux_source_directory(
+    ${PROJECT_SOURCE_DIR}/src
+    SRC_FILES
+)
+include_directories(
+    ${PROJECT_SOURCE_DIR}/include
+)
 
-add_executable(${PROJECT_NAME} ${SRC_FILES})
+add_executable(
+    ${PROJECT_NAME}
+    ${SRC_FILES}
+)
 
-target_link_libraries(${PROJECT_NAME}
+target_link_libraries(
+    ${PROJECT_NAME}
     PRIVATE
     ${JSONCPP_LIBRARIES}
 )

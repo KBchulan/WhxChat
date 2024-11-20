@@ -3,10 +3,10 @@
 
 #include <iostream>
 
-CServer::CServer(boost::asio::io_context &ioc, unsigned short &port) 
+CServer::CServer(boost::asio::io_context &ioc, unsigned short port) 
     : _ioc(ioc), _socket(ioc), _acceptor(ioc, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port))
 {
-
+    std::cout << "GateServer start on port :" << port << '\n';
 }
 
 void CServer::Start()
@@ -24,13 +24,13 @@ void CServer::Start()
             }   
 
             // 创建新连接，并且创建一个httpConnection管理这个连接
-            // may have error
             std::make_shared<HttpConnection>(std::move(self->_socket))->Start();
+
             self->Start();
         }
         catch(const std::exception& e)
         {
             std::cerr << e.what() << '\n';
-        }   
+        }
     });
 }
