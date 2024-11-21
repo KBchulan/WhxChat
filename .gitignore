@@ -1,2 +1,5 @@
 .vscode/
 ServerPanel/GateServer/build/
+test/a.out
+learn/
+QtPanel/build/

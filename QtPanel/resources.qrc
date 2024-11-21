@@ -3,5 +3,6 @@
         <file>resources/icos/MainWindow.ico</file>
         <file>resources/Login/Main.png</file>
         <file>style/stylesheet.qss</file>
+        <file>resources/config.ini</file>
     </qresource>
 </RCC>

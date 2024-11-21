@@ -27,6 +27,9 @@ class HttpManager final : public QObject, public Singleton<HttpManager>, public 
 public:
     ~HttpManager();
 
+    // send http request
+    void PostHttpReq(QUrl url, QJsonObject json, ReqId req_id, Modules mod);
+
 private slots:
     // when http request finished, it will working
     void slot_http_finish(ReqId id, QString res, ErrorCodes err, Modules mod);
@@ -40,9 +43,6 @@ signals:
 
 private:
     HttpManager();
-
-    // send http request
-    void PostHttpReq(QUrl url, QJsonObject json, ReqId req_id, Modules mod);
 
 private:
     QNetworkAccessManager _manager;

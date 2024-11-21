@@ -1,0 +1,2 @@
+cd ../QtPanel/build
+./WhxChat

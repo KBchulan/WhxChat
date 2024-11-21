@@ -1,4 +1,3 @@
-#include "global.h"
 #include "httpmanager.h"
 #include "registerdialog.h"
 #include "ui_registerdialog.h"
@@ -40,6 +39,10 @@ void RegisterDialog::on_get_code_clicked()
     if(match)
     {
         // The Server send http confirm-code
+        QJsonObject json_obj;
+        json_obj["email"] = email;
+        HttpManager::GetInstance()->PostHttpReq(gate_url_prefix + "/get_varifycode", json_obj,
+                                                ReqId::ID_GET_VARIFY_CODE, Modules::REGISTERMOD);
     }
     else
     {
@@ -102,5 +105,6 @@ void RegisterDialog::initHttpHandlers()
         auto email = jsonObj["email"].toString();
         showTip(tr("The varify_code has already sent, please check out it."), true);
         qDebug() << "email is: " << email;
+        qDebug() << "error is: " << error;
     });
 }

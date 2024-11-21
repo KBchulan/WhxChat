@@ -23,6 +23,9 @@ private:
     // 处理请求(header, body)
     void HandleReq();
 
+    // 解析get请求的参数
+    void PreParseGetParam();
+
 private:
     boost::asio::ip::tcp::socket _socket;
     boost::beast::flat_buffer _buffer{ BUFFER_SIZE };
@@ -35,6 +38,10 @@ private:
         _socket.get_executor(),
         std::chrono::seconds(60)
     };
+
+    // get请求：url处理
+    std::string _get_url;
+    std::unordered_map<std::string, std::string> _get_params;
 };
 
 #endif // !HTTPCONNECTION_H
