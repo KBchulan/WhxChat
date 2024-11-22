@@ -10,7 +10,7 @@ QDialog #LoginDialog, #RegisterDialog
 
 #err_tip[state = 'normal']
 {
-    color : rgb(69, 174, 69);
+    color : rgb(85, 196, 85);
 }
 
 #err_tip[state = 'err']

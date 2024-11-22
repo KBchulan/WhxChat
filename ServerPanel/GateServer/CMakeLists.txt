@@ -17,6 +17,12 @@ if(CMAKE_BUILD_TYPE MATCHES "Release")
     endif()
 endif()
 
+set(_PROTOBUF_LIBPROTOBUF protobuf::libprotobuf)
+set(_REFLECTION gRPC::grpc++_reflection)
+
+find_package(Protobuf REQUIRED)
+find_package(gRPC CONFIG REQUIRED)
+
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(JSONCPP REQUIRED jsoncpp)
 
@@ -24,8 +30,19 @@ aux_source_directory(
     ${PROJECT_SOURCE_DIR}/src
     SRC_FILES
 )
+
 include_directories(
     ${PROJECT_SOURCE_DIR}/include
+)
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+file(MAKE_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/config)
+
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/config/config.ini
+    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/config/config.ini
+    COPYONLY
 )
 
 add_executable(
@@ -36,5 +53,12 @@ add_executable(
 target_link_libraries(
     ${PROJECT_NAME}
     PRIVATE
+
+    # gRPC和Protobuf
+    gRPC::grpc++
+    gRPC::grpc++_reflection
+    protobuf::libprotobuf
+    
+    # third party
     ${JSONCPP_LIBRARIES}
 )

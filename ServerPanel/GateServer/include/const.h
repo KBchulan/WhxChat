@@ -12,9 +12,14 @@
 
 // cc
 #include <map>
+#include <mutex>
+#include <atomic>
+#include <thread>
+#include <vector>
 #include <memory>
 #include <functional>
 #include <unordered_map>
+#include <condition_variable>
 
 // personal
 #include "Singleton.h"

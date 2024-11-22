@@ -10,7 +10,7 @@ make -j$(nproc)
 
 if [ $? -eq 0 ]; then
     echo "编译成功,正在启动程序..."
-    ./GateServer
+    ./bin/GateServer
 else
     echo "编译失败!"
     exit 1

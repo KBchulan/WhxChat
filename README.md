@@ -7,3 +7,9 @@
 | 验证服务 | nodejs |
 | 服务器之间通信 | grpc |
 | server与client之间通信 | asio |
+
+## port used
+| service | port |
+|---------|------|
+| GateServer | 14789 |
+| VerifyServer | 50051 |

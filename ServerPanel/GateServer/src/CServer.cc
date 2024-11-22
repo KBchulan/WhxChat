@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-CServer::CServer(boost::asio::io_context &ioc, unsigned short port) 
+CServer::CServer(boost::asio::io_context &ioc, unsigned short port)
     : _ioc(ioc), _socket(ioc), _acceptor(ioc, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port))
 {
     std::cout << "GateServer start on port :" << port << '\n';

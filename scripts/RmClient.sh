@@ -1,0 +1,1 @@
+rm -rf ../QtPanel/build

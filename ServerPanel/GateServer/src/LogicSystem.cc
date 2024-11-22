@@ -1,5 +1,6 @@
 #include "../include/LogicSystem.h"
 #include "../include/HttpConnection.h"
+#include "../include/VerifyGrpcClient.h"
 
 LogicSystem::~LogicSystem()
 {
@@ -45,8 +46,8 @@ LogicSystem::LogicSystem()
         if(src_root.isMember("email"))
         {
             auto email = src_root["email"].asString();
-            std::cout << "email is: " << email << std::endl;
-            dst_root["error"] = 0;
+            GetVarifyRsp rsp = VerifyGrpcClient::GetInstance()->GetVarifyCode(email);
+            dst_root["error"] = rsp.error();
             dst_root["email"] = src_root["email"];
             std::string jsonstr = dst_root.toStyledString();
             boost::beast::ostream(connection->_response.body()) << jsonstr << '\n'; 

@@ -1,2 +1,2 @@
 cd ../ServerPanel/GateServer/build
-./GateServer
+./bin/GateServer
