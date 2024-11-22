@@ -26,6 +26,8 @@ find_package(gRPC CONFIG REQUIRED)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(JSONCPP REQUIRED jsoncpp)
 
+find_package(Boost REQUIRED COMPONENTS filesystem system)
+
 aux_source_directory(
     ${PROJECT_SOURCE_DIR}/src
     SRC_FILES
@@ -37,11 +39,11 @@ include_directories(
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-file(MAKE_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/config)
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/config)
 
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/config/config.ini
-    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/config/config.ini
+    ${CMAKE_BINARY_DIR}/config/config.ini
     COPYONLY
 )
 
@@ -61,4 +63,8 @@ target_link_libraries(
     
     # third party
     ${JSONCPP_LIBRARIES}
+
+    # Boost
+    Boost::filesystem
+    Boost::system
 )

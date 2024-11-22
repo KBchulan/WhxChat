@@ -1,7 +1,12 @@
 #include "../include/CServer.h"
+#include "../include/ConfigManager.h"
 
 int main()
 {
+    ConfigManager gCfgMgr;
+    std::string gate_port_str = gCfgMgr["GateServer"]["port"];
+    unsigned short gate_short = atoi(gate_port_str.c_str());
+
     try
     {
         unsigned short port = static_cast<unsigned short>(14789);

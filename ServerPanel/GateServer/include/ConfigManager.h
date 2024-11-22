@@ -22,6 +22,7 @@ struct SectionInfo
             return *this;
 
         this->_section_datas = other._section_datas;
+        return *this;
     }
 
     std::string operator[](const std::string &key)
@@ -34,18 +35,44 @@ struct SectionInfo
 
     // 三路比较符号，生成大小比较(可能用不上)
     bool operator<=>(const SectionInfo &) const = default;
+
     std::map<std::string, std::string> _section_datas;
 };
 
-class ConfigManager final : public Singleton<ConfigManager>
+class ConfigManager
 {
-    friend class Singleton<ConfigManager>;
-
 public:
-    ~ConfigManager();
+    ~ConfigManager()
+    {
+        _config_map.clear();
+    }
+
+    ConfigManager();
+
+    ConfigManager(const ConfigManager &other)
+    {
+        _config_map = other._config_map;
+    }
+
+    ConfigManager &operator=(const ConfigManager &other)
+    {
+        if (&other == this)
+            return *this;
+
+        this->_config_map = other._config_map;
+        return *this;
+    }
+
+    SectionInfo operator[](const std::string &section)
+    {
+        if (!_config_map.contains(section))
+            return SectionInfo();
+
+        return _config_map[section];
+    }
 
 private:
-    ConfigManager();
+    std::map<std::string, SectionInfo> _config_map;
 };
 
 #endif // !CONFIGMANAGER_H
