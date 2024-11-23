@@ -7,11 +7,15 @@ class LogicSystem;
 class HttpConnection final : public std::enable_shared_from_this<HttpConnection>
 {
     friend class LogicSystem;
+
 public:
-    explicit HttpConnection(boost::asio::ip::tcp::socket socket);
+    explicit HttpConnection(boost::asio::io_context &ioc);
 
     // 开始监听
     void Start();
+
+    // 获取socket
+    boost::asio::ip::tcp::socket &GetSocket();
 
 private:
     // 检测超时

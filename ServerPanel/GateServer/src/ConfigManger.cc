@@ -5,8 +5,6 @@ ConfigManager::ConfigManager()
     boost::filesystem::path current = boost::filesystem::current_path();
     boost::filesystem::path config_path = current / "config" / "config.ini";
 
-    std::cout << config_path << '\n';
-
     boost::property_tree::ptree pt;
     boost::property_tree::read_ini(config_path.string(), pt);
 
@@ -26,12 +24,5 @@ ConfigManager::ConfigManager()
         SectionInfo section_info;
         section_info._section_datas = section_config;
         _config_map[section_name] = section_info;
-    }
-
-    for (const auto &section_pair : _config_map)
-    {
-        std::cout << "[" << section_pair.first << "]" << std::endl;
-        for (const auto &key_value : section_pair.second._section_datas)
-            std::cout << key_value.first << " = " << key_value.second << std::endl;
     }
 }

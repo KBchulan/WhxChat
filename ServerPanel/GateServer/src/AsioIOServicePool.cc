@@ -2,6 +2,8 @@
 
 AsioIOServicePool::~AsioIOServicePool()
 {
+    // 经典RAII
+    Stop();
     std::cout << R"(AsioIOServicePool has been destructed!)" << std::endl;
 }
 
@@ -14,7 +16,7 @@ AsioIOServicePool::AsioIOServicePool(std::size_t size)
             new boost::asio::io_context::work(_ioContexts[i]));
     }
 
-    for (size_t i = 0; i < size; i++)
+    for (size_t i = 0; i < _ioContexts.size(); i++)
     {
         _threads.emplace_back([this, i]()
                               { _ioContexts[i].run(); });
@@ -23,7 +25,12 @@ AsioIOServicePool::AsioIOServicePool(std::size_t size)
 
 boost::asio::io_context &AsioIOServicePool::GetIoContext()
 {
-    auto current = _nextIoContext.fetch_add(1) % _ioContexts.size();
+    std::size_t current = _nextIoContext.fetch_add(1, std::memory_order_relaxed) % _ioContexts.size();
+    
+    std::size_t expected = current + _ioContexts.size();
+    if (expected > (std::numeric_limits<std::size_t>::max() / 2))
+        _nextIoContext.store(0, std::memory_order_relaxed);
+    
     return _ioContexts[current];
 }
 
@@ -31,11 +38,10 @@ void AsioIOServicePool::Stop()
 {
     for (auto &work : _works)
     {
-        work.reset();
+        work->get_io_context().stop();
+        work.reset();    
     }
 
     for (auto &thread : _threads)
-    {
         thread.join();
-    }
 }

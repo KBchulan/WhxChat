@@ -3,8 +3,8 @@
 
 #include <iostream>
 
-HttpConnection::HttpConnection(boost::asio::ip::tcp::socket socket)
-    : _socket(std::move(socket))
+HttpConnection::HttpConnection(boost::asio::io_context &ioc)
+    : _socket(ioc)
 {
     std::cout << R"(HttpManager has been created!)" << '\n';
 }
@@ -208,4 +208,9 @@ void HttpConnection::PreParseGetParam()
             _get_params[key] = value;
         }
     }
+}
+
+boost::asio::ip::tcp::socket &HttpConnection::GetSocket()
+{
+    return _socket;
 }

@@ -16,10 +16,13 @@
 // cc
 #include <map>
 #include <mutex>
+#include <queue>
 #include <atomic>
 #include <thread>
 #include <vector>
 #include <memory>
+#include <iostream>
+#include <stdexcept>
 #include <functional>
 #include <unordered_map>
 #include <condition_variable>
@@ -36,8 +39,5 @@ enum ErrorCodes
     ErrorJson = 1001,
     RPCFailed = 1002,       // 分布式系统中远程过程调用错误
 };
-
-class ConfigManager;
-extern ConfigManager gCfgMgr;
 
 #endif // !CONST_H

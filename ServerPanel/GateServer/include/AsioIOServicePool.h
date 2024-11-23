@@ -6,8 +6,11 @@
 class AsioIOServicePool final : public Singleton<AsioIOServicePool>
 {
     friend class Singleton<AsioIOServicePool>;
+    
 public:
     ~AsioIOServicePool();
+    AsioIOServicePool(const AsioIOServicePool &) = delete;
+    AsioIOServicePool &operator=(const AsioIOServicePool &) = delete;
 
     void Stop();
 

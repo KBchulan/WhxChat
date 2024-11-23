@@ -6,7 +6,7 @@
 
 | 模块 | 技术选型 |
 |------|----------|
-| 客户端界面 | Qt 5.14+ |
+| 客户端界面 | Qt |
 | HTTP网关 | Boost.Beast |
 | 异步服务器 | Boost.Asio |
 | 验证服务 | Node.js |
@@ -38,9 +38,9 @@
 - Boost 1.74+
 - Node.js 12+
 - CMake 3.24+
-- gRPC
+- gRPC 1.34+
 - Redis
-- MySQL
+- MySQL 8.0+
 
 ## 如何使用
 
