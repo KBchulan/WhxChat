@@ -1,8 +1,11 @@
 BUILD_DIR="../QtPanel/build"
-if [ ! -d "$BUILD_DIR" ]; then
-    mkdir "$BUILD_DIR"
+
+if [ -d "$BUILD_DIR" ]; then
+    echo "检测到build文件夹已存在,正在删除"
+    rm -rf "$BUILD_DIR"
 fi
 
+mkdir "$BUILD_DIR"
 cd "$BUILD_DIR"
 
 qmake ../WhxChat.pro -spec linux-g++ CONFIG+=release

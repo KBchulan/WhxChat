@@ -39,14 +39,14 @@
 - Node.js 12+
 - CMake 3.24+
 - gRPC 1.34+
-- Redis
+- Redis hiredis 1.2+
 - MySQL 8.0+
 
 ## 如何使用
 
 ### 1. 克隆仓库
 ```bash
-git clone https://github.com/yourusername/WhxChat.git
+git clone https://github.com/KBchulan/WhxChat.git
 cd WhxChat
 ```
 

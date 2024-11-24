@@ -1,1 +1,0 @@
-rm -rf ../ServerPanel/GateServer/build

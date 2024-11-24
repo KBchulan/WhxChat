@@ -22,11 +22,11 @@ set(_REFLECTION gRPC::grpc++_reflection)
 
 find_package(Protobuf REQUIRED)
 find_package(gRPC CONFIG REQUIRED)
+find_package(Boost REQUIRED COMPONENTS filesystem system)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(JSONCPP REQUIRED jsoncpp)
-
-find_package(Boost REQUIRED COMPONENTS filesystem system)
+pkg_check_modules(HIREDIS REQUIRED hiredis)
 
 aux_source_directory(
     ${PROJECT_SOURCE_DIR}/src
@@ -63,8 +63,7 @@ target_link_libraries(
     
     # third party
     ${JSONCPP_LIBRARIES}
-
-    # Boost
-    Boost::filesystem
-    Boost::system
+    ${HIREDIS_LIBRARIES}
+    ${Boost_FILESYSTEM_LIBRARY}
+    ${Boost_SYSTEM_LIBRARY}
 )

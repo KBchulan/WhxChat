@@ -34,6 +34,7 @@
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
+
 #define PROTOBUF_INTERNAL_EXPORT_message_2eproto
 
 PROTOBUF_NAMESPACE_OPEN

@@ -16,7 +16,7 @@ int main()
                 std::cerr << "Singal receive failed!" << '\n';
                 return 0;
             }
-            ioc.stop(); 
+            ioc.stop();
             return 0;
         });
 

@@ -4,6 +4,7 @@
 // 第三方库
 #include <boost/asio.hpp>
 #include <boost/beast.hpp>
+#include <hiredis/hiredis.h>
 #include <boost/filesystem.hpp>
 #include <boost/beast/http.hpp>
 #include <boost/property_tree/ptree.hpp>
