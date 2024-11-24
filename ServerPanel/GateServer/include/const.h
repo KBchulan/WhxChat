@@ -22,6 +22,7 @@
 #include <thread>
 #include <vector>
 #include <memory>
+#include <cassert>
 #include <iostream>
 #include <stdexcept>
 #include <functional>
