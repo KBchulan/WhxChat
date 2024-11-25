@@ -5,10 +5,10 @@ const emailModule = require('./email');
 const redis_module = require('./redis');
 const { v4: uuidv4 } = require('uuid');
 
-async function GetVarifyCode(call, callback) 
+async function GetVarifyCode(call, callback)
 {
     console.log("email is ", call.request.email)
-    try 
+    try
     {
         let query_res = await redis_module.GetRedis(const_module.code_prefix + call.request.email)
         console.log("query_res is ", query_res)
@@ -67,7 +67,8 @@ async function GetVarifyCode(call, callback)
     }
 }
 
-function main() {
+function main() 
+{
     var server = new grpc.Server()
     server.addService(message_proto.VarifyService.service, { GetVarifyCode: GetVarifyCode })
     server.bindAsync('0.0.0.0:50051', grpc.ServerCredentials.createInsecure(), () => {

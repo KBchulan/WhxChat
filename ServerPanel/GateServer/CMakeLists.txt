@@ -27,6 +27,7 @@ find_package(Boost REQUIRED COMPONENTS filesystem system)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(JSONCPP REQUIRED jsoncpp)
 pkg_check_modules(HIREDIS REQUIRED hiredis)
+pkg_check_modules(MYSQLCLIENT REQUIRED mysqlclient)
 
 aux_source_directory(
     ${PROJECT_SOURCE_DIR}/src
@@ -64,6 +65,7 @@ target_link_libraries(
     # third party
     ${JSONCPP_LIBRARIES}
     ${HIREDIS_LIBRARIES}
-    ${Boost_FILESYSTEM_LIBRARY}
     ${Boost_SYSTEM_LIBRARY}
+    ${MYSQLCLIENT_LIBRARIES}
+    ${Boost_FILESYSTEM_LIBRARY}
 )

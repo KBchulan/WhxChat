@@ -4,7 +4,7 @@ ConfigManager::ConfigManager()
 {
     boost::filesystem::path current = boost::filesystem::current_path();
     boost::filesystem::path config_path = current / "config" / "config.ini";
-
+  
     boost::property_tree::ptree pt;
     boost::property_tree::read_ini(config_path.string(), pt);
 

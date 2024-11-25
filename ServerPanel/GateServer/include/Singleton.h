@@ -6,7 +6,8 @@
 #include <iostream>
 
 template <typename T>
-class Singleton{
+class Singleton
+{
 public:
     ~Singleton()
     {

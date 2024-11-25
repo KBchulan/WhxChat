@@ -12,8 +12,6 @@ let redis_host = config.redis.host;
 let redis_port = config.redis.port;
 let redis_passwd = config.redis.passwd;
 
-let code_prefix = "code_";
-
 module.exports = 
 {
     email_pass,
@@ -26,6 +24,4 @@ module.exports =
     redis_host,
     redis_port,
     redis_passwd,
-
-    code_prefix
 }

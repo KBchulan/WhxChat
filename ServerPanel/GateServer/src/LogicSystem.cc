@@ -85,10 +85,8 @@ LogicSystem::LogicSystem()
             return true;
         }
 
-        auto pwd = src_root["passwd"].asString();
-        auto confirm = src_root["confirm"].asString();
-
-        if(pwd != confirm)
+        // 输入密码和确认是否一样
+        if(src_root["passwd"].asString() != src_root["confirm"].asString())
         {
             std::cerr << "confirm not equal to passwd" << '\n';
             dst_root["error"] = ErrorCodes::PasswdErr;
