@@ -34,6 +34,9 @@ private slots:
     // when httpManager's register module finished, then the registerDialog will working
     void slot_reg_mod_finish(ReqId id, QString res, ErrorCodes err);
 
+    //  when push the sure btn, it will send a http request
+    void on_sure_btn_clicked();
+
 private:
     // show some message(err is red, else green)
     void showTip(QString str, bool b_ok);

@@ -89,7 +89,6 @@ private:
                 _pool->returnRedisConnection(_conn);
         }
 
-        // 禁止拷贝
         ConnectionGuard(const ConnectionGuard &) = delete;
         ConnectionGuard &operator=(const ConnectionGuard &) = delete;
 

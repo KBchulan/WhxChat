@@ -34,12 +34,20 @@
 
 // 常量定义
 static constexpr size_t BUFFER_SIZE = 8192;
+#define CODEPREFIX "code_"
 
 enum ErrorCodes
 {
     Success = 0,
     ErrorJson = 1001,
     RPCFailed = 1002,       // 分布式系统中远程过程调用错误
+    VarifyExpired = 1003,
+    VarifyCodeErr = 1004,
+    UserExist = 1005,
+    PasswdErr = 1006,
+    EmailNotMatch = 1007,
+    PasswdUpFailed = 1008,
+    PasswdInvalid = 1009,
 };
 
 #endif // !CONST_H
