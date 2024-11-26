@@ -2,14 +2,17 @@
 
 LogManager::~LogManager()
 {
-    try
+    if(!_is_shutdown)
     {
-        Flush();
-        spdlog::drop_all();
-    }
-    catch (const std::exception &exc)
-    {
-        std::cerr << "LogManager destruct error!" << exc.what() << '\n';
+        try
+        {
+            Flush();
+            spdlog::shutdown();
+        }
+        catch (const std::exception &exc)
+        {
+            std::cerr << "LogManager destruct error: " << exc.what() << '\n';
+        }
     }
 }
 

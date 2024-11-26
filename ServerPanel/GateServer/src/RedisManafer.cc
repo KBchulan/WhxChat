@@ -1,3 +1,4 @@
+#include "../include/LogManager.h"
 #include "../include/RedisManager.h"
 #include "../include/ConfigManager.h"
 
@@ -21,13 +22,13 @@ RedisConnectPool::RedisConnectPool(std::uint32_t size, std::string host, std::ui
         // auth failed
         if(reply == nullptr)
         {
-            std::cerr << "认证失败" << '\n';
+            LOG_Redis->error("认证失败");
             redisFree(context);
             continue;
         }
         if(reply->type == REDIS_REPLY_ERROR)
         {
-            std::cerr << "认证失败" << '\n';
+            LOG_Redis->error("认证失败");
             redisFree(context);
             freeReplyObject(reply); 
             continue;
@@ -106,20 +107,20 @@ bool RedisManager::Get(const std::string &key, std::string &value)
 
     if(reply == nullptr)
     {
-        std::cerr << "Execute command, [ Get " << key << " ] falied!" << '\n';
+        LOG_Redis->error("Execute command, [ Get {} ] falied!", key);
         return false;
     }
 
     if(reply->type != REDIS_REPLY_STRING)
     {
-        std::cerr << "Execute command, [ Get " << key << " ] falied!" << '\n';
+        LOG_Redis->error("Execute command, [ Get {} ] falied!", key);
         freeReplyObject(reply);
         return false;
     }
 
     value = reply->str;
     freeReplyObject(reply);
-    std::cout << "Execute command, [ Get " << key << " ] success!" << '\n';
+    LOG_Redis->info("Execute command, [ Get {} ] success!", key);
     return true; 
 }
 
@@ -135,19 +136,19 @@ bool RedisManager::Set(const std::string &key, const std::string &value)
 
    if(reply == nullptr)
     {
-        std::cerr << "Execute command [ SET " << key << " " << value << " ] failed!" << '\n';
+        LOG_Redis->error("Execute command [ SET {} {} ] failed!", key, value);
         return false; 
     }
 
     if(!(reply->type == REDIS_REPLY_STATUS && strcasecmp(reply->str, "OK") == 0))
     {
-        std::cerr << "Execute command [ SET " << key << " " << value << " ] failed!" << '\n';
+        LOG_Redis->error("Execute command [ SET {} {} ] failed!", key, value);
         freeReplyObject(reply);
         return false; 
     }
 
     freeReplyObject(reply);
-    std::cout << "Execute command [ SET " << key << " " << value << " ] success!" << '\n';
+    LOG_Redis->info("Execute command [ SET {} {} ] success!", key, value);
     return true;
 }
 
@@ -164,19 +165,19 @@ bool RedisManager::Auth(const std::string &password)
 
     if(reply == nullptr)
     {
-        std::cerr << "Password error" << std::endl;
+        LOG_Redis->error("Password error");
         return false;
     }
 
     if(reply->type == REDIS_REPLY_ERROR)
     {
-        std::cerr << "Password error" << std::endl;
+        LOG_Redis->error("Password error");
         freeReplyObject(reply);
         return false;
     }
 
     freeReplyObject(reply);
-    std::cout << "Password right" << std::endl;
+    LOG_Redis->info("Password right");
     return true;
 }
 
@@ -192,19 +193,19 @@ bool RedisManager::LPush(const std::string &key, const std::string &value)
 
     if(reply == nullptr)
     {
-        std::cerr << "Execute command [ LPUSH " << key << " " << value << " ] failed!" << '\n';
+        LOG_Redis->error("Execute command [ LPUSH {} {} ] failed!", key, value);
         return false;
     }
 
     if(reply->type != REDIS_REPLY_INTEGER || reply->integer <= 0)
     {
-        std::cerr << "Execute command [ LPUSH " << key << " " << value << " ] failed!" << '\n';
+        LOG_Redis->error("Execute command [ LPUSH {} {} ] failed!", key, value);
         freeReplyObject(reply);
         return false;
     }
 
     freeReplyObject(reply);
-    std::cout << "Execute command [ LPUSH " << key << " " << value << " ] success!" << '\n';
+    LOG_Redis->info("Execute command [ LPUSH {} {} ] success!", key, value);
     return true;
 }
 
@@ -220,20 +221,20 @@ bool RedisManager::LPop(const std::string &key, std::string &value)
 
     if(reply == nullptr)
     {
-        std::cerr << "Execute command [ LPOP " << key << " ] failed!" << '\n';
+        LOG_Redis->error("Execute command [ LPOP {} ] failed!", key);
         return false;
     }
 
     if(reply->type != REDIS_REPLY_STRING)
     {
-        std::cerr << "Execute command [ LPOP " << key << " ] failed!" << '\n';
+        LOG_Redis->error("Execute command [ LPOP {} ] failed!", key);
         freeReplyObject(reply);
         return false;
     }
 
     value = reply->str;
     freeReplyObject(reply);
-    std::cout << "Execute command [ LPOP " << key << " ] success!" << '\n';
+    LOG_Redis->info("Execute command [ LPOP {} ] success!", key);
     return true; 
 }
 
@@ -249,19 +250,19 @@ bool RedisManager::RPush(const std::string &key, const std::string &value)
 
     if(reply == nullptr)
     {
-        std::cerr << "Execute command [ RPUSH " << key << " " << value << " ] failed!" << '\n';
+        LOG_Redis->error("Execute command [ RPUSH {} {} ] failed!", key, value);
         return false;
     }
 
     if(reply->type != REDIS_REPLY_INTEGER || reply->integer <= 0)
     {
-        std::cerr << "Execute command [ RPUSH " << key << " " << value << " ] failed!" << '\n';
+        LOG_Redis->error("Execute command [ RPUSH {} {} ] failed!", key, value);
         freeReplyObject(reply);
         return false;
     }
 
     freeReplyObject(reply);
-    std::cout << "Execute command [ RPUSH " << key << " " << value << " ] success!" << '\n';
+    LOG_Redis->info("Execute command [ RPUSH {} {} ] success!", key, value);
     return true;
 }
 
@@ -277,20 +278,20 @@ bool RedisManager::RPop(const std::string &key, std::string &value)
 
     if(reply == nullptr)
     {
-        std::cerr << "Execute command [ RPOP " << key << " ] failed!" << '\n';
+        LOG_Redis->error("Execute command [ RPOP {} ] failed!", key);
         return false;
     }
 
     if(reply->type != REDIS_REPLY_STRING)
     {
-        std::cerr << "Execute command [ RPOP " << key << " ] failed!" << '\n';
+        LOG_Redis->error("Execute command [ RPOP {} ] failed!", key);
         freeReplyObject(reply);
         return false;
     }
 
     value = reply->str;
     freeReplyObject(reply);
-    std::cout << "Execute command [ RPOP " << key << " ] success!" << '\n';
+    LOG_Redis->info("Execute command [ RPOP {} ] success!", key);
     return true;
 }
 
@@ -306,19 +307,19 @@ bool RedisManager::HSet(const std::string &key, const std::string &hkey, const s
 
     if(reply == nullptr)
     {
-        std::cerr << "Execute command [ HSET " << key << " " << hkey << " " << value << " ] failed!" << '\n';
+        LOG_Redis->error("Execute command [ HSET {} {} {} ] failed!", key, hkey, value);
         return false;
     }
 
     if(reply->type != REDIS_REPLY_INTEGER)
     {
-        std::cerr << "Execute command [ HSET " << key << " " << hkey << " " << value << " ] failed!" << '\n';
+        LOG_Redis->error("Execute command [ HSET {} {} {} ] failed!", key, hkey, value);
         freeReplyObject(reply);
         return false;
     }
 
     freeReplyObject(reply);
-    std::cout << "Execute command [ HSET " << key << " " << hkey << " " << value << " ] success!" << '\n';
+    LOG_Redis->info("Execute command [ HSET {} {} {} ] success!", key, hkey, value);
     return true;
 }
 
@@ -345,18 +346,18 @@ bool RedisManager::HSet(const char *key, const char *hkey, const char *hvalue, s
 
     if (reply == nullptr)
     {
-        std::cerr << "Execut command [ HSet " << key << "  " << hkey << "  " << hvalue << " ] failure ! " << std::endl;
+        LOG_Redis->error("Execut command [ HSet {} {} {} ] failure!", key, hkey, hvalue);
         return false;
     }
 
     if (reply->type != REDIS_REPLY_INTEGER)
     {
-        std::cerr << "Execut command [ HSet " << key << "  " << hkey << "  " << hvalue << " ] failure ! " << std::endl;
+        LOG_Redis->error("Execut command [ HSet {} {} {} ] failure!", key, hkey, hvalue);
         freeReplyObject(reply);
         return false;
     }
 
-    std::cout << "Execut command [ HSet " << key << "  " << hkey << "  " << hvalue << " ] success ! " << std::endl;
+    LOG_Redis->info("Execut command [ HSet {} {} {} ] success!", key, hkey, hvalue);
     freeReplyObject(reply);
     return true;
 }
@@ -382,20 +383,20 @@ std::string RedisManager::HGet(const std::string &key, const std::string &hkey)
 
     if (reply == nullptr)
     {
-        std::cerr << "Execut command [ HGet " << key << " " << hkey << "  ] failure ! " << std::endl;
+        LOG_Redis->error("Execut command [ HGet {} {} ] failure!", key, hkey);
         return "";
     }
 
     if (reply->type == REDIS_REPLY_NIL)
     {
         freeReplyObject(reply);
-        std::cerr << "Execut command [ HGet " << key << " " << hkey << "  ] failure ! " << std::endl;
+        LOG_Redis->error("Execut command [ HGet {} {} ] failure!", key, hkey);
         return "";
     }
 
     std::string value = reply->str;
     freeReplyObject(reply);
-    std::cout << "Execut command [ HGet " << key << " " << hkey << " ] success ! " << std::endl;
+    LOG_Redis->info("Execut command [ HGet {} {} ] success!", key, hkey);
     return value;
 }
 
@@ -411,18 +412,18 @@ bool RedisManager::Del(const std::string &key)
 
     if (reply == nullptr)
     {
-        std::cerr << "Execut command [ Del " << key << " ] failure ! " << std::endl;
+        LOG_Redis->error("Execut command [ Del {} ] failure!", key);
         return false;
     }
 
     if (reply->type != REDIS_REPLY_INTEGER)
     {
-        std::cerr << "Execut command [ Del " << key << " ] failure ! " << std::endl;
+        LOG_Redis->error("Execut command [ Del {} ] failure!", key);
         freeReplyObject(reply);
         return false;
     }
 
-    std::cout << "Execut command [ Del " << key << " ] success ! " << std::endl;
+    LOG_Redis->info("Execut command [ Del {} ] success!", key);
     freeReplyObject(reply);
     return true;
 }
@@ -439,18 +440,18 @@ bool RedisManager::ExistsKey(const std::string &key)
 
     if(reply == nullptr)
     {
-        std::cerr << "Not Found [ Key " << key << " ]  ! " << std::endl;
+        LOG_Redis->error("Not Found [ Key {} ]!", key);
         return false;
     }
 
     if(reply->type != REDIS_REPLY_INTEGER || reply->integer == 0)
     {
-        std::cerr << "Not Found [ Key " << key << " ]  ! " << std::endl;
+        LOG_Redis->error("Not Found [ Key {} ]!", key);
         freeReplyObject(reply);
         return false;
     }
     
-    std::cout << " Found [ Key " << key << " ] exists ! " << std::endl;
+    LOG_Redis->info("Found [ Key {} ] exists!", key);
     freeReplyObject(reply);
     return true;
 }
