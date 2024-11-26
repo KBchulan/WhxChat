@@ -1,9 +1,8 @@
-#include "../include/MysqlDao.h"
 #include "../include/MysqlManager.h"
 
 MysqlManager::~MysqlManager()
 {
-
+    
 }
 
 MysqlManager::MysqlManager()

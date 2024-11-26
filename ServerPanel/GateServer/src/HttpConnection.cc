@@ -1,12 +1,11 @@
+#include "../include/LogManager.h"
 #include "../include/LogicSystem.h"
 #include "../include/HttpConnection.h"
-
-#include <iostream>
 
 HttpConnection::HttpConnection(boost::asio::io_context &ioc)
     : _socket(ioc)
 {
-    std::cout << R"(HttpManager has been created!)" << '\n';
+    LOG_HTTP->info("HttpManager has been created!");
 }
 
 void HttpConnection::Start()
@@ -18,7 +17,7 @@ void HttpConnection::Start()
         {
             if(ec)
             {
-                std::cerr << R"(Http read err is: )" << ec.message() << '\n';
+                LOG_HTTP->error("Http read error: {}", ec.message());
                 return;
             }
 
@@ -28,7 +27,7 @@ void HttpConnection::Start()
         }
         catch(const std::exception& e)
         {
-            std::cerr << e.what() << '\n';
+            LOG_HTTP->error("Handle request failed: {}", e.what());
         }
     });
 }
@@ -122,45 +121,57 @@ std::string UrlDecode(const std::string &str)
 
 void HttpConnection::HandleReq()
 {
-    // 设置版本
-    _response.version(_request.version());
-    _response.keep_alive(false);
+    LOG_HTTP->info("收到新的HTTP请求: {} {}",
+                   _request.method_string(),
+                   _request.target().to_string());
 
-    if(_request.method() == boost::beast::http::verb::get)
+    try
     {
-        PreParseGetParam();
-        bool success = LogicSystem::GetInstance()->HandleGet(_get_url, shared_from_this());
-        if(!success)
+        // 设置版本
+        _response.version(_request.version());
+        _response.keep_alive(false);
+
+        if (_request.method() == boost::beast::http::verb::get)
         {
-            _response.result(boost::beast::http::status::not_found);
-            _response.set(boost::beast::http::field::content_type, "text/plain");
-            boost::beast::ostream(_response.body()) << "url not found\r\n";
+            PreParseGetParam();
+            bool success = LogicSystem::GetInstance()->HandleGet(_get_url, shared_from_this());
+            if (!success)
+            {
+                _response.result(boost::beast::http::status::not_found);
+                _response.set(boost::beast::http::field::content_type, "text/plain");
+                boost::beast::ostream(_response.body()) << "url not found\r\n";
+                WriteResponse();
+                return;
+            }
+
+            _response.result(boost::beast::http::status::ok);
+            _response.set(boost::beast::http::field::server, "GateServer");
             WriteResponse();
             return;
         }
 
-        _response.result(boost::beast::http::status::ok);
-        _response.set(boost::beast::http::field::server, "GateServer");
-        WriteResponse();
-        return;
+        if (_request.method() == boost::beast::http::verb::post)
+        {
+            bool success = LogicSystem::GetInstance()->HandlePost(_request.target().to_string(), shared_from_this());
+            if (!success)
+            {
+                _response.result(boost::beast::http::status::not_found);
+                _response.set(boost::beast::http::field::content_type, "text/plain");
+                boost::beast::ostream(_response.body()) << "url not found\r\n";
+                WriteResponse();
+                return;
+            }
+
+            _response.result(boost::beast::http::status::ok);
+            _response.set(boost::beast::http::field::server, "GateServer");
+            WriteResponse();
+            return;
+        }
     }
-
-    if(_request.method() == boost::beast::http::verb::post)
+    catch (const std::exception &e)
     {
-        bool success = LogicSystem::GetInstance()->HandlePost(_request.target().to_string(), shared_from_this());
-        if(!success)
-        {
-            _response.result(boost::beast::http::status::not_found);
-            _response.set(boost::beast::http::field::content_type, "text/plain");
-            boost::beast::ostream(_response.body()) << "url not found\r\n";
-            WriteResponse();
-            return;
-        }
-
-        _response.result(boost::beast::http::status::ok);
-        _response.set(boost::beast::http::field::server, "GateServer");
-        WriteResponse();
-        return;
+        LOG_HTTP->error("处理HTTP请求失败: {}", e.what());
+        _response.result(boost::beast::http::status::internal_server_error);
     }
 }
 

@@ -1,4 +1,5 @@
 #include "../include/MysqlDao.h"
+#include "../include/LogManager.h"
 #include "../include/ConfigManager.h"
 
 SqlConnection::SqlConnection(sql::Connection *con, std::uint64_t lastTime)
@@ -35,7 +36,7 @@ MysqlPool::MysqlPool(const std::string &url, const std::string &user, const std:
     }
     catch (const std::exception &e)
     {
-        std::cerr << "Mysql pool init failed!" << e.what() << '\n';
+        LOG_SQL->error("Mysql pool init failed: {}", e.what());
     }
 }
 
@@ -63,12 +64,11 @@ void MysqlPool::CheckConnection()
             std::unique_ptr<sql::Statement> stmt(con->_con->createStatement());
             stmt->executeQuery("SELECT 1");
             con->_last_oper_time = timeStamp;
-            std::cout << "execute timer alive query, cur is " << std::endl;
+            LOG_SQL->debug("Execute timer alive query successful");
         }
         catch (const std::exception &e)
         {
-            // 检测不到心跳就重新生成一个连接
-            std::cerr << "execute timer alive query, cur is " << e.what() << '\n';
+            LOG_SQL->error("Execute timer alive query failed: {}", e.what());
             sql::mysql::MySQL_Driver *driver = sql::mysql::get_mysql_driver_instance();
             auto *newCon = driver->connect(_url, _user, _passwd);
             newCon->setSchema(_schema);
@@ -141,6 +141,8 @@ MysqlDao::~MysqlDao()
 
 int MysqlDao::RegUser(const std::string &name, const std::string &email, const std::string &passwd)
 {
+    LOG_SQL->debug("注册用户: name={}, email={}", name, email);
+
     auto con = _pool->GetConnection();
 
     Defer defer([this, &con]
@@ -166,16 +168,16 @@ int MysqlDao::RegUser(const std::string &name, const std::string &email, const s
         if (res->next())
         {
             int result = res->getInt("result");
-            std::cout << "Result" << result << '\n';
+            LOG_SQL->debug("Register result: {}", result);
+            LOG_SQL->info("用户注册成功: {}", email);
             return result;
         }
         return -1;
     }
     catch (sql::SQLException& e) 
     {
-		std::cerr << "SQLException: " << e.what();
-		std::cerr << " (MySQL error code: " << e.getErrorCode();
-		std::cerr << ", SQLState: " << e.getSQLState() << " )" << std::endl;
-		return -1;
-	}
+        LOG_SQL->error("SQLException: {} (MySQL error code: {}, SQLState: {})", 
+            e.what(), e.getErrorCode(), e.getSQLState());
+        return -1;
+    }
 }

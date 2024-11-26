@@ -1,3 +1,4 @@
+#include "../include/LogManager.h"
 #include "../include/LogicSystem.h"
 #include "../include/RedisManager.h"
 #include "../include/MysqlManager.h"
@@ -6,7 +7,7 @@
 
 LogicSystem::~LogicSystem()
 {
-    std::cout << "LogicSystem has been destructed!" << '\n';
+    LOG_SERVER->info("LogicSystem has been destructed!");
 }
 
 LogicSystem::LogicSystem()
@@ -27,7 +28,7 @@ LogicSystem::LogicSystem()
     RegPost("/get_varifycode", [](std::shared_ptr<HttpConnection> connection)
     {
         auto body_str = boost::beast::buffers_to_string(connection->_request.body().data());
-        std::cout << "receive body is: " << body_str << '\n';
+        LOG_HTTP->info("Received body: {}", body_str);
 
         connection->_response.set(boost::beast::http::field::content_type, "text/json");
         
@@ -38,7 +39,7 @@ LogicSystem::LogicSystem()
         bool parse_success = reader.parse(body_str, src_root);
         if(!parse_success)
         {
-            std::cerr << "Failed to parse Json data" << '\n';
+            LOG_HTTP->error("Failed to parse Json data");
             dst_root["error"] = ErrorCodes::ErrorJson;
             std::string jsonstr = dst_root.toStyledString();
             boost::beast::ostream(connection->_response.body()) << jsonstr << '\n'; 
@@ -57,7 +58,7 @@ LogicSystem::LogicSystem()
         }
         else
         {
-            std::cout << "Failed to parse Json data" << '\n';
+            LOG_HTTP->error("Failed to parse Json data");
             dst_root["error"] = ErrorCodes::ErrorJson;
             std::string jsonstr = dst_root.toStyledString();
             boost::beast::ostream(connection->_response.body()) << jsonstr; 
@@ -68,7 +69,7 @@ LogicSystem::LogicSystem()
     RegPost("/user_register", [](std::shared_ptr<HttpConnection> connection)
     {
         auto body_str = boost::beast::buffers_to_string(connection->_request.body().data());
-        std::cout << "receive body is: " << body_str << '\n';
+        LOG_HTTP->info("Received body: {}", body_str);
 
         connection->_response.set(boost::beast::http::field::content_type, "text/json");
         
