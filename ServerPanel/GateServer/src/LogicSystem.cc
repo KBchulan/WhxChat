@@ -1,5 +1,6 @@
 #include "../include/LogicSystem.h"
 #include "../include/RedisManager.h"
+#include "../include/MysqlManager.h"
 #include "../include/HttpConnection.h"
 #include "../include/VerifyGrpcClient.h"
 
@@ -119,10 +120,20 @@ LogicSystem::LogicSystem()
         }
         
         // mysql查找user
+        int uid = MysqlManager::GetInstance()->RegUser(src_root["user"].asString(), src_root["email"].asString(), src_root["passwd"].asString());
+        if(uid == 0 || uid == -1)
+        {
+            std::cerr << "user or email exist" << '\n';
+            dst_root["error"] = ErrorCodes::UserExist;
+            std::string jsonstr = dst_root.toStyledString();
+            boost::beast::ostream(connection->_response.body()) << jsonstr; 
+            return true;
+        }
         
         // 回包
         dst_root["error"] = 0;
-        dst_root["email"] = src_root["email"];
+        dst_root["uid"] = uid;
+        dst_root["email"] = src_root["email"].asString();
         dst_root ["user"]= src_root["user"].asString();
         dst_root["passwd"] = src_root["passwd"].asString();
         dst_root["confirm"] = src_root["confirm"].asString();

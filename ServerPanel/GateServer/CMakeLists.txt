@@ -63,6 +63,7 @@ target_link_libraries(
     protobuf::libprotobuf
     
     # third party
+    mysqlcppconn
     ${JSONCPP_LIBRARIES}
     ${HIREDIS_LIBRARIES}
     ${Boost_SYSTEM_LIBRARY}

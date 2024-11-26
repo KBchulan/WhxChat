@@ -30,7 +30,7 @@ public:
     std::unique_ptr<SqlConnection> GetConnection();
 
     // 归还一个数据库连接到连接池
-    void ReturnConnection(const std::unique_ptr<SqlConnection> con);
+    void ReturnConnection(std::unique_ptr<SqlConnection> con);
 
     // 关闭连接池
     void Close();
@@ -71,19 +71,19 @@ public:
     int RegUser(const std::string &name, const std::string &email, const std::string &passwd);
 
     // 使用事务注册用户,包含头像上传,返回错误码
-    int RegUserTransaction(const std::string &name, const std::string &email, const std::string &passwd, const std::string &icon);
+    // int RegUserTransaction(const std::string &name, const std::string &email, const std::string &passwd, const std::string &icon);
     
     // 检查用户名和邮箱是否匹配
-    bool CheckEmail(const std::string &name, const std::string &email);
+    // bool CheckEmail(const std::string &name, const std::string &email);
     
     // 更新用户密码
-    bool UpdatePasswd(const std::string &name, const std::string &newpasswd);
+    // bool UpdatePasswd(const std::string &name, const std::string &newpasswd);
     
     // 验证用户密码,成功则返回用户信息
-    bool CheckPasswd(const std::string &name, const std::string &passwd, UserInfo &userInfo);
+    // bool CheckPasswd(const std::string &name, const std::string &passwd, UserInfo &userInfo);
     
     // 测试存储过程
-    bool TestProcedure(const std::string &email, int &uid, std::string &name);
+    // bool TestProcedure(const std::string &email, int &uid, std::string &name);
 
 private:
     std::unique_ptr<MysqlPool> _pool;

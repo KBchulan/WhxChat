@@ -62,4 +62,19 @@ enum ErrorCodes
     PasswdInvalid = 1009,
 };
 
+// RAII统一实现，仿go语言的defer
+class Defer
+{
+public:
+    Defer(std::function<void()> func) : _func(func) {}
+
+    ~Defer()
+    {
+        _func();
+    }
+
+private:
+    std::function<void()> _func;
+};
+
 #endif // !CONST_H

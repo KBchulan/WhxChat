@@ -1,6 +1,9 @@
 .vscode/
-ServerPanel/GateServer/build/
-learn/
+
+someElse/a.out
+
 QtPanel/build/
 QtPanel/WhxChat.pro.user
+
 ServerPanel/VarifyServer/node_modules/
+ServerPanel/GateServer/build/

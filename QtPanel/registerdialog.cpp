@@ -120,6 +120,7 @@ void RegisterDialog::initHttpHandlers()
         }
 
         auto email = jsonObj["email"].toString();
+        qDebug() << "user uuid is " << jsonObj["uuid"].toString();
         showTip(tr("user register success!"), true);
         qDebug() << "email is: " << email;
     });
