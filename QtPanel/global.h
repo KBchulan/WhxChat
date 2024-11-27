@@ -28,6 +28,8 @@
 // personal header
 #include "QStyle"
 
+extern QString gate_url_prefix;
+
 // functional
 // repolish err_tip(in register_dialog)'s style(in other words, it will repolish qss)
 extern std::function<void(QWidget *)> repolish;
@@ -58,12 +60,15 @@ enum TipErr
     TIP_SUCCESS = 0,            // success
     TIP_EMAIL_ERR = 1,          // not match the regex in register
     TIP_PWD_ERR = 2,            // number, word...
-    TIP_CONFIRM_ERR = 3,        // not equal to the password 
-    TIP_PWD_CONFIRM = 4,        // not match
-    TIP_VARIFY_ERR = 5,         // just check isNull, the rightness will judge by GateServer
-    TIP_USER_ERR = 6            // some name regex
+    TIP_PWD_CONFIRM = 3,        // not match
+    TIP_VARIFY_ERR = 4,         // just check isNull, the rightness will judge by GateServer
+    TIP_USER_ERR = 5,           // some name regex
 };
 
-extern QString gate_url_prefix;
+enum ClickLbState
+{
+    Normal = 0,
+    Selected = 1,
+};
 
 #endif // GLOBAL_H

@@ -50,10 +50,49 @@ RegisterDialog::RegisterDialog(QWidget *parent) :
         CheckVarifyCodeValid();
     });
 
+    ui->pass_visible->setCursor(Qt::PointingHandCursor);
+    ui->confirm_visible->setCursor(Qt::PointingHandCursor);
+
+    ui->pass_visible->SetState("unvisible", "unvisible_hover", "unvisible_hover", "visible", "visible_hover", "visible_hover");
+    ui->confirm_visible->SetState("unvisible", "unvisible_hover", "unvisible_hover", "visible", "visible_hover", "visible_hover");
+
+    connect(ui->pass_visible, &ClickedLabel::sig_clicked, this, [this]()
+    {
+        auto state = ui->pass_visible->GetCurState();
+        if(state == ClickLbState::Normal)
+            ui->pass_edit->setEchoMode(QLineEdit::Password);
+        else
+            ui->pass_edit->setEchoMode(QLineEdit::Normal);
+    });
+
+    connect(ui->confirm_visible, &ClickedLabel::sig_clicked, this, [this]()
+    {
+        auto state = ui->confirm_visible->GetCurState();
+        if(state == ClickLbState::Normal)
+            ui->confirm_edit->setEchoMode(QLineEdit::Password);
+        else
+            ui->confirm_edit->setEchoMode(QLineEdit::Normal);
+    });
+
+    _countdown_timer = new QTimer(this);
+
+    connect(_countdown_timer, &QTimer::timeout, [this]()
+    {
+        if(_countdown == 0)
+        {
+            _countdown_timer->stop();
+            emit sigSwitchLogin();
+            return;
+        }
+        _countdown--;
+        auto str = QString("注册成功，%1 s后返回登录界面").arg(_countdown);
+        ui->tip_lb->setText(str);
+    });
 }
 
 RegisterDialog::~RegisterDialog()
 {
+    qDebug() << "register destruce";
     delete ui;
 }
 
@@ -128,6 +167,7 @@ void RegisterDialog::initHttpHandlers()
         showTip(tr("验证码已发送，请注意查收."), true);
         qDebug() << "email is: " << email;
         qDebug() << "error is: " << error;
+
     });
 
     // register user's handler
@@ -147,6 +187,7 @@ void RegisterDialog::initHttpHandlers()
         qDebug() << "user uuid is " << jsonObj["uuid"].toString();
         showTip(tr("注册成功!"), true);
         qDebug() << "email is: " << email;
+        ChangeTipPage();
     });
 }
 
@@ -216,7 +257,7 @@ bool RegisterDialog::CheckPasswordValid()
         return false;
     }
 
-    DelTipErr(TipErr::TIP_EMAIL_ERR);
+    DelTipErr(TipErr::TIP_PWD_ERR);
     return true;
 }
 
@@ -276,4 +317,23 @@ void RegisterDialog::on_sure_btn_clicked()
 
     HttpManager::GetInstance()->PostHttpReq(QUrl(gate_url_prefix + "/user_register"),
                                             json_obj, ReqId::ID_REG_USER, Modules::REGISTERMOD);
+}
+
+void RegisterDialog::ChangeTipPage()
+{
+    _countdown_timer->stop();
+    ui->stackedWidget->setCurrentWidget(ui->page_2);
+
+    _countdown_timer->start(1000);
+}
+
+void RegisterDialog::on_return_btn_clicked()
+{
+    _countdown_timer->stop();
+    emit sigSwitchLogin();
+}
+
+void RegisterDialog::on_cancel_btn_clicked()
+{
+    emit sigSwitchLogin();
 }

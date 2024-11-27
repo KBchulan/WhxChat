@@ -34,6 +34,9 @@ public slots:
     // handle reg_btn's singal
     void SlotSwitchReg();
 
+    // handle register's return singal
+    void SlotSwitchLogin();
+
 private:
     Ui::MainWindow *ui;
     LoginDialog *_login_dlg;

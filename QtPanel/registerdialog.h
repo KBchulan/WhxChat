@@ -27,6 +27,9 @@ public:
     explicit RegisterDialog(QWidget *parent = nullptr);
     ~RegisterDialog();
 
+signals:
+    void sigSwitchLogin();
+
 private slots:
     // get_code button clicked's callback
     void on_get_code_clicked();
@@ -36,6 +39,14 @@ private slots:
 
     //  when push the sure btn, it will send a http request
     void on_sure_btn_clicked();
+
+    // change two page
+    void ChangeTipPage();
+
+    // page2
+    void on_return_btn_clicked();
+
+    void on_cancel_btn_clicked();
 
 private:
     // show some message(err is red, else green)
@@ -58,7 +69,9 @@ private:
     void DelTipErr(TipErr te);
 
 private:
+    int _countdown{5};
     Ui::RegisterDialog *ui;
+    QTimer *_countdown_timer;
     QMap<TipErr, QString> _tip_errs;
     QMap<ReqId, std::function<void(const QJsonObject &)>> _handlers;
 };

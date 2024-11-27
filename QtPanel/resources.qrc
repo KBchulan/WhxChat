@@ -4,5 +4,9 @@
         <file>resources/Login/Main.png</file>
         <file>style/stylesheet.qss</file>
         <file>resources/config.ini</file>
+        <file>resources/button/unvisible.png</file>
+        <file>resources/button/unvisible_hover.png</file>
+        <file>resources/button/visible.png</file>
+        <file>resources/button/visible_hover.png</file>
     </qresource>
 </RCC>
