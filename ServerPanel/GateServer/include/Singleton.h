@@ -9,7 +9,10 @@ template <typename T>
 class Singleton
 {
 public:
-    ~Singleton() = default;
+    ~Singleton()
+    {
+        std::cout << R"(Singleton basic has been destructed!)" << '\n';
+    }
 
     Singleton(const Singleton &) = delete;
     Singleton &operator=(const Singleton &) = delete;
@@ -22,6 +25,11 @@ public:
             _instance = std::shared_ptr<T>(new T);
         });
         return _instance;
+    }
+
+    void PrintAddress()
+    {
+        std::cout << _instance.get() << '\n';
     }
 
 protected:

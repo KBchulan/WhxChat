@@ -13,7 +13,6 @@
 | 服务间通信 | gRPC |
 | 缓存 | Redis |
 | 数据库 | MySQL |
-| 日志 | spdlog |
 
 #### 1. Qt客户端 (QtPanel)
 - 使用 Qt 5.14+ 开发的跨平台客户端
@@ -25,7 +24,6 @@
 - 使用 Boost.Asio 处理异步网络请求
 - 负责请求的转发和负载均衡
 - 通过 gRPC 与验证服务通信
-- 使用 spdlog 进行日志记录
 
 #### 3. 验证服务 (VerifyServer)
 - 使用 Node.js 开发的验证服务
@@ -43,7 +41,6 @@
 - gRPC 1.34+
 - Redis hiredis 1.2+
 - MySQL 8.0+
-- spdlog 1.10+
 
 ## 如何使用
 

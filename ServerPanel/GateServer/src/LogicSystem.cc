@@ -1,4 +1,3 @@
-#include "../include/LogManager.h"
 #include "../include/LogicSystem.h"
 #include "../include/RedisManager.h"
 #include "../include/MysqlManager.h"
@@ -7,7 +6,7 @@
 
 LogicSystem::~LogicSystem()
 {
-    LOG_SERVER->info("LogicSystem has been destructed!");
+    std::cout << "LogicSystem has been destructed!" << '\n';
 }
 
 LogicSystem::LogicSystem()
@@ -28,7 +27,7 @@ LogicSystem::LogicSystem()
     RegPost("/get_varifycode", [](std::shared_ptr<HttpConnection> connection)
     {
         auto body_str = boost::beast::buffers_to_string(connection->_request.body().data());
-        LOG_HTTP->info("Received body: {}", body_str);
+        std::cout << "receive body is: " << body_str << '\n';
 
         connection->_response.set(boost::beast::http::field::content_type, "text/json");
         
@@ -39,7 +38,7 @@ LogicSystem::LogicSystem()
         bool parse_success = reader.parse(body_str, src_root);
         if(!parse_success)
         {
-            LOG_HTTP->error("Failed to parse Json data");
+            std::cerr << "Failed to parse Json data" << '\n';
             dst_root["error"] = ErrorCodes::ErrorJson;
             std::string jsonstr = dst_root.toStyledString();
             boost::beast::ostream(connection->_response.body()) << jsonstr << '\n'; 
@@ -58,7 +57,7 @@ LogicSystem::LogicSystem()
         }
         else
         {
-            LOG_HTTP->error("Failed to parse Json data");
+            std::cout << "Failed to parse Json data" << '\n';
             dst_root["error"] = ErrorCodes::ErrorJson;
             std::string jsonstr = dst_root.toStyledString();
             boost::beast::ostream(connection->_response.body()) << jsonstr; 
@@ -69,7 +68,7 @@ LogicSystem::LogicSystem()
     RegPost("/user_register", [](std::shared_ptr<HttpConnection> connection)
     {
         auto body_str = boost::beast::buffers_to_string(connection->_request.body().data());
-        LOG_HTTP->info("Received body: {}", body_str);
+        std::cout << "receive body is: " << body_str << '\n';
 
         connection->_response.set(boost::beast::http::field::content_type, "text/json");
         
@@ -80,7 +79,7 @@ LogicSystem::LogicSystem()
         bool parse_success = reader.parse(body_str, src_root);
         if(!parse_success)
         {
-            LOG_HTTP->error("Failed to parse Json data");
+            std::cerr << "Failed to parse Json data" << '\n';
             dst_root["error"] = ErrorCodes::ErrorJson;
             std::string jsonstr = dst_root.toStyledString();
             boost::beast::ostream(connection->_response.body()) << jsonstr; 
@@ -90,7 +89,7 @@ LogicSystem::LogicSystem()
         // 输入密码和确认是否一样
         if(src_root["passwd"].asString() != src_root["confirm"].asString())
         {
-            LOG_HTTP->error("confirm not equal to passwd");
+            std::cerr << "confirm not equal to passwd" << '\n';
             dst_root["error"] = ErrorCodes::PasswdErr;
             std::string jsonstr = dst_root.toStyledString();
             boost::beast::ostream(connection->_response.body()) << jsonstr; 
@@ -103,7 +102,7 @@ LogicSystem::LogicSystem()
         // 验证码过期
         if(!b_get_varify)
         {
-            LOG_HTTP->error("get varify code expired");
+            std::cerr << "get varify code expired" << '\n';
             dst_root["error"] = ErrorCodes::VarifyExpired;
             std::string jsonstr = dst_root.toStyledString();
             boost::beast::ostream(connection->_response.body()) << jsonstr; 
@@ -113,7 +112,7 @@ LogicSystem::LogicSystem()
         // 验证码不匹配
         if(varify_code != src_root["varifycode"].asString())
         {
-            LOG_HTTP->error("varify code error");
+            std::cerr << "varify code error" << '\n';
             dst_root["error"] = ErrorCodes::VarifyCodeErr;
             std::string jsonstr = dst_root.toStyledString();
             boost::beast::ostream(connection->_response.body()) << jsonstr; 
@@ -124,7 +123,7 @@ LogicSystem::LogicSystem()
         int uid = MysqlManager::GetInstance()->RegUser(src_root["user"].asString(), src_root["email"].asString(), src_root["passwd"].asString());
         if(uid == 0 || uid == -1)
         {
-            LOG_HTTP->error("user or email exist");
+            std::cerr << "user or email exist" << '\n';
             dst_root["error"] = ErrorCodes::UserExist;
             std::string jsonstr = dst_root.toStyledString();
             boost::beast::ostream(connection->_response.body()) << jsonstr; 

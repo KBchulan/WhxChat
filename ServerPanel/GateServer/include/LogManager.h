@@ -48,11 +48,12 @@ public:
     {
         static std::once_flag shutdown_flag;
         std::call_once(shutdown_flag, []()
-                       {
+        {
             auto instance = GetInstance();
             instance->Flush();
             spdlog::shutdown();
-            instance->_is_shutdown = true; });
+            instance->_is_shutdown = true; 
+        });
     }
 
     bool IsShutdown() const { return _is_shutdown; }
@@ -66,12 +67,12 @@ private:
 
 private:
     std::string _log_path;
+    bool _is_shutdown{false};
     std::shared_ptr<spdlog::logger> _rpc_logger;
     std::shared_ptr<spdlog::logger> _sql_logger;
     std::shared_ptr<spdlog::logger> _http_logger;
     std::shared_ptr<spdlog::logger> _redis_logger;
     std::shared_ptr<spdlog::logger> _server_logger;
-    bool _is_shutdown{false};
 };
 
 // 定义宏简化日志调用
