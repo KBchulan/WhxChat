@@ -1,7 +1,15 @@
 #include "../include/CServer.h"
-
+#include "../include/LogManager.h"
 int main()
 {
+    if(!LogManager::GetInstance()->Init("../../../logs", LogLevel::DEBUG))
+    {
+        std::cerr << "初始化日志系统失败" << std::endl;
+        return EXIT_FAILURE;
+    }
+
+    LOG_SERVER->info(R"(GateServer start!)");
+
     try
     {
         unsigned short port = static_cast<unsigned short>(14789);
@@ -13,9 +21,17 @@ int main()
         {
             if (error)
             {
-                std::cerr << "Singal receive failed!" << '\n';
+                LOG_SERVER->error(R"({} : {})", __FILE__, "Singal receive failed!");
                 return 0;
             }
+
+            if(!LogManager::GetInstance()->IsShutdown())
+            {
+                LOG_SERVER->info("Shutting down server");
+                LOG_SERVER->flush();
+                LogManager::Shutdown();
+            }
+
             ioc.stop();
             return 0;
         });
@@ -25,7 +41,12 @@ int main()
     }
     catch (const std::exception &e)
     {
-        std::cerr << e.what() << '\n';
+        if(!LogManager::GetInstance()->IsShutdown())
+        {
+            LOG_SERVER->info("Shutting down server");
+            LOG_SERVER->flush();
+            LogManager::Shutdown();
+        }
         return EXIT_FAILURE;
     }
 }

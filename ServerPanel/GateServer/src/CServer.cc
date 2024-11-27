@@ -1,4 +1,5 @@
 #include "../include/CServer.h"
+#include "../include/LogManager.h"
 #include "../include/HttpConnection.h"
 #include "../include/AsioIOServicePool.h"
 
@@ -7,7 +8,7 @@
 CServer::CServer(boost::asio::io_context &ioc, unsigned short port)
     : _ioc(ioc), _acceptor(ioc, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port))
 {
-    std::cout << "GateServer start on port :" << port << '\n';
+    LOG_SERVER->info(R"(GateServer start on port :{})", port);
 }
 
 void CServer::Start()
@@ -33,7 +34,7 @@ void CServer::Start()
         }
         catch(const std::exception& e)
         {
-            std::cerr << e.what() << '\n';
+            LOG_SERVER->error(R"({} : {})", __FILE__, e.what());
         }
     });
 }

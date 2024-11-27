@@ -1,3 +1,4 @@
+#include "../include/LogManager.h"
 #include "../include/LogicSystem.h"
 #include "../include/HttpConnection.h"
 
@@ -5,8 +6,9 @@
 
 HttpConnection::HttpConnection(boost::asio::io_context &ioc)
     : _socket(ioc)
+
 {
-    std::cout << R"(HttpManager has been created!)" << '\n';
+    LOG_HTTP->info(R"(HttpManager has been created!)");
 }
 
 void HttpConnection::Start()
@@ -18,7 +20,7 @@ void HttpConnection::Start()
         {
             if(ec)
             {
-                std::cerr << R"(Http read err is: )" << ec.message() << '\n';
+                LOG_HTTP->error(R"({} : {})", __FILE__, ec.message());
                 return;
             }
 
@@ -28,7 +30,7 @@ void HttpConnection::Start()
         }
         catch(const std::exception& e)
         {
-            std::cerr << e.what() << '\n';
+            LOG_HTTP->error(R"({} : {})", __FILE__, e.what());
         }
     });
 }

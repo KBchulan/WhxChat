@@ -1,10 +1,11 @@
+#include "../include/LogManager.h"
 #include "../include/AsioIOServicePool.h"
 
 AsioIOServicePool::~AsioIOServicePool()
 {
     // 经典RAII
     Stop();
-    std::cout << R"(AsioIOServicePool has been destructed!)" << std::endl;
+    LOG_SERVER->info(R"(AsioIOServicePool has been destructed!)");
 }
 
 AsioIOServicePool::AsioIOServicePool(std::size_t size)

@@ -1,4 +1,5 @@
 #include "../include/MysqlDao.h"
+#include "../include/LogManager.h"
 #include "../include/ConfigManager.h"
 
 SqlConnection::SqlConnection(sql::Connection *con, std::uint64_t lastTime)
@@ -35,7 +36,7 @@ MysqlPool::MysqlPool(const std::string &url, const std::string &user, const std:
     }
     catch (const std::exception &e)
     {
-        std::cerr << "Mysql pool init failed!" << e.what() << '\n';
+        LOG_SQL->error(R"({} : {})", __FILE__, "Mysql pool init failed!");
     }
 }
 
@@ -68,7 +69,7 @@ void MysqlPool::CheckConnection()
         catch (const std::exception &e)
         {
             // 检测不到心跳就重新生成一个连接
-            std::cerr << "execute timer alive query, cur is " << e.what() << '\n';
+            LOG_SQL->error("execute timer alive query, cur is {}", e.what());
             sql::mysql::MySQL_Driver *driver = sql::mysql::get_mysql_driver_instance();
             auto *newCon = driver->connect(_url, _user, _passwd);
             newCon->setSchema(_schema);
@@ -173,9 +174,7 @@ int MysqlDao::RegUser(const std::string &name, const std::string &email, const s
     }
     catch (sql::SQLException& e) 
     {
-		std::cerr << "SQLException: " << e.what();
-		std::cerr << " (MySQL error code: " << e.getErrorCode();
-		std::cerr << ", SQLState: " << e.getSQLState() << " )" << std::endl;
+		LOG_SQL->error("SQLException: {} (MySQL error code: {}, SQLState: {})", e.what(), e.getErrorCode(), e.getSQLState());
 		return -1;
 	}
 }
