@@ -21,7 +21,7 @@ int main()
         {
             if (error)
             {
-                LOG_SERVER->error("Signal receive failed!");
+                std::cerr << "Signal receive failed!" << std::endl;
                 return;
             }
             

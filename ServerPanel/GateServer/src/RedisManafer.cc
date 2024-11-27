@@ -35,7 +35,6 @@ RedisConnectPool::RedisConnectPool(std::uint32_t size, std::string host, std::ui
         }
 
         freeReplyObject(reply);
-        LOG_Redis->info("认证成功");
         _connections.push(std::move(context));
     }
 }
@@ -88,7 +87,6 @@ RedisManager::RedisManager()
     std::string host = gCfgMgr["Redis"]["host"];
     std::string port = gCfgMgr["Redis"]["port"];
     std::string password = gCfgMgr["Redis"]["password"];
-    LOG_Redis->info("Redis host: {}, port: {}, password: {}", host, port, password);
     _con_pool.reset(new RedisConnectPool(std::thread::hardware_concurrency(), host, static_cast<std::uint16_t>(atoi(port.c_str())), password.c_str()));
 }
 

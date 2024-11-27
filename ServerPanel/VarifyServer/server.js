@@ -29,7 +29,7 @@ async function GetVarifyCode(call, callback)
                 callback(null, 
                 {
                     email: call.request.email,
-                    error: const_module.Errors.RedisErr
+                    error: const_module.Errors.RedisError
                 });
                 return;
             }
@@ -53,7 +53,7 @@ async function GetVarifyCode(call, callback)
         callback(null, 
         {
             email: call.request.email,
-            error: const_module.Errors.SUCCESS
+            error: const_module.Errors.Success
         });
     } 
     catch (error)
