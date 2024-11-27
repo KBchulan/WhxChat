@@ -1,3 +1,4 @@
+#include "../include/LogManager.h"
 #include "../include/RedisManager.h"
 #include "../include/ConfigManager.h"
 

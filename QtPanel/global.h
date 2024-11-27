@@ -32,6 +32,9 @@
 // repolish err_tip(in register_dialog)'s style(in other words, it will repolish qss)
 extern std::function<void(QWidget *)> repolish;
 
+// 字符串异或进行加密
+extern std::function<QString(QString)> xorString;
+
 enum ReqId
 {
     ID_GET_VARIFY_CODE = 1001,  // get varify code(in RegisterDialog)
@@ -48,6 +51,17 @@ enum ErrorCodes
     SUCCESS = 0,
     ERR_JSON = 1,               // json parse failed
     ERR_NETWORK = 2,            // all net error
+};
+
+enum TipErr
+{
+    TIP_SUCCESS = 0,            // success
+    TIP_EMAIL_ERR = 1,          // not match the regex in register
+    TIP_PWD_ERR = 2,            // number, word...
+    TIP_CONFIRM_ERR = 3,        // not equal to the password 
+    TIP_PWD_CONFIRM = 4,        // not match
+    TIP_VARIFY_ERR = 5,         // just check isNull, the rightness will judge by GateServer
+    TIP_USER_ERR = 6            // some name regex
 };
 
 extern QString gate_url_prefix;

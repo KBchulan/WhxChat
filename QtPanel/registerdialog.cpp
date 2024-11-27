@@ -21,6 +21,35 @@ RegisterDialog::RegisterDialog(QWidget *parent) :
 
     // init the handlers
     initHttpHandlers();
+
+    // first of all, clear the err_tip.text(), and connect to all condition
+    ui->err_tip->clear();
+
+    connect(ui->user_edit, &QLineEdit::editingFinished, this, [this]()
+    {
+        CheckUserValid();
+    });
+
+    connect(ui->email_edit, &QLineEdit::editingFinished, this, [this]()
+    {
+        CheckEmailValid();
+    });
+
+    connect(ui->pass_edit, &QLineEdit::editingFinished, this, [this]()
+    {
+        CheckPasswordValid();
+    });
+
+    connect(ui->confirm_edit, &QLineEdit::editingFinished, this, [this]()
+    {
+        CheckConfWordValid();
+    });
+
+    connect(ui->varify_edit, &QLineEdit::editingFinished, this, [this]()
+    {
+        CheckVarifyCodeValid();
+    });
+
 }
 
 RegisterDialog::~RegisterDialog()
@@ -31,22 +60,15 @@ RegisterDialog::~RegisterDialog()
 void RegisterDialog::on_get_code_clicked()
 {
     auto email = ui->email_edit->text();
+    bool valid = CheckEmailValid();
 
-    // （nums + letters + specials) + '@' + （nums + letters + specials) + '.' + (at least two letter)
-    QRegularExpression regex(R"([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})");
-    bool match = regex.match(email).hasMatch();
-
-    if(match)
+    if(valid)
     {
         // The Server send http confirm-code
         QJsonObject json_obj;
         json_obj["email"] = email;
         HttpManager::GetInstance()->PostHttpReq(gate_url_prefix + "/get_varifycode", json_obj,
                                                 ReqId::ID_GET_VARIFY_CODE, Modules::REGISTERMOD);
-    }
-    else
-    {
-        showTip(tr("The email-address is error!"), false);
     }
 }
 
@@ -98,12 +120,12 @@ void RegisterDialog::initHttpHandlers()
         int error = jsonObj["error"].toInt();
         if(error != ErrorCodes::SUCCESS)
         {
-            showTip(tr("Paramers error"), false);
+            showTip(tr("参数错误"), false);
             return;
         }
 
         auto email = jsonObj["email"].toString();
-        showTip(tr("The varify_code has already sent, please check out it."), true);
+        showTip(tr("验证码已发送，请注意查收."), true);
         qDebug() << "email is: " << email;
         qDebug() << "error is: " << error;
     });
@@ -113,63 +135,143 @@ void RegisterDialog::initHttpHandlers()
     {
         int error = jsonObj["error"].toInt();
 
+        // 此处可以显示具体原因
         if(error != ErrorCodes::SUCCESS)
         {
-            showTip(tr("params error!"), false);
+            if(error == 1005)
+                showTip(tr("用户已存在!"), false);
             return;
         }
 
         auto email = jsonObj["email"].toString();
         qDebug() << "user uuid is " << jsonObj["uuid"].toString();
-        showTip(tr("user register success!"), true);
+        showTip(tr("注册成功!"), true);
         qDebug() << "email is: " << email;
     });
 }
 
+void RegisterDialog::AddTipErr(TipErr te, QString tips)
+{
+    _tip_errs[te] = tips;
+    showTip(tips, false);
+}
+
+void RegisterDialog::DelTipErr(TipErr te)
+{
+    _tip_errs.remove(te);
+    if(_tip_errs.empty())
+    {
+        ui->err_tip->clear();
+        return;
+    }
+    showTip(_tip_errs.first(), false);
+}
+
+bool RegisterDialog::CheckUserValid()
+{
+    if(ui->user_edit->text() == "")
+    {
+        AddTipErr(TipErr::TIP_USER_ERR, tr("用户名不能为空"));
+        return false;
+    }
+    DelTipErr(TipErr::TIP_USER_ERR);
+    return true;
+}
+
+bool RegisterDialog::CheckEmailValid()
+{
+    auto email = ui->email_edit->text();
+
+    // （nums + letters + specials) + '@' + （nums + letters + specials) + '.' + (at least two letter)
+    QRegularExpression regex(R"([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})");
+    bool match = regex.match(email).hasMatch();
+
+    if(!match)
+    {
+        AddTipErr(TipErr::TIP_EMAIL_ERR, tr("邮箱地址不正确"));
+        return false;
+    }
+
+    DelTipErr(TipErr::TIP_EMAIL_ERR);
+    return true;
+}
+
+bool RegisterDialog::CheckPasswordValid()
+{
+    auto password = ui->pass_edit->text();
+
+    // 先检测长度
+    if(password.length() < 6 || password.length() > 15)
+    {
+        AddTipErr(TipErr::TIP_PWD_ERR, tr("密码长度不准确,应在6~15位"));
+        return false;
+    }
+
+    QRegularExpression regex("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)[A-Za-z\\d!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]{6,15}$");
+    bool match = regex.match(password).hasMatch();
+
+    if(!match)
+    {
+        AddTipErr(TipErr::TIP_PWD_ERR, tr("密码必须包含大小写字母和数字"));
+        return false;
+    }
+
+    DelTipErr(TipErr::TIP_EMAIL_ERR);
+    return true;
+}
+
+bool RegisterDialog::CheckConfWordValid()
+{
+    auto pass = ui->pass_edit->text();
+    auto confirm = ui->confirm_edit->text();
+
+    if(pass != confirm)
+    {
+        AddTipErr(TipErr::TIP_PWD_CONFIRM, tr("两次密码不同"));
+        return false;
+    }
+
+    DelTipErr(TipErr::TIP_PWD_CONFIRM);
+    return true;
+}
+
+bool RegisterDialog::CheckVarifyCodeValid()
+{
+    auto varifyCode = ui->varify_edit->text();
+
+    if(varifyCode.length() == 0)
+    {
+        AddTipErr(TipErr::TIP_VARIFY_ERR, tr("验证码不能为空"));
+        return false;
+    }
+
+    DelTipErr(TipErr::TIP_VARIFY_ERR);
+    return true;
+}
+
 void RegisterDialog::on_sure_btn_clicked()
 {
-    if (ui->user_edit->text() == "")
-    {
-        showTip(tr("用户名不能为空"), false);
+    if (!CheckUserValid())
         return;
-    }
 
-    if (ui->email_edit->text() == "")
-    {
-        showTip(tr("邮箱不能为空"), false);
+    if (!CheckEmailValid())
         return;
-    }
 
-    if (ui->pass_edit->text() == "")
-    {
-        showTip(tr("密码不能为空"), false);
+    if (!CheckPasswordValid())
         return;
-    }
 
-    if (ui->confirm_edit->text() == "")
-    {
-        showTip(tr("确认密码不能为空"), false);
+    if (!CheckConfWordValid())
         return;
-    }
 
-    if (ui->confirm_edit->text() != ui->pass_edit->text())
-    {
-        showTip(tr("密码和确认密码不匹配"), false);
+    if (!CheckVarifyCodeValid())
         return;
-    }
-
-    if (ui->varify_edit->text() == "")
-    {
-        showTip(tr("验证码不能为空"), false);
-        return;
-    }
 
     // 发送http请求注册用户
     QJsonObject json_obj;
     json_obj["user"] = ui->user_edit->text();
     json_obj["email"] = ui->email_edit->text();
-    json_obj["passwd"] = ui->pass_edit->text();
-    json_obj["confirm"] = ui->confirm_edit->text();
+    json_obj["passwd"] = xorString(ui->pass_edit->text());
+    json_obj["confirm"] = xorString(ui->confirm_edit->text());
     json_obj["varifycode"] = ui->varify_edit->text();
 
     HttpManager::GetInstance()->PostHttpReq(QUrl(gate_url_prefix + "/user_register"),

@@ -64,7 +64,7 @@ void MysqlPool::CheckConnection()
             std::unique_ptr<sql::Statement> stmt(con->_con->createStatement());
             stmt->executeQuery("SELECT 1");
             con->_last_oper_time = timeStamp;
-            std::cout << "execute timer alive query, cur is " << std::endl;
+            std::cout << "execute timer alive query, cur is " << con.get()->_last_oper_time << std::endl;
         }
         catch (const std::exception &e)
         {

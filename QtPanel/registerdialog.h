@@ -44,8 +44,22 @@ private:
     // handle httpRequest, in other words, it will init the _handlers
     void initHttpHandlers();
 
+    // check all edit isValid
+    bool CheckUserValid();
+    bool CheckEmailValid();
+    bool CheckPasswordValid();
+    bool CheckConfWordValid();
+    bool CheckVarifyCodeValid();
+
+    // add to tip map
+    void AddTipErr(TipErr te, QString tips);
+
+    // remove from tip map
+    void DelTipErr(TipErr te);
+
 private:
     Ui::RegisterDialog *ui;
+    QMap<TipErr, QString> _tip_errs;
     QMap<ReqId, std::function<void(const QJsonObject &)>> _handlers;
 };
 

@@ -1,5 +1,6 @@
 #include "../include/CServer.h"
 #include "../include/LogManager.h"
+
 int main()
 {
     if(!LogManager::GetInstance()->Init("../../../logs", LogLevel::DEBUG))
