@@ -9,7 +9,10 @@ template <typename T>
 class Singleton
 {
 public:
-    ~Singleton() = default;
+    ~Singleton()
+    {
+        std::cout << "Singleton destructor called \n";
+    }
 
     Singleton(const Singleton &) = delete;
     Singleton &operator=(const Singleton &) = delete;

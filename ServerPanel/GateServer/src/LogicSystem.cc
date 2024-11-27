@@ -98,7 +98,9 @@ LogicSystem::LogicSystem()
         }
 
         std::string varify_code;
+        LOG_HTTP->info("Debug point 1: Before getting verify code from Redis");
         bool b_get_varify = RedisManager::GetInstance()->Get(CODEPREFIX + src_root["email"].asString(), varify_code);
+        LOG_HTTP->info("Debug point 2: After getting verify code from Redis"); 
         
         // 验证码过期
         if(!b_get_varify)
@@ -121,7 +123,9 @@ LogicSystem::LogicSystem()
         }
         
         // mysql查找user
+        LOG_HTTP->info("Debug point 3: Before registering user in MySQL");
         int uid = MysqlManager::GetInstance()->RegUser(src_root["user"].asString(), src_root["email"].asString(), src_root["passwd"].asString());
+        LOG_HTTP->info("Debug point 4: After registering user in MySQL");
         if(uid == 0 || uid == -1)
         {
             LOG_HTTP->error("user or email exist");

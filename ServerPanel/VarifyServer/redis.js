@@ -21,10 +21,10 @@ async function GetRedis(key)
         const result = await RedisCli.get(key)
         if (result === null) 
         {
-            console.log('result:', '<' + result + '>', 'This key cannot be find...')
+            console.log('result:', '<' + result + '>', 'This key cannot be find')
             return null
         }
-        console.log('Result:', '<' + result + '>', 'Get key success!...');
+        console.log('Result:', '<' + result + '>', 'Get key success!');
         return result
     }
     catch (error) 
@@ -41,10 +41,10 @@ async function QueryRedis(key)
         const result = await RedisCli.exists(key)
         if (result === 0) 
         {
-            console.log('result:<', '<' + result + '>', 'This key is null...');
+            console.log('result:<', '<' + result + '>', 'This key is null');
             return null
         }
-        console.log('Result:', '<' + result + '>', 'With this value!...');
+        console.log('Result:', '<' + result + '>', 'With this value!');
         return result
     } 
     catch (error) 
