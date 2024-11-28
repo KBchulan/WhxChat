@@ -41,6 +41,9 @@ signals:
     // register finished,then the register will be done
     void sig_reg_mod_finish(ReqId id, QString res, ErrorCodes err);
 
+    // reset password
+    void sig_reset_mod_finish(ReqId id, QString res, ErrorCodes err);
+
 private:
     HttpManager();
 

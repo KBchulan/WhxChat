@@ -178,3 +178,61 @@ int MysqlDao::RegUser(const std::string &name, const std::string &email, const s
 		return -1;
 	}
 }
+
+bool MysqlDao::CheckEmail(const std::string &name, const std::string &email)
+{
+    auto con = _pool->GetConnection();
+
+    Defer defer([this, &con]
+                { _pool->ReturnConnection(std::move(con)); });
+
+    try
+    {
+        if(con == nullptr)
+            return false;
+
+        std::unique_ptr<sql::PreparedStatement> stmt(con->_con->prepareStatement("SELECT email FROM user WHERE name = ?"));
+        stmt->setString(1, name);
+
+        std::unique_ptr<sql::ResultSet> res(stmt->executeQuery());
+
+        while(res->next())
+        {
+            std::string tmpemail = res->getString("email");
+            if(tmpemail == email)
+                return true;
+        }
+        return false;
+    }
+    catch(sql::SQLException& e)
+    {
+        LOG_SQL->error("SQLException: {} (MySQL error code: {}, SQLState: {})", e.what(), e.getErrorCode(), e.getSQLState());
+        return false;
+    }
+}
+
+bool MysqlDao::UpdatePasswd(const std::string &name, const std::string &newpasswd)
+{
+    auto con = _pool->GetConnection();
+
+    Defer defer([this, &con]
+                { _pool->ReturnConnection(std::move(con)); });
+
+    try
+    {
+        if(con == nullptr)
+            return false;
+
+        std::unique_ptr<sql::PreparedStatement> pstmt(con->_con->prepareStatement("UPDATE user SET passwd = ? WHERE name = ?"));
+        pstmt->setString(1, newpasswd);
+        pstmt->setString(2, name);
+
+        pstmt->executeUpdate();
+        return true;
+    }
+    catch(sql::SQLException& e)
+    {
+        LOG_SQL->error("SQLException: {} (MySQL error code: {}, SQLState: {})", e.what(), e.getErrorCode(), e.getSQLState());
+        return false;
+    }
+}

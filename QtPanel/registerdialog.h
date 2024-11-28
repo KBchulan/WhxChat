@@ -46,6 +46,7 @@ private slots:
     // page2
     void on_return_btn_clicked();
 
+    // cancel btn
     void on_cancel_btn_clicked();
 
 private:

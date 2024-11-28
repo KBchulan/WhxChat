@@ -41,11 +41,16 @@ enum ReqId
 {
     ID_GET_VARIFY_CODE = 1001,  // get varify code(in RegisterDialog)
     ID_REG_USER = 1002,         // register user(in RegisterDialog)
+    ID_RESET_PWD = 1003,        // reset password
+    ID_LOGIN_USER = 1004,       // login user
+    ID_CHAT_SERVER = 1005,      // login chat server
+    ID_CHAT_LOGIN_RSP = 1006,   // when the 1005 be done, the return body
 };
 
 enum Modules
 {
     REGISTERMOD = 0,            // register mod
+    RESETMOD = 1,               // reset password
 };
 
 enum ErrorCodes

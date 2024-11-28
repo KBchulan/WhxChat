@@ -28,10 +28,15 @@ public:
 private:
     Ui::LoginDialog *ui;
 
+public slots:
+    void slot_forget_pwd();
+
 signals:
     // change to register
     void switchRegister();
 
+    // change to resetPwd
+    void switchReset();
 };
 
 #endif // LOGINDIALOG_H

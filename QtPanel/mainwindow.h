@@ -10,6 +10,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "resetdialog.h"
 #include "logindialog.h"
 #include "registerdialog.h"
 
@@ -37,9 +38,16 @@ public slots:
     // handle register's return singal
     void SlotSwitchLogin();
 
+    // from resetDialog
+    void SlotSwitchLogin2();
+
+    // handel reset
+    void SlotSwitchReset();
+
 private:
     Ui::MainWindow *ui;
     LoginDialog *_login_dlg;
+    ResetDialog *_reset_dlg;
     RegisterDialog *_reg_dlg;
 };
 

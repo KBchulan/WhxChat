@@ -143,6 +143,88 @@ LogicSystem::LogicSystem()
         boost::beast::ostream(connection->_response.body()) << jsonstr;
         return true;
     });
+
+    RegPost("/reset_pwd", [](std::shared_ptr<HttpConnection> connection)
+    {
+        auto body_str = boost::beast::buffers_to_string(connection->_request.body().data());
+
+        connection->_response.set(boost::beast::http::field::content_type, "text/json");
+
+        Json::Value root;
+        Json::Reader reader;
+        Json::Value src_root;
+
+        bool parse_success = reader.parse(body_str, src_root);
+
+        if(!parse_success)
+        {
+            LOG_HTTP->error(R"({} : {})", __FILE__, "Failed to parse Json data");
+            root["error"] = ErrorCodes::ErrorJson;
+            std::string jsonstr = root.toStyledString();
+            boost::beast::ostream(connection->_response.body()) << jsonstr;
+            return true;
+        }
+
+        auto name = src_root["user"].asString();
+        auto email = src_root["email"].asString();
+        auto passwd = src_root["passwd"].asString();
+        auto varifycode = src_root["varifycode"].asString();
+
+        // 先查看验证码是否存在
+        std::string varify_code;
+        bool b_get_varify = RedisManager::GetInstance()->Get(CODEPREFIX + email, varify_code);
+
+        if(!b_get_varify)
+        {
+            LOG_HTTP->error(R"({} : {})", __FILE__, "get varify code expired");
+            root["error"] = ErrorCodes::VarifyExpired;
+            std::string jsonstr = root.toStyledString();
+            boost::beast::ostream(connection->_response.body()) << jsonstr;
+            return true;
+        }
+
+        // 验证码不匹配
+        if(varify_code != varifycode)
+        {
+            LOG_HTTP->error(R"({} : {})", __FILE__, "varify code error");
+            root["error"] = ErrorCodes::VarifyCodeErr;
+            std::string jsonstr = root.toStyledString();
+            boost::beast::ostream(connection->_response.body()) << jsonstr;
+            return true;
+        }
+
+        // 查询数据库中用户名和邮箱是否匹配
+        bool email_valid = MysqlManager::GetInstance()->CheckEmail(name, email);
+        if(!email_valid)
+        {
+            LOG_HTTP->error(R"({} : {})", __FILE__, "email not match");
+            root["error"] = ErrorCodes::EmailNotMatch;
+            std::string jsonstr = root.toStyledString();
+            boost::beast::ostream(connection->_response.body()) << jsonstr;
+            return true;
+        }
+
+        // 更新数据库中的密码
+        bool b_update_pwd = MysqlManager::GetInstance()->UpdatePwd(name, passwd);
+        if(!b_update_pwd)
+        {
+            LOG_HTTP->error(R"({} : {})", __FILE__, "update pwd failed");
+            root["error"] = ErrorCodes::PasswdUpFailed;
+            std::string jsonstr = root.toStyledString();
+            boost::beast::ostream(connection->_response.body()) << jsonstr;
+            return true;
+        }
+
+        // 回包
+        root["error"] = 0;
+        root["user"] = name;
+        root["email"] = email;
+        root["passwd"] = passwd;
+        root["varifycode"] = varifycode;
+        std::string jsonstr = root.toStyledString();
+        boost::beast::ostream(connection->_response.body()) << jsonstr;
+        return true;
+    });
 }
 
 void LogicSystem::RegGet(const std::string &url, HttpHandler handler)

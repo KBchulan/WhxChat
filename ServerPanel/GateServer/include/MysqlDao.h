@@ -74,10 +74,10 @@ public:
     // int RegUserTransaction(const std::string &name, const std::string &email, const std::string &passwd, const std::string &icon);
     
     // 检查用户名和邮箱是否匹配
-    // bool CheckEmail(const std::string &name, const std::string &email);
+    bool CheckEmail(const std::string &name, const std::string &email);
     
     // 更新用户密码
-    // bool UpdatePasswd(const std::string &name, const std::string &newpasswd);
+    bool UpdatePasswd(const std::string &name, const std::string &newpasswd);
     
     // 验证用户密码,成功则返回用户信息
     // bool CheckPasswd(const std::string &name, const std::string &passwd, UserInfo &userInfo);

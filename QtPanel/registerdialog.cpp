@@ -12,10 +12,6 @@ RegisterDialog::RegisterDialog(QWidget *parent) :
     ui->pass_edit->setEchoMode(QLineEdit::Password);
     ui->confirm_edit->setEchoMode(QLineEdit::Password);
 
-    // set err_tip's property
-    ui->err_tip->setProperty("state", "normal");
-    repolish(ui->err_tip);
-
     // connect to httpManager module finished signals
     connect(HttpManager::GetInstance().get(), &HttpManager::sig_reg_mod_finish, this, &RegisterDialog::slot_reg_mod_finish);
 
@@ -49,9 +45,6 @@ RegisterDialog::RegisterDialog(QWidget *parent) :
     {
         CheckVarifyCodeValid();
     });
-
-    ui->pass_visible->setCursor(Qt::PointingHandCursor);
-    ui->confirm_visible->setCursor(Qt::PointingHandCursor);
 
     ui->pass_visible->SetState("unvisible", "unvisible_hover", "unvisible_hover", "visible", "visible_hover", "visible_hover");
     ui->confirm_visible->SetState("unvisible", "unvisible_hover", "unvisible_hover", "visible", "visible_hover", "visible_hover");
@@ -115,7 +108,7 @@ void RegisterDialog::slot_reg_mod_finish(ReqId id, QString res, ErrorCodes err)
 {
     if(err != ErrorCodes::SUCCESS)
     {
-        showTip(tr("The net request error"), false);
+        showTip(tr("网络请求错误"), false);
         return;
     }
 
@@ -123,12 +116,12 @@ void RegisterDialog::slot_reg_mod_finish(ReqId id, QString res, ErrorCodes err)
     QJsonDocument jsonDoc = QJsonDocument::fromJson(res.toUtf8());
     if(jsonDoc.isEmpty())
     {
-        showTip(tr("Json parse failed"), false);
+        showTip(tr("Json解析错误"), false);
         return;
     }
     if(!jsonDoc.isObject())
     {
-        showTip(tr("Json parse error"), false);
+        showTip(tr("Json解析失败"), false);
         return;
     }
 
@@ -165,9 +158,6 @@ void RegisterDialog::initHttpHandlers()
 
         auto email = jsonObj["email"].toString();
         showTip(tr("验证码已发送，请注意查收."), true);
-        qDebug() << "email is: " << email;
-        qDebug() << "error is: " << error;
-
     });
 
     // register user's handler
@@ -184,9 +174,7 @@ void RegisterDialog::initHttpHandlers()
         }
 
         auto email = jsonObj["email"].toString();
-        qDebug() << "user uuid is " << jsonObj["uuid"].toString();
         showTip(tr("注册成功!"), true);
-        qDebug() << "email is: " << email;
         ChangeTipPage();
     });
 }
@@ -210,7 +198,7 @@ void RegisterDialog::DelTipErr(TipErr te)
 
 bool RegisterDialog::CheckUserValid()
 {
-    if(ui->user_edit->text() == "")
+    if(ui->user_edit->text().trimmed().isEmpty())
     {
         AddTipErr(TipErr::TIP_USER_ERR, tr("用户名不能为空"));
         return false;
@@ -335,5 +323,6 @@ void RegisterDialog::on_return_btn_clicked()
 
 void RegisterDialog::on_cancel_btn_clicked()
 {
+    _countdown_timer->stop();
     emit sigSwitchLogin();
 }
