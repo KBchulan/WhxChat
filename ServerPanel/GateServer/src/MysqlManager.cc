@@ -25,3 +25,8 @@ bool MysqlManager::UpdatePwd(const std::string &name, const std::string &newpass
 {
     return _dao.UpdatePasswd(name, newpassword);
 }
+
+bool MysqlManager::CheckPwd(const std::string &email, const std::string &pwd, UserInfo &userInfo)
+{
+    return _dao.CheckPasswd(email, pwd, userInfo);
+}

@@ -31,6 +31,9 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    // 添加动画函数
+    void setupEntranceAnimation(QWidget* widget, int duration = 800);
+
 public slots:
     // handle reg_btn's singal
     void SlotSwitchReg();

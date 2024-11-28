@@ -80,7 +80,7 @@ public:
     bool UpdatePasswd(const std::string &name, const std::string &newpasswd);
     
     // 验证用户密码,成功则返回用户信息
-    // bool CheckPasswd(const std::string &name, const std::string &passwd, UserInfo &userInfo);
+    bool CheckPasswd(const std::string &email, const std::string &passwd, UserInfo &userInfo);
     
     // 测试存储过程
     // bool TestProcedure(const std::string &email, int &uid, std::string &name);

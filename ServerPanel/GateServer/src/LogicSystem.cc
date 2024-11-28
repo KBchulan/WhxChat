@@ -3,6 +3,7 @@
 #include "../include/RedisManager.h"
 #include "../include/MysqlManager.h"
 #include "../include/HttpConnection.h"
+#include "../include/StatusGrpcClient.h"
 #include "../include/VerifyGrpcClient.h"
 
 LogicSystem::~LogicSystem()
@@ -147,6 +148,7 @@ LogicSystem::LogicSystem()
     RegPost("/reset_pwd", [](std::shared_ptr<HttpConnection> connection)
     {
         auto body_str = boost::beast::buffers_to_string(connection->_request.body().data());
+        LOG_SERVER->info(R"({} : {})", __FILE__, "receive body is: " + body_str);
 
         connection->_response.set(boost::beast::http::field::content_type, "text/json");
 
@@ -221,6 +223,63 @@ LogicSystem::LogicSystem()
         root["email"] = email;
         root["passwd"] = passwd;
         root["varifycode"] = varifycode;
+        std::string jsonstr = root.toStyledString();
+        boost::beast::ostream(connection->_response.body()) << jsonstr;
+        return true;
+    });
+
+    RegPost("/user_login", [](std::shared_ptr<HttpConnection> connection)
+    {
+        auto body_str = boost::beast::buffers_to_string(connection->_request.body().data());
+        LOG_HTTP->info(R"({} : {})", __FILE__, "receive body is: " + body_str);
+
+        connection->_response.set(boost::beast::http::field::content_type, "text/json");
+
+        Json::Value root;
+        Json::Reader reader;
+        Json::Value src_root;
+
+        bool parse_success = reader.parse(body_str, src_root);
+        if(!parse_success)
+        {
+            LOG_HTTP->error(R"({} : {})", __FILE__, "Failed to parse Json data");
+            root["error"] = ErrorCodes::ErrorJson;
+            std::string jsonstr = root.toStyledString();
+            boost::beast::ostream(connection->_response.body()) << jsonstr;
+            return true;
+        }
+
+        auto email = src_root["email"].asString();
+        auto passwd = src_root["passwd"].asString();
+
+        UserInfo user_info;
+        bool pwd_valid = MysqlManager::GetInstance()->CheckPwd(email, passwd, user_info);
+        if(!pwd_valid)
+        {
+            LOG_HTTP->error(R"({} : {})", __FILE__, "passwd error");
+            root["error"] = ErrorCodes::PasswdInvalid;
+            std::string jsonstr = root.toStyledString();
+            boost::beast::ostream(connection->_response.body()) << jsonstr;
+            return true;
+        }
+        
+        // 状态服务
+        auto reply = StatusGrpcClient::GetInstance()->GetChatServer(user_info._uid);
+        if(reply.error() != 0)
+        {
+            LOG_HTTP->error(R"({} : {})", __FILE__, "Grpc get chat server failed");
+            root["error"] = ErrorCodes::RPCFailed;
+            std::string jsonstr = root.toStyledString();
+            boost::beast::ostream(connection->_response.body()) << jsonstr;
+            return true;
+        }
+
+        root["error"] = 0;
+        root["email"] = email;
+        root["uid"] = user_info._uid;
+        root["token"] = reply.token();
+        root["host"] = reply.host();
+        root["port"] = reply.port();
         std::string jsonstr = root.toStyledString();
         boost::beast::ostream(connection->_response.body()) << jsonstr;
         return true;

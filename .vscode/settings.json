@@ -73,6 +73,7 @@
         "typeindex": "cpp",
         "typeinfo": "cpp",
         "variant": "cpp",
-        "qstyle": "cpp"
+        "qstyle": "cpp",
+        "*.inc": "cpp"
     }
 }

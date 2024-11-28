@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QTimer>
+#include <QPropertyAnimation>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -16,13 +19,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     // show current dialog(default widget is _login_dlg)
     setCentralWidget(_login_dlg);
+    _login_dlg->show();
 
     // create and register message link
     connect(_login_dlg, &LoginDialog::switchRegister, this, &MainWindow::SlotSwitchReg);
 
     // reset password
     connect(_login_dlg, &LoginDialog::switchReset, this, &MainWindow::SlotSwitchReset);
-
 }
 
 MainWindow::~MainWindow()
@@ -38,11 +41,11 @@ void MainWindow::SlotSwitchReg()
     // set dialogs's style
     _reg_dlg->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
 
-    connect(_reg_dlg, &RegisterDialog::sigSwitchLogin, this, &MainWindow::SlotSwitchLogin);
-
     setCentralWidget(_reg_dlg);
     _login_dlg->hide();
     _reg_dlg->show();
+
+    connect(_reg_dlg, &RegisterDialog::sigSwitchLogin, this, &MainWindow::SlotSwitchLogin);
 }
 
 void MainWindow::SlotSwitchLogin()
@@ -92,3 +95,21 @@ void MainWindow::SlotSwitchReset()
     connect(_reset_dlg, &ResetDialog::switchLogin, this, &MainWindow::SlotSwitchLogin2);
 }
 
+void MainWindow::setupEntranceAnimation(QWidget* widget, int duration)
+{
+    if (!widget) return;
+
+    // 创建动画效果
+    QPropertyAnimation *animation = new QPropertyAnimation(widget, "geometry");
+    animation->setDuration(duration);
+    animation->setEasingCurve(QEasingCurve::OutCubic);
+
+    // 设置动画起始和结束位置
+    QRect startGeometry(0, height(), width(), height());
+    QRect endGeometry(0, 0, width(), height());
+    animation->setStartValue(startGeometry);
+    animation->setEndValue(endGeometry);
+
+    // 启动动画，完成后自动删除
+    animation->start(QAbstractAnimation::DeleteWhenStopped);
+}

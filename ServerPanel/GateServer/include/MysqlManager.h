@@ -22,7 +22,7 @@ public:
     bool UpdatePwd(const std::string &name, const std::string &newpassword);
     
     // 验证用户密码是否正确,并返回用户信息
-    // bool CheckPwd(const std::string &email, const std::string &pwd, UserInfo &userInfo);
+    bool CheckPwd(const std::string &email, const std::string &pwd, UserInfo &userInfo);
     
     // 测试存储过程
     // bool TestProcedure(const std::string &email, int &uid, std::string &name);

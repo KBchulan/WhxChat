@@ -48,18 +48,19 @@
 static constexpr size_t BUFFER_SIZE = 8192;
 #define CODEPREFIX "code_"
 
+// 错误码枚举
 enum ErrorCodes
 {
-    Success = 0,
-    ErrorJson = 1001,
-    RPCFailed = 1002,
-    VarifyExpired = 1003,
-    VarifyCodeErr = 1004,
-    UserExist = 1005,
-    PasswdErr = 1006,
-    EmailNotMatch = 1007,
-    PasswdUpFailed = 1008,
-    PasswdInvalid = 1009,
+    Success = 0,            // 成功
+    ErrorJson = 1001,       // JSON解析错误
+    RPCFailed = 1002,       // RPC调用失败
+    VarifyExpired = 1003,   // 验证码过期
+    VarifyCodeErr = 1004,   // 验证码错误
+    UserExist = 1005,       // 用户已存在
+    PasswdErr = 1006,       // 密码错误
+    EmailNotMatch = 1007,   // 邮箱不匹配
+    PasswdUpFailed = 1008,  // 密码更新失败
+    PasswdInvalid = 1009,   // 密码格式无效
 };
 
 // RAII统一实现，仿go语言的defer
@@ -68,10 +69,7 @@ class Defer
 public:
     Defer(std::function<void()> func) : _func(func) {}
 
-    ~Defer()
-    {
-        _func();
-    }
+    ~Defer() {_func();}
 
 private:
     std::function<void()> _func;

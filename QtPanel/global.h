@@ -51,6 +51,7 @@ enum Modules
 {
     REGISTERMOD = 0,            // register mod
     RESETMOD = 1,               // reset password
+    LOGINMOD = 2,               // user login
 };
 
 enum ErrorCodes
@@ -74,6 +75,14 @@ enum ClickLbState
 {
     Normal = 0,
     Selected = 1,
+};
+
+struct ServerInfo
+{
+    int Uid;
+    QString Host;
+    QString Port;
+    QString Token;
 };
 
 #endif // GLOBAL_H
