@@ -25,7 +25,7 @@ private:
 
 private:
     std::vector<std::thread> _threads;
-    std::atomic<std::uint32_t> _nextIoContext;
+    std::atomic<std::uint32_t> _nextIOContext;
     std::vector<boost::asio::io_context> _ioContexts;
     std::vector<std::unique_ptr<boost::asio::io_context::work>> _works;
 
