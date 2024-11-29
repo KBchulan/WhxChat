@@ -9,7 +9,7 @@ int main()
         return EXIT_FAILURE;
     }
 
-    LOG_SERVER->info(R"(GateServer start!)");
+    LOG_SERVER->info(R"(ChatServer start!)");
 
     try
     {
@@ -20,12 +20,27 @@ int main()
 
         signals.async_wait([&pool, &ioc](auto, auto)
         {
+            pool.Stop();
+            ioc.stop();
+
+            if(!LogManager::GetInstance()->IsShutdown())
+            {
+                LOG_SERVER->info("Shutting down server");
+                LOG_SERVER->flush();
+                LogManager::Shutdown();
+            }
         });
 
+        ioc.run();
     }
-    catch(const std::exception& e)
+    catch (const std::exception &e)
     {
-        std::cerr << e.what() << '\n';
+        if (!LogManager::GetInstance()->IsShutdown())
+        {
+            LOG_SERVER->info("Shutting down server");
+            LOG_SERVER->flush();
+            LogManager::Shutdown();
+        }
+        return EXIT_FAILURE;
     }
-    
 }

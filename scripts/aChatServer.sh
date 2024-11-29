@@ -1,0 +1,1 @@
+../ServerPanel/ChatServer/build/bin/ChatServer

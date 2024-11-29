@@ -6,5 +6,6 @@ QtPanel/WhxChat.pro.user
 ServerPanel/VarifyServer/node_modules/
 ServerPanel/GateServer/build/
 ServerPanel/StatusServer/build/
+ServerPanel/ChatServer/build/
 
 logs/
