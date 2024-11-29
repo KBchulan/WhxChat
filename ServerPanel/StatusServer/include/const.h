@@ -8,9 +8,12 @@
 // boost
 #include <boost/asio.hpp>
 #include <boost/beast.hpp>
+#include <boost/uuid/uuid.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/beast/http.hpp>
+#include <boost/uuid/uuid_io.hpp>
 #include <boost/property_tree/ptree.hpp>
+#include <boost/uuid/uuid_generators.hpp>
 #include <boost/property_tree/ini_parser.hpp>
 
 // jsoncpp
@@ -46,7 +49,17 @@
 
 // 常量定义
 static constexpr size_t BUFFER_SIZE = 8192;
-#define CODEPREFIX "code_"
+
+// Redis中用户IP的key前缀
+#define USERIPPREFIX  "uip_"
+// Redis中用户token的key前缀 
+#define USERTOKENPREFIX  "utoken_"
+// Redis中IP计数的key前缀
+#define IPCOUNTPREFIX  "ipcount_"
+// Redis中用户基本信息的key前缀
+#define USER_BASE_INFO "ubaseinfo_"
+// Redis中登录计数的key
+#define LOGIN_COUNT  "logincount"
 
 // 错误码枚举
 enum ErrorCodes
@@ -61,6 +74,8 @@ enum ErrorCodes
     EmailNotMatch = 1007,   // 邮箱不匹配
     PasswdUpFailed = 1008,  // 密码更新失败
     PasswdInvalid = 1009,   // 密码格式无效
+    TokenInvalid = 1010,    // token无效
+    UidInvalid = 1011,      // uid无效
 };
 
 // RAII统一实现，仿go语言的defer

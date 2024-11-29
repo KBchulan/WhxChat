@@ -1,5 +1,5 @@
+#include "../include/LogManager.h"
 #include "../include/StatusGrpcClient.h"
-#include "StatusGrpcClient.h"
 
 StatusConPool::StatusConPool(std::uint32_t size, std::string host, std::string port)
     : _poolSize(size), _host(host), _port(port), _b_stop(false)
@@ -10,6 +10,7 @@ StatusConPool::StatusConPool(std::uint32_t size, std::string host, std::string p
             grpc::InsecureChannelCredentials());
         
         _connections.push(StatusService::NewStub(channel));
+        LOG_SERVER->info("Created connection to StatusServer at {}:{}", host, port);
     }
 }
 
@@ -58,6 +59,8 @@ void StatusConPool::Close()
 
 StatusGrpcClient::StatusGrpcClient()
 {
+    LOG_SERVER->info("Initializing StatusGrpcClient");
+
     auto &gCfgMgr = ConfigManager::GetInstance();
     std::string host = gCfgMgr["StatusServer"]["host"];
     std::string port = gCfgMgr["StatusServer"]["port"];

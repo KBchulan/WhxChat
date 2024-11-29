@@ -118,7 +118,7 @@ void LoginDialog::initHttpHandlers()
     _handlers.insert(ReqId::ID_LOGIN_USER, [this](QJsonObject jsonObj)
     {
         int error = jsonObj["error"].toInt();
-        if(error != ErrorCodes::ERR_NETWORK)
+        if(error != ErrorCodes::SUCCESS)
         {
             showTip("参数错误", false);
             enableBtn(true);
@@ -135,6 +135,8 @@ void LoginDialog::initHttpHandlers()
 
         _uid = si.Uid;
         _token = si.Token;
+
+        qDebug() << "email: " << email << " uid: " << si.Uid << " token: " << si.Token;
 
         emit sig_connect_tcp(si);
     });

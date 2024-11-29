@@ -282,6 +282,7 @@ LogicSystem::LogicSystem()
         root["port"] = reply.port();
         std::string jsonstr = root.toStyledString();
         boost::beast::ostream(connection->_response.body()) << jsonstr;
+        LOG_HTTP->info(R"({} : {})", __FILE__, "send response: " + jsonstr);
         return true;
     });
 }
