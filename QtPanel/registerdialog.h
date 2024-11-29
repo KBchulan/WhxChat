@@ -11,6 +11,7 @@
 #define REGISTERDIALOG_H
 
 #include "global.h"
+#include "particleeffect.h"
 
 #include <QDialog>
 
@@ -69,12 +70,20 @@ private:
     // remove from tip map
     void DelTipErr(TipErr te);
 
+    // 动画
+    void addRandomParticle();
+    void initParticleEffect();
+
 private:
     int _countdown{5};
     Ui::RegisterDialog *ui;
     QTimer *_countdown_timer;
     QMap<TipErr, QString> _tip_errs;
     QMap<ReqId, std::function<void(const QJsonObject &)>> _handlers;
+
+    // 动画元素
+    QTimer *m_particleTimer;
+    ParticleEffect *m_particleEffect;
 };
 
 #endif // REGISTERDIALOG_H

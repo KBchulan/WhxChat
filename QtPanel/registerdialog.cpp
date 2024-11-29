@@ -2,6 +2,8 @@
 #include "registerdialog.h"
 #include "ui_registerdialog.h"
 
+#include <QtMath>
+
 RegisterDialog::RegisterDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::RegisterDialog)
@@ -81,12 +83,99 @@ RegisterDialog::RegisterDialog(QWidget *parent) :
         auto str = QString("注册成功，%1 s后返回登录界面").arg(_countdown);
         ui->tip_lb->setText(str);
     });
+
+    initParticleEffect();
 }
 
 RegisterDialog::~RegisterDialog()
 {
     qDebug() << "register destruce";
     delete ui;
+}
+
+void RegisterDialog::initParticleEffect()
+{
+    // 创建粒子效果
+    m_particleEffect = new ParticleEffect(this);
+    m_particleEffect->resize(size());
+    m_particleEffect->lower();
+
+    // 创建定时器以定期添加新粒子
+    m_particleTimer = new QTimer(this);
+    connect(m_particleTimer, &QTimer::timeout, this, &RegisterDialog::addRandomParticle);
+    m_particleTimer->start(1000);
+
+    std::uint16_t particleCount = (qrand() % 4);
+    
+    for (std::uint16_t i = 0; i < particleCount; i++)
+        addRandomParticle();
+
+    m_particleEffect->start();
+}
+
+void RegisterDialog::addRandomParticle()
+{
+    // 随机决定这次添加多少个粒子(2-5个)
+    int particleCount = 2 + (qrand() % 4);
+
+    for (int i = 0; i < particleCount; ++i)
+    {
+        int edge = qrand() % 4;
+        int x = 0, y = 0;
+
+        switch (edge)
+        {
+        case 0:
+            x = qrand() % width();
+            y = -10;
+            break;
+        case 1:
+            x = width() + 10;
+            y = qrand() % height();
+            break;
+        case 2:
+            x = qrand() % width();
+            y = height() + 10;
+            break;
+        case 3:
+            x = -10;
+            y = qrand() % height();
+            break;
+        }
+
+        qreal size = 5 + (qrand() % 15);
+
+        QColor color;
+        switch (qrand() % 3)
+        {
+        case 0:
+            color = QColor(100 + qrand() % 50, 150 + qrand() % 50, 255, 150);
+            break;
+        case 1:
+            color = QColor(150 + qrand() % 50, 100 + qrand() % 50, 255, 150);
+            break;
+        case 2:
+            color = QColor(100 + qrand() % 50, 255, 200 + qrand() % 55, 150);
+            break;
+        }
+
+        // 随机形状
+        ParticleEffect::ShapeType shape = static_cast<ParticleEffect::ShapeType>(qrand() % 5);
+
+        // 计算向中心的速度方向
+        QPointF center(width() / 2, height() / 2);
+        QPointF pos(x, y);
+        QPointF direction = center - pos;
+        qreal length = qSqrt(direction.x() * direction.x() + direction.y() * direction.y());
+        if (length > 0)
+            direction /= length;
+
+        // 添加一个随机偏移量使运动更自然
+        direction.rx() += (qrand() % 100 - 50) / 100.0;
+        direction.ry() += (qrand() % 100 - 50) / 100.0;
+
+        m_particleEffect->addParticle(pos, shape, size, qrand() % 360, color, direction);
+    }
 }
 
 void RegisterDialog::on_get_code_clicked()

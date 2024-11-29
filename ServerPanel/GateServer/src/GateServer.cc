@@ -1,5 +1,6 @@
 #include "../include/CServer.h"
 #include "../include/LogManager.h"
+#include "../include/ConfigManager.h"
 
 int main()
 {
@@ -13,7 +14,7 @@ int main()
 
     try
     {
-        unsigned short port = static_cast<unsigned short>(14789);
+        unsigned short port = static_cast<unsigned short>(atoi(ConfigManager::GetInstance()["GateServer"]["port"].c_str()));
         boost::asio::io_context ioc;
 
         boost::asio::signal_set signals(ioc, SIGINT, SIGTERM);

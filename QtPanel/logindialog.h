@@ -53,7 +53,7 @@ private:
     // 网络请求
     void initHttpHandlers();
 
-    // 动画私有方法
+    // 动画
     void addRandomParticle();
     void initParticleEffect();
 
@@ -73,6 +73,12 @@ private:
 public slots:
     // 处理忘记密码的槽函数
     void slot_forget_pwd();
+
+    // tcp success
+    void slot_tcp_con_finished(bool success);
+
+    // tcp failed
+    void slot_login_failed(int);
 
 signals:
     // change to register

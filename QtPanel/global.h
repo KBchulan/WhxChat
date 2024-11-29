@@ -12,10 +12,12 @@
 
 // qt
 #include <QDir>
+#include <QObject>
 #include <QWidget>
 #include <QSettings>
 #include <QByteArray>
 #include <QJsonObject>
+#include <QJsonDocument>
 #include <QNetworkReply>
 #include <QRegularExpression>
 
@@ -43,7 +45,7 @@ enum ReqId
     ID_REG_USER = 1002,         // register user(in RegisterDialog)
     ID_RESET_PWD = 1003,        // reset password
     ID_LOGIN_USER = 1004,       // login user
-    ID_CHAT_SERVER = 1005,      // login chat server
+    ID_CHAT_LOGIN = 1005,       // login chat server
     ID_CHAT_LOGIN_RSP = 1006,   // when the 1005 be done, the return body
 };
 
@@ -77,6 +79,7 @@ enum ClickLbState
     Selected = 1,
 };
 
+// 将自己的信息通过网关服务器拿到聊天服务器
 struct ServerInfo
 {
     int Uid;

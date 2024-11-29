@@ -2,6 +2,7 @@
 #define RESETDIALOG_H
 
 #include "global.h"
+#include "particleeffect.h"
 
 #include <QDialog>
 
@@ -43,10 +44,18 @@ private:
     // 初始化处理器
     void initHandlers();
 
+    // 动画
+    void addRandomParticle();
+    void initParticleEffect();
+
 private:
     Ui::ResetDialog *ui;
     QMap<TipErr, QString> _tip_errs;
     QMap<ReqId, std::function<void(const QJsonObject&)>> _handlers;
+
+    // 动画元素
+    QTimer *m_particleTimer;
+    ParticleEffect *m_particleEffect;
 
 private slots:
     // 返回按钮点击事件
