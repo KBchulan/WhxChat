@@ -68,7 +68,8 @@ void LoginDialog::initParticleEffect()
     connect(m_particleTimer, &QTimer::timeout, this, &LoginDialog::addRandomParticle);
     m_particleTimer->start(1000);
 
-    for (std::uint16_t i = 0; i < 5; i++)
+    std::uint16_t particleCount = (qrand() % 4);
+    for (std::uint16_t i = 0; i < particleCount; i++)
         addRandomParticle();
 
     m_particleEffect->start();
@@ -172,13 +173,10 @@ void LoginDialog::initHead()
 void LoginDialog::showTip(QString str, bool b_ok)
 {
     if(b_ok)
-    {
         ui->err_tip->setProperty("state", "normal");
-    }
     else
-    {
         ui->err_tip->setProperty("state", "err");
-    }
+        
     ui->err_tip->setText(str);
     repolish(ui->err_tip);
 }
