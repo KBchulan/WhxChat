@@ -176,6 +176,25 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="ClickedLabel" name="pass_visible">
+         <property name="minimumSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
      <item>

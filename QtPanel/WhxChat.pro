@@ -22,6 +22,7 @@ SOURCES += \
     logindialog.cpp \
     main.cpp \
     mainwindow.cpp \
+    particleeffect.cpp \
     registerdialog.cpp \
     resetdialog.cpp \
     timerbtn.cpp
@@ -32,6 +33,7 @@ HEADERS += \
     httpmanager.h \
     logindialog.h \
     mainwindow.h \
+    particleeffect.h \
     registerdialog.h \
     resetdialog.h \
     singleton.h \

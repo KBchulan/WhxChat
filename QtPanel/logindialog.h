@@ -11,6 +11,7 @@
 #define LOGINDIALOG_H
 
 #include "global.h"
+#include "particleeffect.h"
 
 #include <QDialog>
 
@@ -52,6 +53,10 @@ private:
     // 网络请求
     void initHttpHandlers();
 
+    // 动画私有方法
+    void addRandomParticle();
+    void initParticleEffect();
+
 private:
     Ui::LoginDialog *ui;
     QMap<TipErr, QString> _tip_errs;
@@ -60,6 +65,10 @@ private:
     // 后续统一管理
     int _uid;
     QString _token;
+
+    // 动画元素
+    QTimer *m_particleTimer;
+    ParticleEffect *m_particleEffect;
 
 public slots:
     // 处理忘记密码的槽函数

@@ -229,6 +229,25 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="ClickedLabel" name="pass_visible">
+        <property name="minimumSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -309,6 +328,11 @@
    <class>TimerBtn</class>
    <extends>QPushButton</extends>
    <header location="global">timerbtn.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ClickedLabel</class>
+   <extends>QLabel</extends>
+   <header>clickedlabel.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

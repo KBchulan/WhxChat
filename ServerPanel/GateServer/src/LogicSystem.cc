@@ -224,6 +224,7 @@ LogicSystem::LogicSystem()
         root["passwd"] = passwd;
         root["varifycode"] = varifycode;
         std::string jsonstr = root.toStyledString();
+        LOG_HTTP->info(R"({} : {})", __FILE__, "send response: " + jsonstr);
         boost::beast::ostream(connection->_response.body()) << jsonstr;
         return true;
     });

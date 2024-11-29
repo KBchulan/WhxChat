@@ -27,6 +27,20 @@ ResetDialog::ResetDialog(QWidget *parent) : QDialog(parent),
     initHandlers();
     connect(HttpManager::GetInstance().get(), &HttpManager::sig_reset_mod_finish, this,
             &ResetDialog::slot_reset_mod_finish);
+    
+    // 设置密码是否可见
+    ui->pwd_edit->setEchoMode(QLineEdit::Password);
+    ui->pass_visible->SetState("unvisible", "unvisible_hover", "unvisible_hover", "visible", "visible_hover", "visible_hover");
+
+    // 设置密码样式
+    connect(ui->pass_visible, &ClickedLabel::sig_clicked, this, [this]
+    {
+        auto state = ui->pass_visible->GetCurState();
+        if(state == ClickLbState::Normal)
+            ui->pwd_edit->setEchoMode(QLineEdit::Password);
+        else
+            ui->pwd_edit->setEchoMode(QLineEdit::Normal);
+    });
 }
 
 ResetDialog::~ResetDialog()

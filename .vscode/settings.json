@@ -74,6 +74,13 @@
         "typeinfo": "cpp",
         "variant": "cpp",
         "qstyle": "cpp",
-        "*.inc": "cpp"
+        "*.inc": "cpp",
+        "qcolor": "cpp",
+        "qpointf": "cpp",
+        "qwidget": "cpp",
+        "qtimer": "cpp",
+        "qvector": "cpp",
+        "*.ipp": "cpp",
+        "qpainter": "cpp"
     }
 }
