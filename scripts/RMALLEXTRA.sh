@@ -3,14 +3,14 @@ if [ -d "../QtPanel/build" ]; then
     rm -rf ../QtPanel/build
 fi
 
+if [ -d "../ServerPanel/ChatServer/build" ]; then
+    echo "正在删除 ../ServerPanel/ChatServer/build ..."
+    rm -rf ../ServerPanel/ChatServer/build
+fi
+
 if [ -d "../ServerPanel/GateServer/build" ]; then
     echo "正在删除 ../ServerPanel/GateServer/build ..."
     rm -rf ../ServerPanel/GateServer/build
-fi
-
-if [ -d "../ServerPanel/ChatServer" ]; then
-    echo "正在删除 ../ServerPanel/ChatServer ..."
-    rm -rf ../ServerPanel/ChatServer
 fi
 
 if [ -d "../ServerPanel/StatusServer/build" ]; then
@@ -18,8 +18,8 @@ if [ -d "../ServerPanel/StatusServer/build" ]; then
     rm -rf ../ServerPanel/StatusServer/build
 fi
 
-if [ -d "../ServerPanel/VarifyServer/node" ]; then
-    echo "正在删除 ../ServerPanel/VarifyServer/node ..."
+if [ -d "../ServerPanel/VarifyServer/node_modules" ]; then
+    echo "正在删除 ../ServerPanel/VarifyServer/node_modules ..."
     rm -rf ../ServerPanel/VarifyServer/node_modules
 fi
 
