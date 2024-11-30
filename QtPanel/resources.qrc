@@ -24,5 +24,8 @@
         <file>resources/Chat/mid/add_friend.png</file>
         <file>resources/Chat/mid/add_friend_hover.png</file>
         <file>resources/Chat/mid/add_friend_normal.png</file>
+        <file>resources/Chat/mid/search.png</file>
+        <file>resources/Chat/mid/close_search.png</file>
+        <file>resources/Chat/mid/close_transparent.png</file>
     </qresource>
 </RCC>

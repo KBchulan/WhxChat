@@ -87,3 +87,14 @@ LoginDialog, RegisterDialog, ResetDialog
 {
     border-image: url(:resources/Chat/mid/add_friend_hover.png);
 }
+
+#search_widget
+{
+    background-color: rgb(232, 244, 246);
+    border-radius: 15px;
+}
+
+#search_edit
+{
+    border: 2px solid #f1f1f1;
+}

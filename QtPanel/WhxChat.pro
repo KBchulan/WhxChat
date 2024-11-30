@@ -17,8 +17,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     chatdialog.cpp \
+    chatuserlist.cpp \
     clickedbtn.cpp \
     clickedlabel.cpp \
+    customizeedit.cpp \
     global.cpp \
     httpmanager.cpp \
     logindialog.cpp \
@@ -33,8 +35,10 @@ SOURCES += \
 
 HEADERS += \
     chatdialog.h \
+    chatuserlist.h \
     clickedbtn.h \
     clickedlabel.h \
+    customizeedit.h \
     global.h \
     httpmanager.h \
     logindialog.h \

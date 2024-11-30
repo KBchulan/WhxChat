@@ -34,7 +34,7 @@ struct Particle {
     qreal maxLife;      // 最大生命值
 };
 
-class ParticleEffect : public QWidget {
+class ParticleEffect final : public QWidget {
     Q_OBJECT
     
 public:

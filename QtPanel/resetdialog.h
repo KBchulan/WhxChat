@@ -20,7 +20,7 @@ namespace Ui
     class ResetDialog;
 }
 
-class ResetDialog : public QDialog
+class ResetDialog final : public QDialog
 {
     Q_OBJECT
 

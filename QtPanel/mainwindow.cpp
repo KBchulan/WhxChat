@@ -25,11 +25,14 @@ MainWindow::MainWindow(QWidget *parent)
     // create and register message link
     connect(_login_dlg, &LoginDialog::switchRegister, this, &MainWindow::SlotSwitchReg);
 
-    // reset password
+    // reset password从
     connect(_login_dlg, &LoginDialog::switchReset, this, &MainWindow::SlotSwitchReset);
 
     // to chat
     connect(TcpManager::GetInstance().get(), &TcpManager::sig_switch_chatdialog, this, &MainWindow::SlotSwitchChat);
+
+    // 仅用于测试
+    emit TcpManager::GetInstance()->sig_switch_chatdialog();
 }
 
 MainWindow::~MainWindow()

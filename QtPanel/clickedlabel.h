@@ -14,12 +14,12 @@
 
 #include "global.h"
 
-class ClickedLabel : public QLabel
+class ClickedLabel final : public QLabel
 {
     Q_OBJECT
 
 public:
-    ClickedLabel(QWidget *parent = nullptr);
+    explicit ClickedLabel(QWidget *parent = nullptr);
 
     virtual void mousePressEvent(QMouseEvent *ev) override;
 

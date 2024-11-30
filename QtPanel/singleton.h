@@ -13,7 +13,8 @@
 #include "global.h"
 
 template <typename T>
-class Singleton{
+class Singleton
+{
 public:
     ~Singleton()
     {
@@ -43,7 +44,6 @@ protected:
 
 private:
     inline static std::shared_ptr<T> _instance = nullptr;
-
 };
 
 #endif // SINGLETON_H

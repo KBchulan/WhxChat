@@ -63,13 +63,13 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <property name="leftMargin">
-       <number>15</number>
+       <number>10</number>
       </property>
       <property name="topMargin">
        <number>20</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>10</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -121,13 +121,13 @@
           <widget class="QLabel" name="side_chat_label">
            <property name="minimumSize">
             <size>
-             <width>40</width>
+             <width>50</width>
              <height>40</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>40</width>
+             <width>50</width>
              <height>40</height>
             </size>
            </property>
@@ -140,13 +140,13 @@
           <widget class="QLabel" name="side_contact_label">
            <property name="minimumSize">
             <size>
-             <width>40</width>
+             <width>50</width>
              <height>40</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>40</width>
+             <width>50</width>
              <height>40</height>
             </size>
            </property>
@@ -229,7 +229,7 @@
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <widget class="QLineEdit" name="search_edit"/>
+          <widget class="CustomizeEdit" name="search_edit"/>
          </item>
          <item>
           <spacer name="horizontalSpacer">
@@ -275,6 +275,9 @@
       <item>
        <widget class="QListWidget" name="search_list"/>
       </item>
+      <item>
+       <widget class="QListWidget" name="con_user_list"/>
+      </item>
      </layout>
     </widget>
    </item>
@@ -292,7 +295,7 @@
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>60</height>
+          <height>70</height>
          </size>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -301,16 +304,32 @@
            <property name="maximumSize">
             <size>
              <width>16777215</width>
-             <height>60</height>
+             <height>70</height>
             </size>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <spacer name="horizontalSpacer_8">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
             <item>
              <widget class="QLabel" name="title_label">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
-                <height>60</height>
+                <height>70</height>
                </size>
               </property>
               <property name="text">
@@ -583,6 +602,11 @@
    <class>ClickedBtn</class>
    <extends>QPushButton</extends>
    <header location="global">clickedbtn.h</header>
+  </customwidget>
+  <customwidget>
+   <class>CustomizeEdit</class>
+   <extends>QLineEdit</extends>
+   <header location="global">customizeedit.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
