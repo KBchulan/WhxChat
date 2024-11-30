@@ -41,11 +41,11 @@ std::string generate_unique_string()
 
 Status StatusServiceImpl::GetChatServer(ServerContext *context, const GetChatServerReq *request, GetChatServerRsp *reply)
 {
-    LOG_SERVER->info("Received GetChatServer request from uid: {}", request->uid());
+    LOG_RPC->info("Received GetChatServer request from uid: {}", request->uid());
 
     const auto &server = getChatServer();
     
-    LOG_SERVER->info("Selected chat server: {} with host: {} and port: {}", server.name, server.host, server.port);
+    LOG_RPC->info("Selected chat server: {} with host: {} and port: {}", server.name, server.host, server.port);
 
     reply->set_host(server.host);
     reply->set_port(server.port);
@@ -53,7 +53,7 @@ Status StatusServiceImpl::GetChatServer(ServerContext *context, const GetChatSer
     reply->set_token(generate_unique_string());
     insertToken(request->uid(), reply->token());
 
-    LOG_SERVER->info("Generated token: {} for uid: {}", reply->token(), request->uid());
+    LOG_RPC->info("Generated token: {} for uid: {}", reply->token(), request->uid());
 
     return Status::OK;
 }
@@ -63,20 +63,22 @@ Status StatusServiceImpl::Login(ServerContext *context, const LoginReq *request,
     auto uid = request->uid();
 	auto token = request->token();
 
-	std::string uid_str = std::to_string(uid);
-	std::string token_key = USERTOKENPREFIX + uid_str;
-	std::string token_value = "";
+	LOG_RPC->info("Received Login request from uid: {} with token: {}", uid, token);
 
-	bool success = RedisManager::GetInstance()->Get(token_key, token_value);
-	if (success) 
-    {
+	std::lock_guard<std::mutex> lock(_token_mtx);
+
+	auto token_iter = _tokens.find(uid);
+	if(token_iter == _tokens.end())
+	{
+		LOG_RPC->error("Token not found for uid: {}", uid);
 		reply->set_error(ErrorCodes::UidInvalid);
 		return Status::OK;
 	}
-	
-	if (token_value != token) 
-    {
-		reply->set_error(ErrorCodes::TokenInvalid);
+
+	if(token_iter->second != token)
+	{
+		LOG_RPC->error("Token mismatch for uid: {}, expected: {}, got: {}", uid, token_iter->second, token);
+		reply->set_error(ErrorCodes::TokenInvalid); 
 		return Status::OK;
 	}
 
@@ -96,7 +98,7 @@ ChatServer StatusServiceImpl::getChatServer()
 {
     std::lock_guard<std::mutex> lock(_server_mtx);
 
-    LOG_SERVER->info("Getting chat server with {} servers", _servers.size());
+    LOG_RPC->info("Getting chat server with {} servers", _servers.size());
 
     auto minServer = _servers.begin()->second;
 

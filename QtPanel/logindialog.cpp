@@ -303,7 +303,7 @@ void LoginDialog::slot_tcp_con_finished(bool success)
         QString jsonString = doc.toJson(QJsonDocument::Indented);
 
         // 发给ChatServer法
-        TcpManager::GetInstance()->sig_send_data(ReqId::ID_CHAT_LOGIN, jsonString);
+        emit TcpManager::GetInstance()->sig_send_data(ReqId::ID_CHAT_LOGIN, jsonString);
     }
     else
     {

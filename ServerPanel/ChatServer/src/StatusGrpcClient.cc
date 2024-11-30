@@ -98,3 +98,32 @@ GetChatServerRsp StatusGrpcClient::GetChatServer(int uid)
         return reply;
     }
 }
+
+LoginRsp StatusGrpcClient::Login(int uid, std::string token)
+{
+    ClientContext context;
+    LoginRsp reply;
+    LoginReq request;
+
+    request.set_uid(uid);
+    request.set_token(token);
+
+    auto stub = _pool->GetConnection();
+
+    Status status = stub->Login(&context, request, &reply);
+
+    LOG_RPC->info("get chat server, status is {}", status.ok());
+
+    Defer defer([&stub, this]
+    {
+        _pool->returnConnection(std::move(stub));
+    });
+
+    if(status.ok())
+        return reply;
+    else
+    {
+        reply.set_error(ErrorCodes::RPCFailed);
+        return reply;
+    }
+}

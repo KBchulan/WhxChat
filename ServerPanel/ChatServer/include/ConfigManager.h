@@ -1,8 +1,6 @@
 #ifndef CONFIGMANAGER_H
 #define CONFIGMANAGER_H
 
-#include "Singleton.h"
-
 #include <map>
 #include <boost/filesystem.hpp>
 #include <boost/property_tree/ptree.hpp>

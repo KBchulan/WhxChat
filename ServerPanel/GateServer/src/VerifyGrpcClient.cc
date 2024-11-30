@@ -1,3 +1,4 @@
+#include "../include/LogManager.h"
 #include "../include/ConfigManager.h"
 #include "../include/VerifyGrpcClient.h"
 
@@ -9,6 +10,7 @@ RPConPool::RPConPool(std::size_t poolsize, std::string host, std::string port)
         std::shared_ptr<Channel> channel = grpc::CreateChannel(_host + ":" + _port,
             grpc::InsecureChannelCredentials());
 
+        LOG_RPC->info("create channel to verify server, host is {}, port is {}", _host, _port);
         _connections.push(VarifyService::NewStub(channel));
     }
 }
@@ -65,6 +67,8 @@ GetVarifyRsp VerifyGrpcClient::GetVarifyCode(std::string email)
 
     auto stub = _pool->GetConnection();
     Status status = stub->GetVarifyCode(&context, request, &reply);
+    
+    LOG_RPC->info("get varify code, status is {}", status.ok());
     if (status.ok())
     {
         _pool->returnConnection(std::move(stub));

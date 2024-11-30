@@ -280,3 +280,80 @@ bool MysqlDao::CheckPasswd(const std::string &email, const std::string &passwd, 
         return false;
     }
 }
+
+
+std::shared_ptr<UserInfo> MysqlDao::GetUser(int uid)
+{
+	auto con = _pool->GetConnection();
+	if (con == nullptr) {
+		return nullptr;
+	}
+
+	Defer defer([this, &con]
+    {
+		_pool->ReturnConnection(std::move(con));
+	});
+
+	try 
+    {
+		std::unique_ptr<sql::PreparedStatement> pstmt(con->_con->prepareStatement("SELECT * FROM user WHERE uid = ?"));
+		pstmt->setInt(1, uid);
+
+		std::unique_ptr<sql::ResultSet> res(pstmt->executeQuery());
+		std::shared_ptr<UserInfo> user_ptr = nullptr;
+
+		while (res->next())
+        {
+			user_ptr.reset(new UserInfo);
+			user_ptr->_passwd = res->getString("passwd");
+			user_ptr->_email = res->getString("email");
+			user_ptr->_name = res->getString("name");
+			user_ptr->_uid = res->getInt("uid");
+			break;
+		}
+		return user_ptr;
+	}
+	catch (sql::SQLException& e) 
+    {
+		LOG_SQL->error("SQLException: {} (MySQL error code: {}, SQLState: {})", e.what(), e.getErrorCode(), e.getSQLState());
+		return nullptr;
+	}
+}
+
+std::shared_ptr<UserInfo> MysqlDao::GetUser(std::string name)
+{
+	auto con = _pool->GetConnection();
+	if (con == nullptr) {
+		return nullptr;
+	}
+
+	Defer defer([this, &con]
+    {
+		_pool->ReturnConnection(std::move(con));
+	});
+
+	try 
+    {
+		std::unique_ptr<sql::PreparedStatement> pstmt(con->_con->prepareStatement("SELECT * FROM user WHERE name = ?"));
+		pstmt->setString(1, name);
+
+		std::unique_ptr<sql::ResultSet> res(pstmt->executeQuery());
+		std::shared_ptr<UserInfo> user_ptr = nullptr;
+
+		while (res->next()) 
+        {
+			user_ptr.reset(new UserInfo);
+			user_ptr->_passwd = res->getString("passwd");
+			user_ptr->_email = res->getString("email");
+			user_ptr->_name = res->getString("name");
+			user_ptr->_uid = res->getInt("uid");
+			break;
+		}
+		return user_ptr;
+	}
+	catch (sql::SQLException& e) 
+    {
+		LOG_SQL->error("SQLException: {} (MySQL error code: {}, SQLState: {})", e.what(), e.getErrorCode(), e.getSQLState());
+		return nullptr;
+	}
+}

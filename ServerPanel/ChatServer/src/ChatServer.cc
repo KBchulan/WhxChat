@@ -1,3 +1,4 @@
+#include "../include/CServer.h"
 #include "../include/LogManager.h"
 #include "../include/ConfigManager.h"
 #include "../include/AsioIOContextPool.h"
@@ -33,7 +34,8 @@ int main()
         });
 
         // create server
-        
+        std::shared_ptr<CServer> server = std::make_shared<CServer>(ioc, static_cast<unsigned short>(atoi(ConfigManager::GetInstance()["SelfServer"]["port"].c_str())));
+
         ioc.run();
     }
     catch (const std::exception &e)

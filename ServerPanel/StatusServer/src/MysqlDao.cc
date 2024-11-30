@@ -27,12 +27,13 @@ MysqlPool::MysqlPool(const std::string &url, const std::string &user, const std:
         }
 
         _check_thread = std::thread([this]
-                                    {
+        {
             while (!_b_stop)
             {
                 CheckConnection();
                 std::this_thread::sleep_for(std::chrono::seconds(60));
-            } });
+            } 
+        });
     }
     catch (const std::exception &e)
     {
@@ -64,7 +65,7 @@ void MysqlPool::CheckConnection()
             std::unique_ptr<sql::Statement> stmt(con->_con->createStatement());
             stmt->executeQuery("SELECT 1");
             con->_last_oper_time = timeStamp;
-            std::cout << "execute timer alive query, cur is " << con.get()->_last_oper_time << std::endl;
+            LOG_SQL->info("execute timer alive query, cur is {}", con.get()->_last_oper_time);
         }
         catch (const std::exception &e)
         {
@@ -167,7 +168,7 @@ int MysqlDao::RegUser(const std::string &name, const std::string &email, const s
         if (res->next())
         {
             int result = res->getInt("result");
-            std::cout << "Result" << result << '\n';
+            LOG_SQL->info("reg user result is {}", result);
             return result;
         }
         return -1;
@@ -199,6 +200,7 @@ bool MysqlDao::CheckEmail(const std::string &name, const std::string &email)
         while(res->next())
         {
             std::string tmpemail = res->getString("email");
+            LOG_SQL->info("check email result is {}", tmpemail);
             if(tmpemail == email)
                 return true;
         }
@@ -226,6 +228,7 @@ bool MysqlDao::UpdatePasswd(const std::string &name, const std::string &newpassw
         std::unique_ptr<sql::PreparedStatement> pstmt(con->_con->prepareStatement("UPDATE user SET passwd = ? WHERE name = ?"));
         pstmt->setString(1, newpasswd);
         pstmt->setString(2, name);
+        LOG_SQL->info("update passwd, name is {}, newpasswd is {}", name, newpasswd);
 
         pstmt->executeUpdate();
         return true;
@@ -258,6 +261,7 @@ bool MysqlDao::CheckPasswd(const std::string &email, const std::string &passwd, 
         while(res->next())
         {
             origin_pwd = res->getString("passwd");
+            LOG_SQL->info("check passwd, origin_pwd is {}", origin_pwd);
             break;
         }
 

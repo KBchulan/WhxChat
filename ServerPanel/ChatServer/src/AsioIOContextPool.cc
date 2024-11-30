@@ -29,7 +29,10 @@ AsioIOContextPool::~AsioIOContextPool()
 void AsioIOContextPool::Stop()
 {
     for(auto &work : _works)
+    {
+        work->get_io_context().stop();
         work.reset();
+    }
     
     for(auto &thread : _threads)
         thread.join();

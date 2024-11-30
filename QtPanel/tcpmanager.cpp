@@ -1,4 +1,5 @@
 #include "tcpmanager.h"
+#include "usermanager.h"
 
 #include <QDataStream>
 #include <QAbstractSocket>
@@ -129,7 +130,10 @@ void TcpManager::initHandlers()
             return;
         }
 
-        // 存储用户数据(暂未完成)
+        // 存储用户数据
+        UserManager::GetInstance()->SetUid(jsonObj["uid"].toInt());
+        UserManager::GetInstance()->SetName(jsonObj["name"].toString());
+        UserManager::GetInstance()->SetToken(jsonObj["token"].toString());
 
         emit sig_switch_chatdialog();
     });
