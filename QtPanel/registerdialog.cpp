@@ -5,10 +5,13 @@
 #include <QtMath>
 
 RegisterDialog::RegisterDialog(QWidget *parent) :
-    QDialog(parent),
+    BackgroundDialog(parent),
     ui(new Ui::RegisterDialog)
 {
     ui->setupUi(this);
+
+    // 设置背景图片和透明度
+    setBackground(":/resources/Login/2.jpg", 0.3);
 
     // edit the password and confirm to password style
     ui->pass_edit->setEchoMode(QLineEdit::Password);
@@ -105,7 +108,7 @@ void RegisterDialog::initParticleEffect()
     connect(m_particleTimer, &QTimer::timeout, this, &RegisterDialog::addRandomParticle);
     m_particleTimer->start(1000);
 
-    std::uint16_t particleCount = (qrand() % 4);
+    std::uint16_t particleCount = (qrand() % 10);
     
     for (std::uint16_t i = 0; i < particleCount; i++)
         addRandomParticle();

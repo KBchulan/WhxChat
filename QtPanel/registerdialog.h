@@ -12,6 +12,7 @@
 
 #include "global.h"
 #include "particleeffect.h"
+#include "backgrounddialog.h"
 
 #include <QDialog>
 
@@ -20,7 +21,7 @@ namespace Ui
     class RegisterDialog;
 }
 
-class RegisterDialog final : public QDialog
+class RegisterDialog final : public BackgroundDialog
 {
     Q_OBJECT
 

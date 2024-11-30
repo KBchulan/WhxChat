@@ -30,9 +30,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     // to chat
     connect(TcpManager::GetInstance().get(), &TcpManager::sig_switch_chatdialog, this, &MainWindow::SlotSwitchChat);
-
-    // 仅用于测试
-    emit TcpManager::GetInstance()->sig_switch_chatdialog();
 }
 
 MainWindow::~MainWindow()

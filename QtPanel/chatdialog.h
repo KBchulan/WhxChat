@@ -12,8 +12,9 @@
 
 #include <QDialog>
 
-namespace Ui {
-class ChatDialog;
+namespace Ui 
+{
+    class ChatDialog;
 }
 
 class ChatDialog final : public QDialog

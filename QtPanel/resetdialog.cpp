@@ -7,10 +7,13 @@
 #include <QtMath>
 #include <QRegularExpression>
 
-ResetDialog::ResetDialog(QWidget *parent) : QDialog(parent),
-                                            ui(new Ui::ResetDialog)
+ResetDialog::ResetDialog(QWidget *parent) 
+    : BackgroundDialog(parent), ui(new Ui::ResetDialog)
 {
     ui->setupUi(this);
+
+    // 设置背景图片和透明度
+    setBackground(":/resources/Login/7.jpg", 0.3);
 
     connect(ui->user_edit, &QLineEdit::editingFinished, this, [this]()
             { checkUserValid(); });
@@ -64,7 +67,7 @@ void ResetDialog::initParticleEffect()
     connect(m_particleTimer, &QTimer::timeout, this, &ResetDialog::addRandomParticle);
     m_particleTimer->start(1000);
 
-    std::uint16_t particleCount = (qrand() % 4);
+    std::uint16_t particleCount = (qrand() % 10);
     
     for (std::uint16_t i = 0; i < particleCount; i++)
         addRandomParticle();

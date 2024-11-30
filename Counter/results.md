@@ -1,37 +1,38 @@
 # Summary
 
-Date : 2024-11-30 20:24:50
+Date : 2024-12-01 00:52:01
 
 Directory /home/whx/文档/code/github/WhxChat
 
-Total : 145 files,  22080 codes, 1588 comments, 3659 blanks, all 27327 lines
+Total : 153 files,  22506 codes, 1609 comments, 3735 blanks, all 27850 lines
 
 Summary / [Details](details.md) / [Diff Summary](diff.md) / [Diff Details](diff-details.md)
 
 ## Languages
 | language | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| C++ | 108 | 18,245 | 1,585 | 3,412 | 23,242 |
-| XML | 5 | 1,870 | 0 | 5 | 1,875 |
+| C++ | 114 | 18,429 | 1,606 | 3,473 | 23,508 |
+| XML | 5 | 1,894 | 0 | 5 | 1,899 |
 | JSON | 3 | 952 | 0 | 4 | 956 |
+| Markdown | 3 | 308 | 0 | 45 | 353 |
 | Shell Script | 10 | 262 | 2 | 64 | 328 |
 | JavaScript | 6 | 219 | 1 | 32 | 252 |
 | CMake | 3 | 174 | 0 | 51 | 225 |
-| Markdown | 1 | 104 | 0 | 32 | 136 |
 | Protocol Buffers | 3 | 83 | 0 | 24 | 107 |
-| QSS | 1 | 72 | 0 | 17 | 89 |
+| QSS | 1 | 81 | 0 | 19 | 100 |
 | Ini | 4 | 71 | 0 | 17 | 88 |
-| Qrc | 1 | 28 | 0 | 1 | 29 |
+| Qrc | 1 | 33 | 0 | 1 | 34 |
 
 ## Directories
 | path | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| . | 145 | 22,080 | 1,588 | 3,659 | 27,327 |
+| . | 153 | 22,506 | 1,609 | 3,735 | 27,850 |
 | . (Files) | 1 | 104 | 0 | 32 | 136 |
-| QtPanel | 36 | 4,004 | 304 | 615 | 4,923 |
-| QtPanel (Files) | 34 | 3,929 | 304 | 597 | 4,830 |
+| Counter | 2 | 204 | 0 | 13 | 217 |
+| QtPanel | 42 | 4,226 | 325 | 678 | 5,229 |
+| QtPanel (Files) | 40 | 4,142 | 325 | 658 | 5,125 |
 | QtPanel/resources | 1 | 3 | 0 | 1 | 4 |
-| QtPanel/style | 1 | 72 | 0 | 17 | 89 |
+| QtPanel/style | 1 | 81 | 0 | 19 | 100 |
 | ServerPanel | 96 | 17,651 | 1,280 | 2,932 | 21,863 |
 | ServerPanel/ChatServer | 30 | 5,694 | 426 | 1,021 | 7,141 |
 | ServerPanel/ChatServer (Files) | 1 | 58 | 0 | 17 | 75 |

@@ -2,18 +2,23 @@
 #include "logindialog.h"
 #include "httpmanager.h"
 #include "ui_logindialog.h"
+#include "backgrounddialog.h"
 
 #include <QDebug>
 #include <QtMath>
 #include <QPainter>
+#include <QParallelAnimationGroup>
 #include <QGraphicsDropShadowEffect>
 
-LoginDialog::LoginDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::LoginDialog)
+LoginDialog::LoginDialog(QWidget *parent)
+    : BackgroundDialog(parent)
+    , ui(new Ui::LoginDialog)
 {
     ui->setupUi(this);
-
+    
+    // 设置背景图片和透明度
+    setBackground(":/resources/Login/8.jpg", 0.3);
+    
     // 注册按钮
     connect(ui->reg_btn, &QPushButton::clicked, this, &LoginDialog::switchRegister);
 
@@ -66,7 +71,7 @@ LoginDialog::~LoginDialog()
 
 void LoginDialog::initParticleEffect()
 {
-    // 创建粒子效果
+    // 创建粒��效果
     m_particleEffect = new ParticleEffect(this);
     m_particleEffect->resize(size());
     m_particleEffect->lower();
@@ -153,28 +158,29 @@ void LoginDialog::initHead()
 {
     QPixmap pixmap(":/resources/Login/3.jpg");
 
-    // 纵横比缩放
     pixmap = pixmap.scaled(ui->head_label->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
-    // 空白透明的pixmap作为画布
     QSize targetSize = ui->head_label->size();
     QPixmap rounded(targetSize);
     rounded.fill(Qt::transparent);
 
-    // 创建画家，抗锯齿
     QPainter painter(&rounded);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    // 设置圆角矩形路径
+    QRect imageRect(125, 0, pixmap.width(), pixmap.height());
+
     QPainterPath path;
     std::uint32_t radius = 20;
-    path.addRoundedRect(0, 0, targetSize.width(), targetSize.height(), radius, radius);
+    path.addRoundedRect(imageRect, radius, radius);
 
-    // 裁减路径
     painter.setClipPath(path);
 
-    // 绘制图片
-    painter.drawPixmap(125, 0, pixmap);
+    painter.drawPixmap(imageRect.x(), imageRect.y(), pixmap);
+
+    QPen pen(QColor(255, 192, 203, 115));
+    pen.setWidth(4);
+    painter.setPen(pen);
+    painter.drawRoundedRect(imageRect, radius, radius);
 
     ui->head_label->setPixmap(rounded);
 }

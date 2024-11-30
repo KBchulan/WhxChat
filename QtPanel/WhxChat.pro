@@ -31,7 +31,8 @@ SOURCES += \
     resetdialog.cpp \
     tcpmanager.cpp \
     timerbtn.cpp \
-    usermanager.cpp
+    usermanager.cpp \
+    backgrounddialog.cpp
 
 HEADERS += \
     chatdialog.h \
@@ -49,7 +50,8 @@ HEADERS += \
     singleton.h \
     tcpmanager.h \
     timerbtn.h \
-    usermanager.h
+    usermanager.h \
+    backgrounddialog.h
 
 FORMS += \
     chatdialog.ui \
