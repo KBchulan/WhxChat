@@ -1,3 +1,4 @@
+#include "tcpmanager.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -26,6 +27,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     // reset password
     connect(_login_dlg, &LoginDialog::switchReset, this, &MainWindow::SlotSwitchReset);
+
+    // to chat
+    connect(TcpManager::GetInstance().get(), &TcpManager::sig_switch_chatdialog, this, &MainWindow::SlotSwitchChat);
 }
 
 MainWindow::~MainWindow()
@@ -63,6 +67,7 @@ void MainWindow::SlotSwitchLogin()
     // create and register message link
     connect(_login_dlg, &LoginDialog::switchRegister, this, &MainWindow::SlotSwitchReg);
     connect(_login_dlg, &LoginDialog::switchReset, this, &MainWindow::SlotSwitchReset);
+    connect(TcpManager::GetInstance().get(), &TcpManager::sig_switch_chatdialog, this, &MainWindow::SlotSwitchChat);
 }
 
 void MainWindow::SlotSwitchLogin2()
@@ -80,6 +85,7 @@ void MainWindow::SlotSwitchLogin2()
     // create and register message link
     connect(_login_dlg, &LoginDialog::switchRegister, this, &MainWindow::SlotSwitchReg);
     connect(_login_dlg, &LoginDialog::switchReset, this, &MainWindow::SlotSwitchReset);
+    connect(TcpManager::GetInstance().get(), &TcpManager::sig_switch_chatdialog, this, &MainWindow::SlotSwitchChat);
 }
 
 void MainWindow::SlotSwitchReset()
@@ -93,6 +99,20 @@ void MainWindow::SlotSwitchReset()
     _reset_dlg->show();
 
     connect(_reset_dlg, &ResetDialog::switchLogin, this, &MainWindow::SlotSwitchLogin2);
+}
+
+void MainWindow::SlotSwitchChat()
+{
+    _chat_dlg = new ChatDialog(this);
+    _chat_dlg->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+
+    setCentralWidget(_chat_dlg);
+
+    _login_dlg->hide();
+    _chat_dlg->show();
+
+    this->setMinimumSize(_chat_dlg->size());
+    this->setMaximumSize(_chat_dlg->size());
 }
 
 void MainWindow::setupEntranceAnimation(QWidget* widget, int duration)

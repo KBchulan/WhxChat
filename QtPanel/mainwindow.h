@@ -10,6 +10,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "chatdialog.h"
 #include "resetdialog.h"
 #include "logindialog.h"
 #include "registerdialog.h"
@@ -47,11 +48,15 @@ public slots:
     // handel reset
     void SlotSwitchReset();
 
+    // switch to chatDialog
+    void SlotSwitchChat();
+
 private:
-    Ui::MainWindow *ui;
-    LoginDialog *_login_dlg;
-    ResetDialog *_reset_dlg;
-    RegisterDialog *_reg_dlg;
+    Ui::MainWindow *ui = nullptr;
+    ChatDialog *_chat_dlg = nullptr;
+    LoginDialog *_login_dlg = nullptr;
+    ResetDialog *_reset_dlg = nullptr;
+    RegisterDialog *_reg_dlg = nullptr;
 };
 
 #endif // MAINWINDOW_H

@@ -67,3 +67,23 @@ LoginDialog, RegisterDialog, ResetDialog
 {
     color: rgb(66, 124, 248);
 }
+
+#side_bar
+{
+    background-color: rgb(20, 20, 20);
+}
+
+#add_btn[state = 'normal']
+{
+    border-image: url(:resources/Chat/mid/add_friend_normal.png);
+}
+
+#add_btn[state = 'hover']
+{
+    border-image: url(:resources/Chat/mid/add_friend_hover.png);
+}
+
+#add_btn[state = 'press']
+{
+    border-image: url(:resources/Chat/mid/add_friend_hover.png);
+}

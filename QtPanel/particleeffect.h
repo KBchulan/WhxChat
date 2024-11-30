@@ -1,3 +1,12 @@
+/******************************************************************************
+ *
+ * @file       particleeffect.h
+ * @brief      粒子系统
+ *
+ * @author     KBchulan
+ * @date       2024/11/30
+ * @history
+ *****************************************************************************/
 #ifndef PARTICLEEFFECT_H
 #define PARTICLEEFFECT_H
 
@@ -72,7 +81,7 @@ private:
     void updateParticles();
     
 private:
-    QTimer* m_timer;                  // 动画计时器
+    QTimer* m_timer = nullptr;        // 动画计时器
     QVector<Particle> m_particles;    // 粒子容器
     QPointF m_emitterPos;             // 发射器位置
     bool m_isActive;                  // 是否激活

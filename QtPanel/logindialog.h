@@ -58,7 +58,7 @@ private:
     void initParticleEffect();
 
 private:
-    Ui::LoginDialog *ui;
+    Ui::LoginDialog *ui = nullptr;
     QMap<TipErr, QString> _tip_errs;
     QMap<ReqId, std::function<void(const QJsonObject &)>> _handlers;
 
@@ -67,8 +67,8 @@ private:
     QString _token;
 
     // 动画元素
-    QTimer *m_particleTimer;
-    ParticleEffect *m_particleEffect;
+    QTimer *m_particleTimer = nullptr;
+    ParticleEffect *m_particleEffect = nullptr;
 
 public slots:
     // 处理忘记密码的槽函数

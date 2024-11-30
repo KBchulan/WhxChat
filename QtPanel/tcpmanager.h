@@ -1,3 +1,12 @@
+/******************************************************************************
+ *
+ * @file       tcpmanager.h
+ * @brief      client与chatServer的长连接
+ *
+ * @author     KBchulan
+ * @date       2024/11/30
+ * @history
+ *****************************************************************************/
 #ifndef TCPMANAGER_H
 #define TCPMANAGER_H
 

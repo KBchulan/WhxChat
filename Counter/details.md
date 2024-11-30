@@ -1,49 +1,52 @@
 # Details
 
-Date : 2024-11-30 15:19:56
+Date : 2024-11-30 20:24:50
 
 Directory /home/whx/文档/code/github/WhxChat
 
-Total : 142 files,  21514 codes, 1521 comments, 3623 blanks, all 26658 lines
+Total : 145 files,  22080 codes, 1588 comments, 3659 blanks, all 27327 lines
 
 [Summary](results.md) / Details / [Diff Summary](diff.md) / [Diff Details](diff-details.md)
 
 ## Files
 | filename | language | code | comment | blank | total |
 | :--- | :--- | ---: | ---: | ---: | ---: |
-| [Counter/details.md](/Counter/details.md) | Markdown | 125 | 0 | 6 | 131 |
-| [Counter/results.md](/Counter/results.md) | Markdown | 50 | 0 | 7 | 57 |
+| [QtPanel/chatdialog.cpp](/QtPanel/chatdialog.cpp) | C++ | 24 | 2 | 9 | 35 |
+| [QtPanel/chatdialog.h](/QtPanel/chatdialog.h) | C++ | 18 | 9 | 8 | 35 |
+| [QtPanel/chatdialog.ui](/QtPanel/chatdialog.ui) | XML | 590 | 0 | 1 | 591 |
+| [QtPanel/clickedbtn.cpp](/QtPanel/clickedbtn.cpp) | C++ | 50 | 0 | 10 | 60 |
+| [QtPanel/clickedbtn.h](/QtPanel/clickedbtn.h) | C++ | 21 | 0 | 9 | 30 |
 | [QtPanel/clickedlabel.cpp](/QtPanel/clickedlabel.cpp) | C++ | 75 | 2 | 10 | 87 |
-| [QtPanel/clickedlabel.h](/QtPanel/clickedlabel.h) | C++ | 27 | 2 | 14 | 43 |
+| [QtPanel/clickedlabel.h](/QtPanel/clickedlabel.h) | C++ | 27 | 11 | 14 | 52 |
 | [QtPanel/global.cpp](/QtPanel/global.cpp) | C++ | 17 | 2 | 7 | 26 |
 | [QtPanel/global.h](/QtPanel/global.h) | C++ | 62 | 16 | 14 | 92 |
 | [QtPanel/httpmanager.cpp](/QtPanel/httpmanager.cpp) | C++ | 47 | 5 | 9 | 61 |
 | [QtPanel/httpmanager.h](/QtPanel/httpmanager.h) | C++ | 29 | 15 | 14 | 58 |
-| [QtPanel/logindialog.cpp](/QtPanel/logindialog.cpp) | C++ | 265 | 26 | 69 | 360 |
+| [QtPanel/logindialog.cpp](/QtPanel/logindialog.cpp) | C++ | 271 | 26 | 69 | 366 |
 | [QtPanel/logindialog.h](/QtPanel/logindialog.h) | C++ | 47 | 28 | 27 | 102 |
 | [QtPanel/logindialog.ui](/QtPanel/logindialog.ui) | XML | 373 | 0 | 1 | 374 |
 | [QtPanel/main.cpp](/QtPanel/main.cpp) | C++ | 28 | 2 | 6 | 36 |
-| [QtPanel/mainwindow.cpp](/QtPanel/mainwindow.cpp) | C++ | 71 | 16 | 28 | 115 |
-| [QtPanel/mainwindow.h](/QtPanel/mainwindow.h) | C++ | 31 | 14 | 13 | 58 |
-| [QtPanel/mainwindow.ui](/QtPanel/mainwindow.ui) | XML | 43 | 0 | 1 | 44 |
+| [QtPanel/mainwindow.cpp](/QtPanel/mainwindow.cpp) | C++ | 85 | 17 | 34 | 136 |
+| [QtPanel/mainwindow.h](/QtPanel/mainwindow.h) | C++ | 34 | 15 | 14 | 63 |
+| [QtPanel/mainwindow.ui](/QtPanel/mainwindow.ui) | XML | 32 | 0 | 1 | 33 |
 | [QtPanel/particleeffect.cpp](/QtPanel/particleeffect.cpp) | C++ | 167 | 10 | 37 | 214 |
-| [QtPanel/particleeffect.h](/QtPanel/particleeffect.h) | C++ | 62 | 8 | 16 | 86 |
+| [QtPanel/particleeffect.h](/QtPanel/particleeffect.h) | C++ | 62 | 17 | 17 | 96 |
 | [QtPanel/registerdialog.cpp](/QtPanel/registerdialog.cpp) | C++ | 326 | 19 | 73 | 418 |
 | [QtPanel/registerdialog.h](/QtPanel/registerdialog.h) | C++ | 46 | 22 | 22 | 90 |
 | [QtPanel/registerdialog.ui](/QtPanel/registerdialog.ui) | XML | 535 | 0 | 1 | 536 |
 | [QtPanel/resetdialog.cpp](/QtPanel/resetdialog.cpp) | C++ | 262 | 19 | 70 | 351 |
-| [QtPanel/resetdialog.h](/QtPanel/resetdialog.h) | C++ | 41 | 14 | 23 | 78 |
+| [QtPanel/resetdialog.h](/QtPanel/resetdialog.h) | C++ | 41 | 23 | 23 | 87 |
 | [QtPanel/resetdialog.ui](/QtPanel/resetdialog.ui) | XML | 340 | 0 | 1 | 341 |
-| [QtPanel/resources.qrc](/QtPanel/resources.qrc) | Qrc | 18 | 0 | 1 | 19 |
+| [QtPanel/resources.qrc](/QtPanel/resources.qrc) | Qrc | 28 | 0 | 1 | 29 |
 | [QtPanel/resources/config.ini](/QtPanel/resources/config.ini) | Ini | 3 | 0 | 1 | 4 |
 | [QtPanel/singleton.h](/QtPanel/singleton.h) | C++ | 31 | 9 | 10 | 50 |
-| [QtPanel/style/stylesheet.qss](/QtPanel/style/stylesheet.qss) | QSS | 56 | 0 | 13 | 69 |
+| [QtPanel/style/stylesheet.qss](/QtPanel/style/stylesheet.qss) | QSS | 72 | 0 | 17 | 89 |
 | [QtPanel/tcpmanager.cpp](/QtPanel/tcpmanager.cpp) | C++ | 136 | 7 | 34 | 177 |
-| [QtPanel/tcpmanager.h](/QtPanel/tcpmanager.h) | C++ | 34 | 1 | 19 | 54 |
+| [QtPanel/tcpmanager.h](/QtPanel/tcpmanager.h) | C++ | 34 | 10 | 19 | 63 |
 | [QtPanel/timerbtn.cpp](/QtPanel/timerbtn.cpp) | C++ | 36 | 0 | 6 | 42 |
-| [QtPanel/timerbtn.h](/QtPanel/timerbtn.h) | C++ | 15 | 0 | 6 | 21 |
+| [QtPanel/timerbtn.h](/QtPanel/timerbtn.h) | C++ | 15 | 9 | 6 | 30 |
 | [QtPanel/usermanager.cpp](/QtPanel/usermanager.cpp) | C++ | 19 | 0 | 8 | 27 |
-| [QtPanel/usermanager.h](/QtPanel/usermanager.h) | C++ | 21 | 0 | 12 | 33 |
+| [QtPanel/usermanager.h](/QtPanel/usermanager.h) | C++ | 21 | 9 | 12 | 42 |
 | [README.md](/README.md) | Markdown | 104 | 0 | 32 | 136 |
 | [ServerPanel/ChatServer/CMakeLists.txt](/ServerPanel/ChatServer/CMakeLists.txt) | CMake | 58 | 0 | 17 | 75 |
 | [ServerPanel/ChatServer/config/config.ini](/ServerPanel/ChatServer/config/config.ini) | Ini | 27 | 0 | 7 | 34 |

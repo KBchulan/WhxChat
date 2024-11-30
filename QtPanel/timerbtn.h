@@ -1,3 +1,12 @@
+/******************************************************************************
+ *
+ * @file       timerbtn.h
+ * @brief      具有定时功能的按钮
+ *
+ * @author     KBchulan
+ * @date       2024/11/30
+ * @history
+ *****************************************************************************/
 #ifndef TIMERBTN_H
 #define TIMERBTN_H
 
@@ -14,7 +23,7 @@ public:
 
 private:
     int _counter;
-    QTimer *_timer;
+    QTimer *_timer = nullptr;
 };
 
 #endif // TIMERBTN_H

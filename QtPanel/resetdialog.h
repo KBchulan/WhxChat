@@ -1,3 +1,12 @@
+/******************************************************************************
+ *
+ * @file       resetdialog.h
+ * @brief      重置密码的界面
+ *
+ * @author     KBchulan
+ * @date       2024/11/30
+ * @history
+ *****************************************************************************/
 #ifndef RESETDIALOG_H
 #define RESETDIALOG_H
 
@@ -49,13 +58,13 @@ private:
     void initParticleEffect();
 
 private:
-    Ui::ResetDialog *ui;
+    Ui::ResetDialog *ui = nullptr;
     QMap<TipErr, QString> _tip_errs;
     QMap<ReqId, std::function<void(const QJsonObject&)>> _handlers;
 
     // 动画元素
-    QTimer *m_particleTimer;
-    ParticleEffect *m_particleEffect;
+    QTimer *m_particleTimer = nullptr;
+    ParticleEffect *m_particleEffect = nullptr;
 
 private slots:
     // 返回按钮点击事件

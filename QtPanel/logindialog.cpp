@@ -221,6 +221,12 @@ void LoginDialog::initHttpHandlers()
         int error = jsonObj["error"].toInt();
         if(error != ErrorCodes::SUCCESS)
         {
+            if(error == 1009)
+            {
+                showTip("密码错误", false);
+                enableBtn(true);
+                return;
+            }
             showTip("参数错误", false);
             enableBtn(true);
             return;
@@ -302,7 +308,7 @@ void LoginDialog::slot_tcp_con_finished(bool success)
         QJsonDocument doc(jsonObj);
         QString jsonString = doc.toJson(QJsonDocument::Indented);
 
-        // 发给ChatServer法
+        // 发给ChatServer
         emit TcpManager::GetInstance()->sig_send_data(ReqId::ID_CHAT_LOGIN, jsonString);
     }
     else

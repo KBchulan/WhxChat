@@ -76,14 +76,14 @@ private:
 
 private:
     int _countdown{5};
-    Ui::RegisterDialog *ui;
-    QTimer *_countdown_timer;
+    Ui::RegisterDialog *ui = nullptr;
+    QTimer *_countdown_timer = nullptr;
     QMap<TipErr, QString> _tip_errs;
     QMap<ReqId, std::function<void(const QJsonObject &)>> _handlers;
 
     // 动画元素
-    QTimer *m_particleTimer;
-    ParticleEffect *m_particleEffect;
+    QTimer *m_particleTimer = nullptr;
+    ParticleEffect *m_particleEffect = nullptr;
 };
 
 #endif // REGISTERDIALOG_H
