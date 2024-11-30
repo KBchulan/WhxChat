@@ -40,8 +40,9 @@ bool LogManager::Init(const std::string &log_path, LogLevel level)
         _http_logger = CreateLogger("http", "http.log");
         _rpc_logger = CreateLogger("rpc", "rpc.log");
         _sql_logger = CreateLogger("sql", "sql.log");
+        _redis_logger = CreateLogger("redis", "redis.log");
 
-        if (!_server_logger || !_http_logger || !_rpc_logger || !_sql_logger)
+        if (!_server_logger || !_http_logger || !_rpc_logger || !_sql_logger || !_redis_logger)
         {
             return false;
         }

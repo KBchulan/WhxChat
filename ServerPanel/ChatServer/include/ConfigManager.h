@@ -24,9 +24,8 @@ struct SectionInfo
     std::map<std::string, std::string> _section_datas;
 };
 
-class ConfigManager final : public Singleton<ConfigManager>
+class ConfigManager
 {
-    friend class Singleton<ConfigManager>;
 public:
     ~ConfigManager();
 
@@ -38,6 +37,8 @@ public:
 
     // 方便通过对象直接获取值
     SectionInfo operator[](const std::string &section);
+
+    void PrintInfo();
 
 private:
     ConfigManager();

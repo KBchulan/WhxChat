@@ -14,7 +14,7 @@ AsioIOContextPool::AsioIOContextPool(std::uint32_t size)
 
     for(std::uint32_t i = 0; i < size; i++)
     {
-        _threads.emplace_back([this, i]
+        _threads.emplace_back([this, i]() -> void
         {
             _ioContexts[i].run();
         });

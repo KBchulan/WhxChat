@@ -49,7 +49,7 @@ public:
     static void Shutdown()
     {
         static std::once_flag shutdown_flag;
-        std::call_once(shutdown_flag, []()
+        std::call_once(shutdown_flag, []() -> void
         {
             auto instance = GetInstance();
             instance->Flush();

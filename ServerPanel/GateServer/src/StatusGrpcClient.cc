@@ -10,7 +10,6 @@ StatusConPool::StatusConPool(std::uint32_t size, std::string host, std::string p
             grpc::InsecureChannelCredentials());
         
         _connections.push(StatusService::NewStub(channel));
-        LOG_SERVER->info("Created connection to StatusServer at {}:{}", host, port);
     }
 }
 

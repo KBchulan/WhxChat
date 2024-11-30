@@ -20,7 +20,7 @@ StatusServiceImpl::StatusServiceImpl()
     {
         if(cfg[wor]["name"].empty())
         {
-            LOG_SERVER->error("Chat server {} not found in config", wor);
+            LOG_RPC->error("Chat server {} not found in config", wor);
             continue;
         }
         

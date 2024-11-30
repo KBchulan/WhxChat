@@ -1,3 +1,4 @@
+#include "../include/LogManager.h"
 #include "../include/ConfigManager.h"
 
 SectionInfo::~SectionInfo()
@@ -85,4 +86,16 @@ SectionInfo ConfigManager::operator[](const std::string &section)
         return SectionInfo();
 
     return _config_map[section];
+}
+
+void ConfigManager::PrintInfo()
+{
+    for (const auto &[first, second] : _config_map)
+    {
+        LOG_SERVER->info("{}", first);
+        for (const auto &[fir, sec] : second._section_datas)
+        {
+            LOG_SERVER->info("{} : {}", fir, sec);
+        }
+    }
 }

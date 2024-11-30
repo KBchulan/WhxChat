@@ -1,4 +1,5 @@
 #include "../include/LogManager.h"
+#include "../include/ConfigManager.h"
 #include "../include/AsioIOContextPool.h"
 
 int main()
@@ -18,7 +19,7 @@ int main()
         boost::asio::io_context ioc;
         boost::asio::signal_set signals(ioc, SIGINT, SIGTERM);
 
-        signals.async_wait([&pool, &ioc](auto, auto)
+        signals.async_wait([&pool, &ioc](auto, auto) -> void
         {
             pool.Stop();
             ioc.stop();
@@ -31,6 +32,8 @@ int main()
             }
         });
 
+        // create server
+        
         ioc.run();
     }
     catch (const std::exception &e)

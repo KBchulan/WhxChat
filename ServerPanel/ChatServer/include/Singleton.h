@@ -20,7 +20,7 @@ public:
     static std::shared_ptr<T> GetInstance()
     {
         static std::once_flag g_flag;
-        std::call_once(g_flag, []()
+        std::call_once(g_flag, []() -> void
         {
             _instance = std::shared_ptr<T>(new T);
         });
@@ -37,7 +37,6 @@ protected:
 
 private:
     inline static std::shared_ptr<T> _instance = nullptr;
-
 };
 
 #endif // SINGLETON_H
