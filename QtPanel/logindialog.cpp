@@ -2,7 +2,6 @@
 #include "logindialog.h"
 #include "httpmanager.h"
 #include "ui_logindialog.h"
-#include "backgrounddialog.h"
 
 #include <QDebug>
 #include <QtMath>

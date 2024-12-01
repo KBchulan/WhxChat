@@ -1,3 +1,12 @@
+/******************************************************************************
+ *
+ * @file       backgrounddialog.h
+ * @brief      注册登录和重置密码三个界面的个性化
+ *
+ * @author     KBchulan
+ * @date       2024/12/01
+ * @history
+ *****************************************************************************/
 #ifndef BACKGROUNDDIALOG_H
 #define BACKGROUNDDIALOG_H
 

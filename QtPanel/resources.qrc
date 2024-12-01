@@ -29,5 +29,7 @@
         <file>resources/Chat/mid/search.png</file>
         <file>resources/Chat/mid/close_search.png</file>
         <file>resources/Chat/mid/close_transparent.png</file>
+        <file>resources/Chat/mid/4.png</file>
+        <file>resources/Chat/mid/7.jpg</file>
     </qresource>
 </RCC>

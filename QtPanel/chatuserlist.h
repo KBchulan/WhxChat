@@ -1,6 +1,8 @@
 #ifndef CHATUSERLIST_H
 #define CHATUSERLIST_H
 
+#include "chatuserwidget.h"
+
 #include <QEvent>
 #include <QDebug>
 #include <QScrollBar>

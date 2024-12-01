@@ -10,6 +10,9 @@
 #ifndef CHATDIALOG_H
 #define CHATDIALOG_H
 
+#include "global.h"
+#include "chatuserlist.h"
+
 #include <QDialog>
 
 namespace Ui 
@@ -25,11 +28,21 @@ public:
     explicit ChatDialog(QWidget *parent = nullptr);
     ~ChatDialog();
 
+    void addChatUserList();
+
 private:
+    // 初始化头像
     void initHead();
+
+    // 显示搜索框
+    void ShowSearch(bool bSearch = false);
 
 private:
     Ui::ChatDialog *ui = nullptr;
+    
+    bool _b_loading;         // 是否正在加载
+    ChatUIMode _mode;        // 当前模式(side_bar)
+    ChatUIMode _state;       // 当前状态(middle_bar)
 };
 
 #endif // CHATDIALOG_H

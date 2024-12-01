@@ -5,10 +5,14 @@
 #include <QDebug>
 #include <QAction>
 #include <QPainter>
+#include <QRandomGenerator>
 
 ChatDialog::ChatDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::ChatDialog)
+    ui(new Ui::ChatDialog),
+    _b_loading(false),
+    _mode(ChatUIMode::ChatMode),
+    _state(ChatUIMode::ChatMode)
 {
     ui->setupUi(this);
 
@@ -35,21 +39,77 @@ ChatDialog::ChatDialog(QWidget *parent) :
             clearAction->setIcon(QIcon(":/resources/Chat/mid/close_transparent.png"));
     });
 
+    // 清除搜索框内容，同时关闭搜索界面
     connect(clearAction, &QAction::triggered, [this, clearAction]() -> void
     {
-         ui->search_edit->clear();
-         clearAction->setIcon(QIcon(":/resources/Chat/mid/close_transparent.png"));
-         ui->search_edit->clearFocus();
+        ui->search_edit->clear();
+        clearAction->setIcon(QIcon(":/resources/Chat/mid/close_transparent.png"));
+        ui->search_edit->clearFocus();
+        ShowSearch(false);
     });
+
+    // 隐藏搜索界面
+    ShowSearch(false);
 
     // 初始化头像
     initHead();
+
+    // 添加聊天用户列表
+    addChatUserList();
 }
 
 ChatDialog::~ChatDialog()
 {
     qDebug() << "chatDialog destructed!";
     delete ui;
+}
+
+std::vector<QString> strs =
+{
+    "hello world !",
+    "nice to meet u",
+    "New year, new life",
+    "You have to love yourself",
+    "My love is written in the wind ever since the whole world is you"
+};
+
+std::vector<QString> heads = 
+{
+    ":/resources/Chat/mid/4.png",
+    ":/resources/Chat/mid/7.jpg"
+};
+
+std::vector<QString> names = 
+{
+    "八奈见杏菜",
+    "宫城志绪理",
+    "温水佳树",
+    "小鞠知花",
+    "白玉璃子",
+    "志喜屋梦子",
+    "马剃天爱星",
+    "朝云千早"
+};
+
+void ChatDialog::addChatUserList()
+{
+    for(int i = 0; i < 12; i++)
+    {
+        int random = QRandomGenerator::global()->bounded(0, heads.size());
+
+        int str_i = random % strs.size();
+        int name_i = random % names.size();
+        int head_i = random % heads.size();
+
+        auto *chat_user_widget = new ChatUserWidget(this);
+        chat_user_widget->SetInfo(strs[str_i], names[name_i], heads[head_i]);
+
+        QListWidgetItem *item = new QListWidgetItem;
+        item->setSizeHint(chat_user_widget->sizeHint());
+
+        ui->chat_user_list->addItem(item);
+        ui->chat_user_list->setItemWidget(item, chat_user_widget);
+    }
 }
 
 void ChatDialog::initHead()
@@ -60,4 +120,29 @@ void ChatDialog::initHead()
     pixmap = pixmap.scaled(ui->side_head_label->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
     ui->side_head_label->setPixmap(pixmap);
+}
+
+void ChatDialog::ShowSearch(bool bSearch)
+{
+    if(bSearch)
+    {
+        ui->chat_user_list->hide();
+        ui->con_user_list->hide();
+        ui->search_list->show();
+        _mode = ChatUIMode::SearchMode;
+    }
+    else if(_state == ChatUIMode::ChatMode)
+    {
+        ui->search_list->hide();
+        ui->con_user_list->hide();
+        ui->chat_user_list->show();
+        _mode = ChatUIMode::ChatMode;
+    }
+    else if(_state == ChatUIMode::ContactMode)
+    {
+        ui->search_list->hide();
+        ui->chat_user_list->hide();
+        ui->con_user_list->show();
+        _mode = ChatUIMode::ContactMode;
+    }
 }

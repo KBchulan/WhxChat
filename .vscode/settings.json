@@ -81,6 +81,8 @@
         "qtimer": "cpp",
         "qvector": "cpp",
         "*.ipp": "cpp",
-        "qpainter": "cpp"
+        "qpainter": "cpp",
+        "qevent": "cpp",
+        "qlistwidget": "cpp"
     }
 }

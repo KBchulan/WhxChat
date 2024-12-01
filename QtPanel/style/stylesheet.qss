@@ -70,7 +70,7 @@ LoginDialog, RegisterDialog, ResetDialog
 
 #side_bar
 {
-    background-color: rgb(20, 20, 20);
+    background-color: rgb(38, 36, 36);
 }
 
 #add_btn[state = 'normal']
@@ -88,6 +88,7 @@ LoginDialog, RegisterDialog, ResetDialog
     border-image: url(:resources/Chat/mid/add_friend_hover.png);
 }
 
+/* 搜索框 */
 #search_widget
 {
     background-color: rgb(232, 244, 246);
@@ -97,4 +98,99 @@ LoginDialog, RegisterDialog, ResetDialog
 #search_edit
 {
     border: 2px solid #f1f1f1;
+}
+
+#chatEdit
+{
+    background-color: rgb(255, 255, 255);
+    border: none;
+}
+
+#bottom_widget
+{
+    background-color: rgb(255, 255, 255);
+    border: none;
+}
+
+#chat_user_list
+{
+    background-color: rgb(250, 250, 250);
+    border: none;
+}
+
+#chat_user_list::item::selected
+{
+    background-color: #d3d7d4;
+    border: none;
+    outline: none;
+}
+
+#chat_user_list::item::hover
+{
+    background-color: rgb(206, 206, 206);
+    border: none;
+    outline: none;
+}
+
+#chat_user_list::focus
+{
+    border: none;
+    outline: none;
+}
+
+#tool_widget
+{
+    background-color: rgb(255, 255, 255);
+    border-bottom: 1px solid #e0e0e0;
+}
+
+ChatUserWidget
+{
+    background-color: rgb(247, 247, 247);
+    border: none;
+}
+
+#user_chat_label
+{
+    color: rgb(153, 153, 153);
+    font-size: 12px;
+}
+
+#user_name_label
+{
+    color: rgb(0, 0, 0);
+    font-size: 14px;
+    font-weight: normal;
+}
+
+#time_widget #time_label
+{
+    color: rgb(140, 140, 140);
+    font-size: 12px;
+}
+
+QScrollBar:vertical
+{
+    background-color: transparent;
+    width: 8px;
+    margin: 0px;
+}
+
+QScrollBar::handle:vertical
+{
+    background-color: rgb(173, 173, 173);
+    min-height: 10px;
+    border-radius: 4px;
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical
+{
+    height: 0px;
+    border: none;
+    background: transparent;
+}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
+{
+    background: transparent;
 }
