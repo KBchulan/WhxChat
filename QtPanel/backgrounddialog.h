@@ -17,6 +17,7 @@
 class BackgroundDialog : public QDialog
 {
     Q_OBJECT
+
 public:
     explicit BackgroundDialog(QWidget *parent = nullptr);
     
@@ -27,8 +28,8 @@ protected:
     void paintEvent(QPaintEvent *event) override;
 
 private:
-    QString m_imagePath;
     qreal m_opacity;
+    QString m_imagePath;
     QPixmap m_backgroundImage;
 };
 

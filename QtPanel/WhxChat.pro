@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     chatdialog.cpp \
+    chatpage.cpp \
     chatuserlist.cpp \
     chatuserwidget.cpp \
     clickedbtn.cpp \
@@ -25,6 +26,7 @@ SOURCES += \
     global.cpp \
     httpmanager.cpp \
     listitembase.cpp \
+    loadingdialog.cpp \
     logindialog.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -38,6 +40,7 @@ SOURCES += \
 
 HEADERS += \
     chatdialog.h \
+    chatpage.h \
     chatuserlist.h \
     chatuserwidget.h \
     clickedbtn.h \
@@ -46,6 +49,7 @@ HEADERS += \
     global.h \
     httpmanager.h \
     listitembase.h \
+    loadingdialog.h \
     logindialog.h \
     mainwindow.h \
     particleeffect.h \
@@ -59,7 +63,9 @@ HEADERS += \
 
 FORMS += \
     chatdialog.ui \
+    chatpage.ui \
     chatuserwidget.ui \
+    loadingdialog.ui \
     logindialog.ui \
     mainwindow.ui \
     registerdialog.ui \

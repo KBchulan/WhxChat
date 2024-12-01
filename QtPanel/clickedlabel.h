@@ -22,6 +22,7 @@ public:
     explicit ClickedLabel(QWidget *parent = nullptr);
 
     virtual void mousePressEvent(QMouseEvent *ev) override;
+    virtual void mouseReleaseEvent(QMouseEvent *ev) override;
 
     // widget event
     virtual void enterEvent(QEvent *event) override;

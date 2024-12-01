@@ -14,20 +14,44 @@ void ClickedLabel::mousePressEvent(QMouseEvent *event)
         if(_cur_state == ClickLbState::Normal)
         {
             _cur_state = ClickLbState::Selected;
-            setProperty("state", _selected_hover);
+            setProperty("state", _selected_press);
             repolish(this);
             update();
         }
         else
         {
             _cur_state = ClickLbState::Normal;
+            setProperty("state", _normal_press);
+            repolish(this);
+            update();
+        }
+        return;
+    }
+    // 调用父类的方法，否则无法触发父类的事件   
+    QLabel::mousePressEvent(event);
+}
+
+void ClickedLabel::mouseReleaseEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
+        if (_cur_state == ClickLbState::Normal)
+        {
             setProperty("state", _normal_hover);
             repolish(this);
             update();
         }
+        else
+        {
+            setProperty("state", _selected_hover);
+            repolish(this);
+            update();
+        }
         emit sig_clicked();
+        return;
     }
-    // 调用父类的方法，否则无法触发父类的事件   
+    
+    // 调用基类的mousePressEvent以保证正常的事件处理
     QLabel::mousePressEvent(event);
 }
 

@@ -1,5 +1,6 @@
 #include "clickedbtn.h"
 #include "chatdialog.h"
+#include "loadingdialog.h"
 #include "ui_chatdialog.h"
 
 #include <QDebug>
@@ -48,6 +49,9 @@ ChatDialog::ChatDialog(QWidget *parent) :
         ShowSearch(false);
     });
 
+    // 接收chatUserList滚动到底部的信号
+    connect(ui->chat_user_list, &ChatUserList::sig_loading_chat_user, this, &ChatDialog::slot_loading_chat_user);
+
     // 隐藏搜索界面
     ShowSearch(false);
 
@@ -95,7 +99,7 @@ void ChatDialog::addChatUserList()
 {
     for(int i = 0; i < 12; i++)
     {
-        int random = QRandomGenerator::global()->bounded(0, heads.size());
+        int random = QRandomGenerator::global()->bounded(0, names.size());
 
         int str_i = random % strs.size();
         int name_i = random % names.size();
@@ -145,4 +149,20 @@ void ChatDialog::ShowSearch(bool bSearch)
         ui->con_user_list->show();
         _mode = ChatUIMode::ContactMode;
     }
+}
+
+void ChatDialog::slot_loading_chat_user()
+{
+    if(_b_loading)
+        return;
+
+    _b_loading = true;
+
+    LoadingDialog *loadingDialog = new LoadingDialog(this);
+    loadingDialog->setModal(true);
+    loadingDialog->show();
+    addChatUserList();
+    loadingDialog->deleteLater();
+
+    _b_loading = false;
 }

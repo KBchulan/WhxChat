@@ -83,6 +83,7 @@
         "*.ipp": "cpp",
         "qpainter": "cpp",
         "qevent": "cpp",
-        "qlistwidget": "cpp"
+        "qlistwidget": "cpp",
+        "qstyleoption": "cpp"
     }
 }

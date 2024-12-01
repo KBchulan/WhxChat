@@ -11,7 +11,7 @@
 #define CHATDIALOG_H
 
 #include "global.h"
-#include "chatuserlist.h"
+#include "chatuserwidget.h"
 
 #include <QDialog>
 
@@ -41,8 +41,11 @@ private:
     Ui::ChatDialog *ui = nullptr;
     
     bool _b_loading;         // 是否正在加载
-    ChatUIMode _mode;        // 当前模式(side_bar)
-    ChatUIMode _state;       // 当前状态(middle_bar)
+    ChatUIMode _mode;        // 当前模式(side_bar or mid_bar)
+    ChatUIMode _state;       // 当前状态
+
+private slots:
+    void slot_loading_chat_user();
 };
 
 #endif // CHATDIALOG_H

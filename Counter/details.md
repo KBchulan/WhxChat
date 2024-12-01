@@ -1,25 +1,26 @@
 # Details
 
-Date : 2024-12-01 00:52:01
+Date : 2024-12-01 19:21:35
 
 Directory /home/whx/文档/code/github/WhxChat
 
-Total : 153 files,  22506 codes, 1609 comments, 3735 blanks, all 27850 lines
+Total : 157 files,  22816 codes, 1628 comments, 3804 blanks, all 28248 lines
 
 [Summary](results.md) / Details / [Diff Summary](diff.md) / [Diff Details](diff-details.md)
 
 ## Files
 | filename | language | code | comment | blank | total |
 | :--- | :--- | ---: | ---: | ---: | ---: |
-| [Counter/details.md](/Counter/details.md) | Markdown | 154 | 0 | 6 | 160 |
-| [Counter/results.md](/Counter/results.md) | Markdown | 50 | 0 | 7 | 57 |
-| [QtPanel/backgrounddialog.cpp](/QtPanel/backgrounddialog.cpp) | C++ | 28 | 7 | 11 | 46 |
-| [QtPanel/backgrounddialog.h](/QtPanel/backgrounddialog.h) | C++ | 19 | 1 | 6 | 26 |
-| [QtPanel/chatdialog.cpp](/QtPanel/chatdialog.cpp) | C++ | 46 | 5 | 13 | 64 |
-| [QtPanel/chatdialog.h](/QtPanel/chatdialog.h) | C++ | 19 | 9 | 8 | 36 |
-| [QtPanel/chatdialog.ui](/QtPanel/chatdialog.ui) | XML | 614 | 0 | 1 | 615 |
+| [QtPanel/backgrounddialog.cpp](/QtPanel/backgrounddialog.cpp) | C++ | 30 | 1 | 12 | 43 |
+| [QtPanel/backgrounddialog.h](/QtPanel/backgrounddialog.h) | C++ | 19 | 10 | 8 | 37 |
+| [QtPanel/chatdialog.cpp](/QtPanel/chatdialog.cpp) | C++ | 125 | 9 | 28 | 162 |
+| [QtPanel/chatdialog.h](/QtPanel/chatdialog.h) | C++ | 28 | 11 | 13 | 52 |
+| [QtPanel/chatdialog.ui](/QtPanel/chatdialog.ui) | XML | 661 | 0 | 1 | 662 |
 | [QtPanel/chatuserlist.cpp](/QtPanel/chatuserlist.cpp) | C++ | 40 | 4 | 12 | 56 |
-| [QtPanel/chatuserlist.h](/QtPanel/chatuserlist.h) | C++ | 18 | 0 | 7 | 25 |
+| [QtPanel/chatuserlist.h](/QtPanel/chatuserlist.h) | C++ | 19 | 0 | 8 | 27 |
+| [QtPanel/chatuserwidget.cpp](/QtPanel/chatuserwidget.cpp) | C++ | 24 | 0 | 7 | 31 |
+| [QtPanel/chatuserwidget.h](/QtPanel/chatuserwidget.h) | C++ | 27 | 9 | 11 | 47 |
+| [QtPanel/chatuserwidget.ui](/QtPanel/chatuserwidget.ui) | XML | 178 | 0 | 1 | 179 |
 | [QtPanel/clickedbtn.cpp](/QtPanel/clickedbtn.cpp) | C++ | 50 | 0 | 10 | 60 |
 | [QtPanel/clickedbtn.h](/QtPanel/clickedbtn.h) | C++ | 21 | 9 | 9 | 39 |
 | [QtPanel/clickedlabel.cpp](/QtPanel/clickedlabel.cpp) | C++ | 75 | 2 | 10 | 87 |
@@ -27,10 +28,12 @@ Total : 153 files,  22506 codes, 1609 comments, 3735 blanks, all 27850 lines
 | [QtPanel/customizeedit.cpp](/QtPanel/customizeedit.cpp) | C++ | 25 | 0 | 8 | 33 |
 | [QtPanel/customizeedit.h](/QtPanel/customizeedit.h) | C++ | 17 | 0 | 9 | 26 |
 | [QtPanel/global.cpp](/QtPanel/global.cpp) | C++ | 17 | 2 | 7 | 26 |
-| [QtPanel/global.h](/QtPanel/global.h) | C++ | 62 | 16 | 14 | 92 |
+| [QtPanel/global.h](/QtPanel/global.h) | C++ | 79 | 16 | 16 | 111 |
 | [QtPanel/httpmanager.cpp](/QtPanel/httpmanager.cpp) | C++ | 47 | 5 | 9 | 61 |
 | [QtPanel/httpmanager.h](/QtPanel/httpmanager.h) | C++ | 29 | 15 | 14 | 58 |
-| [QtPanel/logindialog.cpp](/QtPanel/logindialog.cpp) | C++ | 279 | 21 | 72 | 372 |
+| [QtPanel/listitembase.cpp](/QtPanel/listitembase.cpp) | C++ | 13 | 0 | 5 | 18 |
+| [QtPanel/listitembase.h](/QtPanel/listitembase.h) | C++ | 15 | 0 | 10 | 25 |
+| [QtPanel/logindialog.cpp](/QtPanel/logindialog.cpp) | C++ | 278 | 21 | 72 | 371 |
 | [QtPanel/logindialog.h](/QtPanel/logindialog.h) | C++ | 48 | 28 | 27 | 103 |
 | [QtPanel/logindialog.ui](/QtPanel/logindialog.ui) | XML | 373 | 0 | 1 | 374 |
 | [QtPanel/main.cpp](/QtPanel/main.cpp) | C++ | 28 | 2 | 6 | 36 |
@@ -45,10 +48,10 @@ Total : 153 files,  22506 codes, 1609 comments, 3735 blanks, all 27850 lines
 | [QtPanel/resetdialog.cpp](/QtPanel/resetdialog.cpp) | C++ | 263 | 20 | 71 | 354 |
 | [QtPanel/resetdialog.h](/QtPanel/resetdialog.h) | C++ | 42 | 23 | 23 | 88 |
 | [QtPanel/resetdialog.ui](/QtPanel/resetdialog.ui) | XML | 340 | 0 | 1 | 341 |
-| [QtPanel/resources.qrc](/QtPanel/resources.qrc) | Qrc | 33 | 0 | 1 | 34 |
+| [QtPanel/resources.qrc](/QtPanel/resources.qrc) | Qrc | 35 | 0 | 1 | 36 |
 | [QtPanel/resources/config.ini](/QtPanel/resources/config.ini) | Ini | 3 | 0 | 1 | 4 |
 | [QtPanel/singleton.h](/QtPanel/singleton.h) | C++ | 32 | 9 | 9 | 50 |
-| [QtPanel/style/stylesheet.qss](/QtPanel/style/stylesheet.qss) | QSS | 81 | 0 | 19 | 100 |
+| [QtPanel/style/stylesheet.qss](/QtPanel/style/stylesheet.qss) | QSS | 161 | 1 | 34 | 196 |
 | [QtPanel/tcpmanager.cpp](/QtPanel/tcpmanager.cpp) | C++ | 136 | 7 | 34 | 177 |
 | [QtPanel/tcpmanager.h](/QtPanel/tcpmanager.h) | C++ | 34 | 10 | 19 | 63 |
 | [QtPanel/timerbtn.cpp](/QtPanel/timerbtn.cpp) | C++ | 36 | 0 | 6 | 42 |
@@ -152,6 +155,7 @@ Total : 153 files,  22506 codes, 1609 comments, 3735 blanks, all 27850 lines
 | [ServerPanel/VarifyServer/proto.js](/ServerPanel/VarifyServer/proto.js) | JavaScript | 15 | 0 | 5 | 20 |
 | [ServerPanel/VarifyServer/redis.js](/ServerPanel/VarifyServer/redis.js) | JavaScript | 70 | 0 | 7 | 77 |
 | [ServerPanel/VarifyServer/server.js](/ServerPanel/VarifyServer/server.js) | JavaScript | 68 | 1 | 10 | 79 |
+| [scripts/RMALLEXTRA.sh](/scripts/RMALLEXTRA.sh) | Shell Script | 21 | 0 | 7 | 28 |
 | [scripts/aChatServer.sh](/scripts/aChatServer.sh) | Shell Script | 1 | 0 | 0 | 1 |
 | [scripts/aClient.sh](/scripts/aClient.sh) | Shell Script | 1 | 0 | 0 | 1 |
 | [scripts/aGateServer.sh](/scripts/aGateServer.sh) | Shell Script | 1 | 0 | 0 | 1 |

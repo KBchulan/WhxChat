@@ -92,24 +92,12 @@ LoginDialog, RegisterDialog, ResetDialog
 #search_widget
 {
     background-color: rgb(232, 244, 246);
-    border-radius: 15px;
+    border-radius: 10px;
 }
 
 #search_edit
 {
     border: 2px solid #f1f1f1;
-}
-
-#chatEdit
-{
-    background-color: rgb(255, 255, 255);
-    border: none;
-}
-
-#bottom_widget
-{
-    background-color: rgb(255, 255, 255);
-    border: none;
 }
 
 #chat_user_list
@@ -136,12 +124,6 @@ LoginDialog, RegisterDialog, ResetDialog
 {
     border: none;
     outline: none;
-}
-
-#tool_widget
-{
-    background-color: rgb(255, 255, 255);
-    border-bottom: 1px solid #e0e0e0;
 }
 
 ChatUserWidget
@@ -193,4 +175,114 @@ QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical
 QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
 {
     background: transparent;
+}
+
+LoadingDialog
+{
+    background-color: #f2eada;
+}
+
+#title_label
+{
+    font-size: 18px;
+    font-weight: bold;
+    border-bottom: 1px solid #c2b6b6;
+}
+
+#tool_widget
+{
+    background-color: rgb(255, 255, 255);
+    border-bottom: 1px solid #e0e0e0;
+}
+
+#emoji_label[state = 'normal']
+{
+    border-image: url(:resources/Chat/right/smile.png);
+}
+
+#emoji_label[state = 'hover']
+{
+    border-image: url(:resources/Chat/right/smile_hover.png);
+}
+
+#emoji_label[state = 'press']
+{
+    border-image: url(:resources/Chat/right/smile_press.png);
+}
+
+#file_label[state = 'normal']
+{
+    border-image: url(:resources/Chat/right/filedir.png);
+}
+
+#file_label[state = 'hover']
+{
+    border-image: url(:resources/Chat/right/filedir_hover.png);
+}
+
+#file_label[state = 'press']
+{
+    border-image: url(:resources/Chat/right/filedir_press.png);
+}
+
+#chatEdit
+{
+    background-color: rgb(255, 255, 255);
+    border: none;
+    font-size: 18px;
+    padding: 5px;
+}
+
+#bottom_widget
+{
+    background-color: rgb(255, 255, 255);
+    border: none;
+}
+
+#recvBtn[state = 'normal']
+{
+    background: #f0f0f0;
+    color: #2cb46e;
+    font-size: 16px;
+    border-radius: 20px;
+}
+
+#recvBtn[state = 'hover']
+{
+    background: #d2d2d2;
+    color: #2cb46e;
+    font-size: 16px;
+    border-radius: 20px;
+}
+
+#recvBtn[state = 'press']
+{
+    background: #c6c6c6;
+    color: #2cb46e;
+    font-size: 16px;
+    border-radius: 20px;
+}
+
+#sendBtn[state = 'normal']
+{
+    background: #f0f0f0;
+    color: #2cb46e;
+    font-size: 16px;
+    border-radius: 20px;
+}
+
+#sendBtn[state='hover']
+{
+    background: #d2d2d2;
+    color: #2cb46e;
+    font-size: 16px;
+    border-radius: 20px;
+}
+
+#sendBtn[state='press']
+{
+    background: #c6c6c6;
+    color: #2cb46e;
+    font-size: 16px;
+    border-radius: 20px;
 }

@@ -11,7 +11,8 @@ void BackgroundDialog::setBackground(const QString& imagePath, qreal opacity)
     m_imagePath = imagePath;
     m_opacity = qBound(0.0, opacity, 1.0);
     
-    if (!m_imagePath.isEmpty()) {
+    if (!m_imagePath.isEmpty())
+    {
         m_backgroundImage.load(m_imagePath);
     }
     
@@ -26,7 +27,8 @@ void BackgroundDialog::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     
-    if (!m_backgroundImage.isNull()) {
+    if (!m_backgroundImage.isNull())
+    {
         painter.setOpacity(m_opacity);
         
         QPixmap scaled = m_backgroundImage.scaled(size(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);

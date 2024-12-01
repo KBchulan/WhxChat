@@ -31,5 +31,6 @@
         <file>resources/Chat/mid/close_transparent.png</file>
         <file>resources/Chat/mid/4.png</file>
         <file>resources/Chat/mid/7.jpg</file>
+        <file>resources/Chat/mid/loading.gif</file>
     </qresource>
 </RCC>
