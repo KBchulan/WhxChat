@@ -84,6 +84,8 @@
         "qpainter": "cpp",
         "qevent": "cpp",
         "qlistwidget": "cpp",
-        "qstyleoption": "cpp"
+        "qstyleoption": "cpp",
+        "ranges": "cpp",
+        "span": "cpp"
     }
 }

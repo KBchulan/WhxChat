@@ -91,7 +91,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QWidget" name="chat_data_list" native="true">
+       <widget class="ChatView" name="chat_data_list" native="true">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -101,7 +101,7 @@
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>600</height>
+          <height>800</height>
          </size>
         </property>
        </widget>
@@ -230,7 +230,7 @@
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>200</height>
+          <height>180</height>
          </size>
         </property>
        </widget>
@@ -366,6 +366,12 @@
    <class>ClickedLabel</class>
    <extends>QLabel</extends>
    <header location="global">clickedlabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ChatView</class>
+   <extends>QWidget</extends>
+   <header location="global">chatview.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

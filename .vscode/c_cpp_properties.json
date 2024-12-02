@@ -8,9 +8,9 @@
                 "/home/whx/qtware/5.14.2/gcc_64/include/**"
             ],
             "defines": [],
-            "compilerPath": "/usr/bin/gcc",
+            "compilerPath": "/usr/bin/g++-12",
             "cStandard": "c17",
-            "cppStandard": "gnu++20",
+            "cppStandard": "gnu++23",
             "intelliSenseMode": "linux-gcc-x64"
         }
     ],

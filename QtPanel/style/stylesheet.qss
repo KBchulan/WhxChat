@@ -189,9 +189,24 @@ LoadingDialog
     border-bottom: 1px solid #c2b6b6;
 }
 
+#chat_data_list
+{
+    background: #f0f0f0;
+}
+
+#chat_background
+{
+    background: #f0f0f0;
+}
+
+#chat_area
+{
+    border: none;
+}
+
 #tool_widget
 {
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(245, 245, 245);
     border-bottom: 1px solid #e0e0e0;
 }
 
@@ -227,7 +242,7 @@ LoadingDialog
 
 #chatEdit
 {
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(245, 245, 245);
     border: none;
     font-size: 18px;
     padding: 5px;
@@ -235,7 +250,7 @@ LoadingDialog
 
 #bottom_widget
 {
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(245, 245, 245);
     border: none;
 }
 
