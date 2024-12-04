@@ -1,6 +1,7 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include <functional>
 
 using namespace std;
 using namespace string_literals;

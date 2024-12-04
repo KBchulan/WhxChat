@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     chatdialog.cpp \
+    chatitembase.cpp \
     chatpage.cpp \
     chatuserlist.cpp \
     chatuserwidget.cpp \
@@ -41,6 +42,7 @@ SOURCES += \
 
 HEADERS += \
     chatdialog.h \
+    chatitembase.h \
     chatpage.h \
     chatuserlist.h \
     chatuserwidget.h \
