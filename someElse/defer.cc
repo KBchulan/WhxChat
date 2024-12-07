@@ -3,22 +3,19 @@
 #include <iostream>
 #include <functional>
 
+class Defer
+{
+public:
+    Defer(std::function<void()> func): _func(func) {}
+    ~Defer() { _func(); }
+    
+private:
+    std::function<void()> _func;
+};
+
 int main()
 {
     auto end = std::chrono::steady_clock::now() + std::chrono::seconds(10);
-
-    class Defer
-    {
-    public:
-        Defer(std::function<void()> func): _func(func) {}
-
-        ~Defer()
-        {
-            _func();
-        }
-    private:
-        std::function<void()> _func;
-    };
 
     while (std::chrono::steady_clock::now() < end) 
     {

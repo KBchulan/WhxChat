@@ -29,7 +29,7 @@ public:
         ++(*this);
         return ptr;
     }
-
+        
     decltype(auto) GetTime() const noexcept
     {
         return _time;
