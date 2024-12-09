@@ -86,6 +86,8 @@
         "qlistwidget": "cpp",
         "qstyleoption": "cpp",
         "ranges": "cpp",
-        "span": "cpp"
+        "span": "cpp",
+        "strstream": "cpp",
+        "cfenv": "cpp"
     }
 }
